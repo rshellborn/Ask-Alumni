@@ -79,7 +79,7 @@
     sendNotification (data) {
       return self.registration.showNotification(data.title, {
         body: data.body,
-        icon: data.icon || '/notification-icon.png',
+        icon: data.icon,
         data: data,
         actions: data.actions || []
       })

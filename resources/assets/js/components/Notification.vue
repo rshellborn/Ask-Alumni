@@ -3,7 +3,7 @@
     <div class="media">
       <div class="media-left">
         <div class="media-object">
-          <img src="/notification-icon.png">
+          <img :src="notification.icon">
         </div>
       </div>
 

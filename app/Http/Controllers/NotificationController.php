@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\NewMessage;
+use App\Notifications\NewComment;
 use Illuminate\Http\Request;
 use NotificationChannels\WebPush\PushSubscription;
 
 use App\Events\NotificationRead;
 use App\Events\NotificationReadAll;
 use App\Notifications\HelloNotification;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use App\User;
 
 class NotificationController extends Controller
 {
@@ -56,6 +61,31 @@ class NotificationController extends Controller
     public function store(Request $request)
     {
         $request->user()->notify(new HelloNotification);
+
+        return response()->json('Notification sent.', 201);
+    }
+
+    /**
+     * Create a new comment notification.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeComment(Request $request) {
+        $userId = DB::table('advice')->where('id', $request->item_id)->pluck('user_id');
+        $user = User::where('id', $userId)->first();
+        $user->notify(new NewComment($request->item_id));
+    }
+
+    /**
+     * Create a new message notification.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeMessage($user)
+    {
+        $user->notify(new NewMessage);
 
         return response()->json('Notification sent.', 201);
     }
@@ -172,6 +202,7 @@ class NotificationController extends Controller
             'body' => $this->format($notification),
             'actionText' => $notification->action_text ?: null,
             'actionUrl' => $notification->action_url ?: null,
+            'icon' => $notification->icon ?: null,
             'id' => isset($notification->id) ? $notification->id : null,
         ];
 

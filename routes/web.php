@@ -38,3 +38,23 @@ Route::get('manifest.json', function () {
         'gcm_sender_id' => config('webpush.gcm.sender_id')
     ];
 });
+
+Route::group(['prefix' => 'messages'], function () {
+    Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
+    //Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
+    Route::post('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
+    Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
+    Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
+    Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
+});
+
+// Advice pages
+Route::get('/advice/post', function () {
+    return view('advice.post');
+});
+Route::get('/advice', 'AdviceController@index');
+Route::get('/advice/{id}', 'AdviceController@view');
+Route::post('/advice', 'AdviceController@post');
+
+
+Route::get('createCommentNotification', 'NotificationController@storeComment');

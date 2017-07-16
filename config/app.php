@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Ask Alumni',
 
     /*
     |--------------------------------------------------------------------------
@@ -178,6 +178,21 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        //Add on service providers
+
+        //Messages
+        Cmgmyr\Messenger\MessengerServiceProvider::class,
+
+        //HTML
+        Collective\Html\HtmlServiceProvider::class,
+
+        //Forum
+        Riari\Forum\ForumServiceProvider::class,
+        Riari\Forum\Frontend\ForumFrontendServiceProvider::class,
+
+        //Like/Comment System
+        risul\LaravelLikeComment\LikeCommentServiceProvider::class
     ],
 
     /*
@@ -226,6 +241,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+
+        'Form' => 'Collective\Html\FormFacade',
+        'Html' => 'Collective\Html\HtmlFacade',
 
     ],
 

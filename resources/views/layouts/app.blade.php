@@ -13,7 +13,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Ask Alumni') }}</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
@@ -31,6 +31,12 @@
             ],
         ]) !!};
     </script>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/icon.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/comment.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/form.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/button.min.css" rel="stylesheet">
+    <link href="{{ asset('/vendor/laravelLikeComment/css/style.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app" v-cloak>
@@ -59,6 +65,12 @@
                             @if (Auth::check())
                                 {{-- See resources/assets/js/components/NotificationsDropdown.vue --}}
                                 <notifications-dropdown></notifications-dropdown>
+                                <li><a href="{{ url('/forum') }}">Forum</a></li>
+                                <li><a href="{{ url('/advice') }}">Advice</a></li>
+                                {{--@if(Auth::user()->type == 'student')--}}
+                                <li><a href="{{ url('/matches') }}">Matches</a></li>
+                                {{--@endif--}}
+                                <li><a href="{{ url('/messages') }}">Messages</a></li>
                             @endif
                         </ul>
                     </ul>
@@ -99,5 +111,6 @@
     </div>
 
     <script src="/js/app.js"></script>
+    @yield('scripts')
 </body>
 </html>

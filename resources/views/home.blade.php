@@ -10,6 +10,12 @@
                 <div class="panel-body text-center">
                     {{-- See resources/assets/js/components/NotificationsDemo.vue --}}
                     <notifications-demo></notifications-demo>
+
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/messages/create') }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" value="{{ Auth::user()->id }}" name="user" />
+                        <button class="btn btn-primary">Direct Message</button>
+                    </form>
                 </div>
             </div>
         </div>

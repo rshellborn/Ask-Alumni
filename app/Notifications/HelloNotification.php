@@ -62,7 +62,7 @@ class HelloNotification extends Notification
         return WebPushMessage::create()
             ->id($notification->id)
             ->title('Hello from Laravel!')
-            ->icon('/notification-icon.png')
+            ->icon('/hello-icon.png')
             ->body('Thank you for using our application.')
             ->action('View app', 'view_app');
     }

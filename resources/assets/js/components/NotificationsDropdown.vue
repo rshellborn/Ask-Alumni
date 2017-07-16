@@ -76,6 +76,7 @@ export default {
               id: id,
               title: data.title,
               body: data.body,
+              icon: data.icon,
               created: created,
               action_url: data.action_url
             }
