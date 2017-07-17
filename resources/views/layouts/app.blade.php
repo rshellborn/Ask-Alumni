@@ -53,9 +53,15 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
+                    @if (Auth::check())
+                        <a class="navbar-brand" href="{{ url('/home') }}">
+                            {{ config('app.name', 'Ask Alumni') }}
+                        </a>
+                    @else
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            {{ config('app.name', 'Ask Alumni') }}
+                        </a>
+                    @endif
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -67,9 +73,9 @@
                                 <notifications-dropdown></notifications-dropdown>
                                 <li><a href="{{ url('/forum') }}">Forum</a></li>
                                 <li><a href="{{ url('/advice') }}">Advice</a></li>
-                                {{--@if(Auth::user()->type == 'student')--}}
-                                <li><a href="{{ url('/matches') }}">Matches</a></li>
-                                {{--@endif--}}
+                                @if(Auth::user()->type == 'Student')
+                                    <li><a href="{{ url('/matches') }}">Matches</a></li>
+                                @endif
                                 <li><a href="{{ url('/messages') }}">Messages</a></li>
                             @endif
                         </ul>
@@ -88,6 +94,11 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ url('/profile') }}">
+                                            My Profile
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();

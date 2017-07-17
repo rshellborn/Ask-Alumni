@@ -58,3 +58,12 @@ Route::post('/advice', 'AdviceController@post');
 
 
 Route::get('createCommentNotification', 'NotificationController@storeComment');
+
+Route::get('/matches', 'MatchesController@index');
+
+Route::get('/profile/edit', 'ProfileController@edit');
+Route::get('/profile/complete', 'ProfileController@complete');
+Route::post('/profile/edit', 'ProfileController@save');
+
+Route::get('/profile', 'ProfileController@index');
+Route::get('/profile/{id}', 'ProfileController@view');
