@@ -28,6 +28,6 @@ class CreateLaravellikecommentTotalLikesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('laravellikecomment_like_totals');
+        Schema::drop('laravellikecomment_total_likes');
     }
 }
