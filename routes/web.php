@@ -67,3 +67,5 @@ Route::post('/profile/edit', 'ProfileController@save');
 
 Route::get('/profile', 'ProfileController@index');
 Route::get('/profile/{id}', 'ProfileController@view');
+
+Route::get('/activate/{code}', 'ActivateController@index');
