@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('verification_code')->default('seeded');
             $table->string('role')->default('admin');
             $table->string('permissions')->default('user');
             $table->boolean('active')->default(false);
