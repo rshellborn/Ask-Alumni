@@ -151,6 +151,10 @@ class ProfileController extends Controller
     }
 
     public function complete() {
+        if(Auth::user()->type != null) {
+            return redirect('home');
+        }
+
         $heading = "We just need a little more information about yourself";
 
         //get high schools
