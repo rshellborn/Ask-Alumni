@@ -86,6 +86,7 @@ class ProfileController extends Controller
         $url = 'profile/edit';
 
         $type = $user->type;
+        $accType = $type;
 
         $selHighSchool = $user->highSchool;
         $selSchools = explode(',', $user->schools);
@@ -146,15 +147,14 @@ class ProfileController extends Controller
         $fields1 = array_slice($fields, 0, $splitSize);
         $fields2 = array_slice($fields, $splitSize);
 
+        $otherType = $type == 'Alumni' ? 'Student' : 'Alumni';
+        $type = $type == 'Alumni' ? 'an Alumni' : 'a Student';
 
-        return view('profile.edit',  compact('url', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'allowMessage', 'notAllowMessage', 'inSchool', 'notInSchool', 'heading', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
+
+        return view('profile.edit',  compact('url', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'allowMessage', 'notAllowMessage', 'inSchool', 'notInSchool', 'heading', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
     }
 
     public function complete() {
-        if(Auth::user()->type != null) {
-            return redirect('home');
-        }
-
         $heading = "We just need a little more information about yourself";
 
         //get high schools
@@ -230,6 +230,6 @@ class ProfileController extends Controller
                 ]);
         }
 
-        return redirect()->action('ProfileController@view', Auth::user()->id);
+        return redirect()->action('ProfileController@index');
     }
 }
