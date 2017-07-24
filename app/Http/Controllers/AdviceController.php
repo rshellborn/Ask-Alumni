@@ -11,9 +11,9 @@ class AdviceController extends Controller
 {
     public function index() {
         $advices = DB::table('advice')->paginate(10);
-        $user = Auth::user()->type;
+        $type = Auth::user()->type;
 
-        return view('advice.index', ['advices' => $advices, 'user' => $user]);
+        return view('advice.index', ['advices' => $advices, 'type' => $type]);
     }
 
     public function post() {
@@ -35,8 +35,26 @@ class AdviceController extends Controller
         return $this->index();
     }
 
-    public function edit() {
+    public function edit($id) {
+        $advice = DB::table('advice')->where('id', $id)->first();
+        $title = $advice->title;
+        $body = $advice->body;
 
+        return view('advice.edit', compact('title', 'body', 'id'));
+    }
+
+    public function save($id) {
+        if(Input::get('action') == 'save') {
+            DB::table('advice')->where('id', $id)->limit(1)->update(
+                [
+                    'title' => Input::get('title'),
+                    'body' => Input::get('body')
+                ]);
+        } else if(Input::get('action') == 'delete') {
+            DB::table('advice')->where('id', $id)->limit(1)->delete();
+        }
+
+        return redirect('advice');
     }
 
     public function view($id) {

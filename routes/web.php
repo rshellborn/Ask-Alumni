@@ -54,6 +54,8 @@ Route::get('/advice/post', function () {
 });
 Route::get('/advice', 'AdviceController@index');
 Route::get('/advice/{id}', 'AdviceController@view');
+Route::get('/advice/edit/{id}', 'AdviceController@edit');
+Route::post('/advice/edit/{id}', 'AdviceController@save');
 Route::post('/advice', 'AdviceController@post');
 
 
