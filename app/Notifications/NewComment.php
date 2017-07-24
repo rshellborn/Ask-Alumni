@@ -14,15 +14,17 @@ class NewComment extends Notification
     use Queueable;
 
     private $postId;
+    private $body;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($postId)
+    public function __construct($postId, $body)
     {
         $this->postId = $postId;
+        $this->body = $body;
     }
 
     /**
@@ -46,7 +48,7 @@ class NewComment extends Notification
     {
         return [
             'title' => 'New Comment',
-            'body' => 'You have a new comment on your Advice post.',
+            'body' => $this->body,
             'action_url' => '/advice/' . $this->postId,
             'icon' => '/advice-icon.png',
             'created' => Carbon::now()->toIso8601String()
