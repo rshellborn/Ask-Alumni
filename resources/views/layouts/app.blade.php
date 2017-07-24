@@ -53,6 +53,9 @@
                     </button>
 
                     <!-- Branding Image -->
+                    <a href="{{ url('/') }}">
+                        <img style="float:left; margin-right:5px" width="30px" src="{{ url('/alumnilogo.png') }}"/>
+                    </a>
                     @if (Auth::check())
                         <a class="navbar-brand" href="{{ url('/home') }}">
                             {{ config('app.name', 'Ask Alumni') }}

@@ -169,8 +169,8 @@
                                     <label for="allowEmail" class="col-md-6 control-label">Allow students to email you with direct questions?</label>
 
                                     <div class="col-md-4">
-                                        <input type="radio" name="allowEmail" value="true" checked>Yes<br/>
-                                        <input type="radio" name="allowEmail" value="false">No<br/>
+                                        <input type="radio" name="allowMessage" value="true" checked>Yes<br/>
+                                        <input type="radio" name="allowMessage" value="false">No<br/>
                                     </div>
                                 </div>
                             </div>
