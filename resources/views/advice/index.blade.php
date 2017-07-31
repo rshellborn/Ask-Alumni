@@ -14,7 +14,9 @@
                     <div class="panel-body">
 {{--                        @if($user == "Alumni")--}}
                         <div class="text-right">
+                            @if ($type == 'Alumni')
                             <button type="submit" class="btn btn-primary" onclick="window.location='{{ url("advice/post") }}'">Post Advice</button>
+                            @endif
                         </div>
                         {{--@endif--}}
                         <div class="container">

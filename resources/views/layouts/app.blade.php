@@ -39,6 +39,16 @@
     <link href="{{ asset('/vendor/laravelLikeComment/css/style.css') }}" rel="stylesheet">
 </head>
 <body>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-78732046-5', 'auto');
+    ga('send', 'pageview');
+
+</script>
     <div id="app" v-cloak>
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
@@ -53,9 +63,18 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    <a href="{{ url('/') }}">
+                        <img style="float:left; margin-right:5px" width="30px" src="{{ url('/alumnilogo.png') }}"/>
                     </a>
+                    @if (Auth::check())
+                        <a class="navbar-brand" href="{{ url('/home') }}">
+                            {{ config('app.name', 'Ask Alumni') }}
+                        </a>
+                    @else
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            {{ config('app.name', 'Ask Alumni') }}
+                        </a>
+                    @endif
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -67,10 +86,11 @@
                                 <notifications-dropdown></notifications-dropdown>
                                 <li><a href="{{ url('/forum') }}">Forum</a></li>
                                 <li><a href="{{ url('/advice') }}">Advice</a></li>
-                                {{--@if(Auth::user()->type == 'student')--}}
-                                <li><a href="{{ url('/matches') }}">Matches</a></li>
-                                {{--@endif--}}
+                                @if(Auth::user()->type == 'Student')
+                                    <li><a href="{{ url('/matches') }}">Matches</a></li>
+                                @endif
                                 <li><a href="{{ url('/messages') }}">Messages</a></li>
+                                <li><a href="{{ url('/about') }}">About</a></li>
                             @endif
                         </ul>
                     </ul>
@@ -88,6 +108,11 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ url('/profile') }}">
+                                            My Profile
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
@@ -109,7 +134,6 @@
 
         @yield('content')
     </div>
-
     <script src="/js/app.js"></script>
     @yield('scripts')
 </body>

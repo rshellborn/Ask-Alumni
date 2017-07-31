@@ -18,6 +18,18 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('verification_code')->default('seeded');
+            $table->string('role')->default('admin');
+            $table->string('permissions')->default('user');
+            $table->boolean('active')->default(false);
+            $table->string('type')->nullable();
+            $table->text('highSchool')->nullable();
+            $table->text('bio')->nullable();
+            $table->text('fields')->nullable();
+            $table->text('schools')->nullable();
+            $table->text('degrees')->nullable();
+            $table->boolean('inSchool')->nullable();
+            $table->boolean('allowMessage')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

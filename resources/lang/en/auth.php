@@ -14,6 +14,7 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
+    'notactive' => 'This account has not been activated. Please check your email to activate it.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

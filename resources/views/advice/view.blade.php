@@ -7,6 +7,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4><strong>{{ $advice->title }}</strong></h4>
+                        @if(Auth::user()->id == $advice->user_id)
+                            <form class="form-horizontal" role="form" method="GET" action="{{ url('advice/edit/' . $id) }}">
+                                <button class="btn btn-success">Edit</button>
+                            </form>
+                        @endif
                     </div>
 
                     <div class="panel-body">

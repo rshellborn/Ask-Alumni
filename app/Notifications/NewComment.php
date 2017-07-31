@@ -14,15 +14,17 @@ class NewComment extends Notification
     use Queueable;
 
     private $postId;
+    private $body;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($postId)
+    public function __construct($postId, $body)
     {
         $this->postId = $postId;
+        $this->body = $body;
     }
 
     /**
@@ -46,7 +48,7 @@ class NewComment extends Notification
     {
         return [
             'title' => 'New Comment',
-            'body' => 'You have a new comment on your Advice post.',
+            'body' => $this->body,
             'action_url' => '/advice/' . $this->postId,
             'icon' => '/advice-icon.png',
             'created' => Carbon::now()->toIso8601String()
@@ -60,13 +62,13 @@ class NewComment extends Notification
      * @param  mixed  $notification
      * @return \Illuminate\Notifications\Messages\DatabaseMessage
      */
-//    public function toWebPush($notifiable, $notification)
-//    {
-//        return WebPushMessage::create()
-//            ->id($notification->id)
-//            ->title('New Message')
-//            ->icon('/message-icon.png')
-//            ->body('You have a new message.')
-//            ->action('View messages', 'messages');
-//    }
+    public function toWebPush($notifiable, $notification)
+    {
+        return WebPushMessage::create()
+            ->id($notification->id)
+            ->title('New Comment')
+            ->icon('/advice-icon.png')
+            ->body($this->body)
+            ->action('View comment', '/advice/' . $this->postId);
+    }
 }

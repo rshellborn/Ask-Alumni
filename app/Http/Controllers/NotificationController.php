@@ -72,9 +72,25 @@ class NotificationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function storeComment(Request $request) {
-        $userId = DB::table('advice')->where('id', $request->item_id)->pluck('user_id');
-        $user = User::where('id', $userId)->first();
-        $user->notify(new NewComment($request->item_id));
+        //check if its a direct reply to the post
+        if($request->parent_id == 0) {
+            //reply to advice post
+            $userId = DB::table('advice')->where('id', $request->item_id)->pluck('user_id');
+            $postUser = User::where('id', $userId)->first();
+            $postUser->notify(new NewComment($request->item_id, 'You have a new comment on your Advice post.'));
+        }
+
+        //get all commenters
+        $userIds = DB::table('laravellikecomment_comments')->where('item_id', $request->item_id)->pluck('user_id');
+
+        foreach($userIds as $id) {
+            //dont notify alumni again and dont notify commenter
+            $commenter = DB::table('laravellikecomment_comments')->where('item_id', $request->item_id)->last();
+            if($id != $postUser->id && $id != $commenter->id) {
+                $user = User::where('id', $id)->first();
+                $user->notify(new NewComment($request->item_id, 'There is a new comment on an Advice post.'));
+            }
+        }
     }
 
     /**

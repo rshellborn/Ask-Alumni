@@ -62,7 +62,7 @@ $(document).on('submit', '.laravelComment-form', function(){
             $.ajax({
                 method: "get",
                 url: "/createCommentNotification",
-                data: {item_id: item_id},
+                data: {item_id: item_id, parent_id: parent},
                 dataType: "json"
             })
                 .done(function(msg){
@@ -82,6 +82,7 @@ $(document).on('submit', '.laravelComment-form', function(){
 
 
 $(document).on('click', '#showComment', function(){
+    console.log('showing');
     var show = $(this).data("show-comment");
     $('.show-'+$(this).data("item-id")+'-'+show).fadeIn('normal');
     $(this).data("show-comment", show+1);
@@ -92,4 +93,3 @@ $(document).on('click', '#showComment', function(){
 $(document).on('click', '#write-comment', function(){
     $($(this).data("form")).show();
 });
-
