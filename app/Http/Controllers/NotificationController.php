@@ -84,8 +84,9 @@ class NotificationController extends Controller
         $userIds = DB::table('laravellikecomment_comments')->where('item_id', $request->item_id)->pluck('user_id');
 
         foreach($userIds as $id) {
-            //dont notify alumni again
-            if($id != $postUser->id) {
+            //dont notify alumni again and dont notify commenter
+            $commenter = DB::table('laravellikecomment_comments')->where('item_id', $request->item_id)->last();
+            if($id != $postUser->id && $id != $commenter->id) {
                 $user = User::where('id', $id)->first();
                 $user->notify(new NewComment($request->item_id, 'There is a new comment on an Advice post.'));
             }

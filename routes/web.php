@@ -64,14 +64,25 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         Route::get('/profile/edit', 'ProfileController@edit');
         Route::get('/profile', 'ProfileController@index');
 
-
-        Route::get('/activate/{code}', 'ActivateController@index');
     });
 
     Route::post('/profile/edit', 'ProfileController@save');
     Route::get('/profile/complete', 'ProfileController@complete');
     Route::get('/profile/{id}', 'ProfileController@view');
 });
+
+
+Route::get('/activate/{code}', 'ActivateController@index');
+
+Route::get('/about', function () {
+    return view('about.about');
+});
+
+Route::get('/contact', function () {
+    return view('about.contact');
+});
+
+Route::post('/contact', 'ContactController@send');
 
 Route::get('/', function () {
     return view('welcome');

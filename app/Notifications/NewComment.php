@@ -62,13 +62,13 @@ class NewComment extends Notification
      * @param  mixed  $notification
      * @return \Illuminate\Notifications\Messages\DatabaseMessage
      */
-//    public function toWebPush($notifiable, $notification)
-//    {
-//        return WebPushMessage::create()
-//            ->id($notification->id)
-//            ->title('New Message')
-//            ->icon('/message-icon.png')
-//            ->body('You have a new message.')
-//            ->action('View messages', 'messages');
-//    }
+    public function toWebPush($notifiable, $notification)
+    {
+        return WebPushMessage::create()
+            ->id($notification->id)
+            ->title('New Comment')
+            ->icon('/advice-icon.png')
+            ->body($this->body)
+            ->action('View comment', '/advice/' . $this->postId);
+    }
 }
