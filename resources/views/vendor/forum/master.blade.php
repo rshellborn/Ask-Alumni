@@ -121,6 +121,11 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
+                    @if (Auth::check())
+                        @if (Auth::user()->email == 'rachel@shellborn.com' || Auth::user()->email == 'mfisli2@gmail.com')
+                            <li><a href="{{ url('/reports') }}">Reports</a></li>
+                        @endif
+                    @endif
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
