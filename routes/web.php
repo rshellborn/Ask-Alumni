@@ -15,6 +15,15 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 {
     Route::group(['middleware' => 'App\Http\Middleware\CheckRegistration'], function()
     {
+        Route::group(['middleware' => 'App\Http\Middleware\AccessReports'], function() {
+            //put middleware here for reports
+            Route::get('/reports', 'ReportsController@index');
+            Route::get('/reports/users', 'ReportsController@users');
+            Route::get('/reports/forums', 'ReportsController@forums');
+            Route::get('/reports/messages', 'ReportsController@messages');
+            Route::get('/reports/advice', 'ReportsController@advice');
+        });
+
         Route::get('/home', 'HomeController@index');
 
     // Notifications
