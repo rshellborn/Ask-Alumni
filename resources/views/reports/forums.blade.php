@@ -5,30 +5,26 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">User Report</div>
+                    <div class="panel-heading">Forums Report</div>
                     <div class="panel-body">
                         <table class="table table-hover table-responsive">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Type</th>
-                                <th>Active</th>
+                                <th>Category</th>
+                                <th>Threads</th>
+                                <th>Posts</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
+                            @foreach($results as $row)
                                 <tr>
                                     <td>
-                                        <button class="btn btn-primary" onclick="window.location='{{ url('profile/' . $user->id) }}'">
-                                            {{ $user->id }}
+                                        <button class="btn btn-success" onclick="window.location='{{ url('forum/' . $row['category_id'] . '-' . $row['category_title']) }}'">
+                                            {{ $row['category_title'] }}
                                         </button>
                                     </td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->type }}</td>
-                                    <td>{{ $user->active }}</td>
+                                    <td>{{ $row['total_threads'] }}</td>
+                                    <td>{{ $row['total_posts'] }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

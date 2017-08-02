@@ -41,7 +41,7 @@ class ProfileController extends Controller
             return view('profile.alumni', compact('url', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'allowMessage', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'name', 'fields', 'schools'));
+        return view('profile.student', compact('highSchool', 'usersProfile', 'name', 'fields', 'schools'));
     }
 
     public function view($id) {
@@ -75,7 +75,7 @@ class ProfileController extends Controller
             return view('profile.alumni', compact('url', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'allowMessage', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'name', 'fields', 'schools'));
+        return view('profile.student', compact('highSchool', 'usersProfile', 'name', 'fields', 'schools'));
     }
 
     public function edit() {

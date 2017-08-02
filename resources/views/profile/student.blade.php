@@ -17,9 +17,11 @@
                 </div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="GET" action="{{ url('profile/edit') }}">
-                        <button class="btn btn-success">Edit Profile</button>
-                    </form>
+                    @if($usersProfile)
+                        <form class="form-horizontal" role="form" method="GET" action="{{ url($url) }}">
+                            <button class="btn btn-success">Edit Profile</button>
+                        </form>
+                    @endif
 
                     <p>Attends {{ $highSchool }}</p>
 
