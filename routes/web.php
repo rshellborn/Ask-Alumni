@@ -26,6 +26,12 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 
         Route::get('/home', 'HomeController@index');
 
+        //Browse
+        Route::get('/discover', 'DiscoverController@index');
+        Route::post('/discover/search', 'DiscoverController@search');
+        Route::get('/discover/search', 'DiscoverController@search');
+
+
     // Notifications
         Route::post('notifications', 'NotificationController@store');
         Route::get('notifications', 'NotificationController@index');
