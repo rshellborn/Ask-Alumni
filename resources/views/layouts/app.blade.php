@@ -89,6 +89,7 @@
                                 @if(Auth::user()->type == 'Student')
                                     <li><a href="{{ url('/matches') }}">Matches</a></li>
                                 @endif
+                                <li><a href="{{ url('/discover') }}">Discover</a></li>
                                 <li><a href="{{ url('/messages') }}">Messages</a></li>
                                 <li><a href="{{ url('/about') }}">About</a></li>
                             @endif

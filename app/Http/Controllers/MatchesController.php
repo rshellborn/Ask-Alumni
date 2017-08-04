@@ -60,6 +60,7 @@ class MatchesController extends Controller
         {
             return $b->totalMatches - $a->totalMatches;
         });
+
         // Get current page form url e.x. &page=1
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         // Create a new Laravel collection from the array data
