@@ -47,4 +47,51 @@ class ReportsController extends Controller
         return view('reports.users', compact('users'));
     }
 
+    public function forums() {
+        $categories = DB::table('forum_categories')->get();
+        $threads    = DB::table('forum_threads')->get();
+        $posts      = DB::table('forum_posts')->get();
+
+        $results = array();
+
+        foreach($categories as $category) {
+            $category_title = $category->title;
+            $category_id = $category->id;
+            $total_threads = 0;
+            $total_posts = 0;
+
+            foreach($threads as $thread) {
+                if($thread->category_id == $category->id) {
+                    $total_threads++;
+                    foreach($posts as $post) {
+                        if($post->thread_id == $thread->id) {
+                            $total_posts++;
+                        }
+                    }
+                }
+            }
+
+            $row = array(
+                'category_title'=>$category_title,
+                'category_id'=>$category_id,
+                'total_threads'=>$total_threads,
+                'total_posts'=>$total_posts
+            );
+            array_push($results, $row);
+        }
+
+        return view('reports.forums', compact('results'));
+    }
+
+    public function messages() {
+        $threads = DB::table('threads')->get();
+
+        return view('reports.messages', compact('threads'));
+    }
+
+    public function advice() {
+        $advice = DB::table('advice')->get();
+
+        return view('reports.advice', compact('advice'));
+    }
 }
