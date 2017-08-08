@@ -22,7 +22,9 @@
                                 <textarea class="form-control" id="message" name="message" rows="10" required></textarea>
                             </div>
 
-                            <button id="submit" name="submit" type="submit" class="btn btn-default">Submit</button>
+                            <div class="text-center">
+                                <button id="submit" name="submit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>

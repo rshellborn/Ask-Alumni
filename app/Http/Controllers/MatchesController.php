@@ -14,15 +14,24 @@ class MatchesController extends Controller
 
     public function index(Request $request) {
         $curUser = Auth::user();
+
         $curFields = $curUser->fields;
         $curFields = explode(",", $curFields);
+
         $curSchools = $curUser->schools;
         $curSchools = explode(",", $curSchools);
+
+        $curDegrees = $curUser->degrees;
+        $curDegrees = explode(",", $curDegrees);
+
         $curHighSchool = $curUser->highSchool;
 
-        $users = DB::table('users')->where([
-                ['type', 'Alumni'],
-                ['allowMessage', true]])->get();
+        if($curUser->type == 'Student') {
+            $users = DB::table('users')->where('type', 'Alumni')->get();
+
+        } else if ($curUser->type == 'Alumni') {
+            $users = DB::table('users')->where('type', 'Student')->get();
+        }
 
         $matches = array();
 
@@ -37,13 +46,19 @@ class MatchesController extends Controller
             $schools = explode(",", $schools);
             $schoolMatches = array_intersect($curSchools,$schools);
 
+            //matches with degrees
+            $degrees = $user->degrees;
+            $degrees = explode(",", $degrees);
+            $degreeMatches = array_intersect($curDegrees,$degrees);
+
             //matches with high school
             $highSchool = $user->highSchool;
             $highSchoolMatch = false;
             if($highSchool == $curHighSchool) {
                 $highSchoolMatch = true;
             }
-            array_push($matches, new Match($user->id, $user->name, $fieldMatches, $schoolMatches, $highSchoolMatch, $highSchool));
+
+            array_push($matches, new Match($user->id, $user->name, $degreeMatches, $fieldMatches, $schoolMatches, $highSchoolMatch, $highSchool));
         }
 
         //remove no matches
@@ -60,6 +75,7 @@ class MatchesController extends Controller
         {
             return $b->totalMatches - $a->totalMatches;
         });
+
         // Get current page form url e.x. &page=1
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         // Create a new Laravel collection from the array data

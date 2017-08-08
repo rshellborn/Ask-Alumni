@@ -14,6 +14,8 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $type = $user->type;
+        $points = $user->points;
+        $rank = $user->rank;
 
         $fields = $user->fields;
         $fields = explode(",", $fields);
@@ -25,23 +27,21 @@ class ProfileController extends Controller
 
         $usersProfile = true;
 
-        if($type == "Alumni") {
-            $degrees = $user->degrees;
-            $degrees = explode(",", $degrees);
+        $id = $user->id;
+        $url = 'profile/edit';
 
-            $allowMessage = $user->allowMessage;
+        $degrees = $user->degrees;
+        $degrees = explode(",", $degrees);
+
+        if($type == "Alumni") {
             $inSchool = $user->inSchool;
 
             $bio = $user->bio;
 
-            $id = $user->id;
-
-            $url = 'profile/edit';
-
-            return view('profile.alumni', compact('url', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'allowMessage', 'inSchool'));
+            return view('profile.alumni', compact('url', 'rank', 'points', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'name', 'fields', 'schools'));
+        return view('profile.student', compact('highSchool', 'email', 'rank', 'degrees', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools'));
     }
 
     public function view($id) {
@@ -50,6 +50,8 @@ class ProfileController extends Controller
         $usersProfile = false;
 
         $type = $user->type;
+        $points = $user->points;
+        $rank = $user->rank;
 
         $fields = $user->fields;
         $fields = explode(",", $fields);
@@ -58,29 +60,25 @@ class ProfileController extends Controller
         $email = $user->email;
         $name = $user->name;
         $highSchool = $user->highSchool;
+        $id = $user->id;
+
+        $degrees = $user->degrees;
+        $degrees = explode(",", $degrees);
+
+        $url = 'profile/edit';
 
         if($type == "Alumni") {
-            $degrees = $user->degrees;
-            $degrees = explode(",", $degrees);
-
-            $allowMessage = $user->allowMessage;
             $inSchool = $user->inSchool;
 
             $bio = $user->bio;
 
-            $id = $user->id;
-
-            $url = 'profile/edit';
-
-            return view('profile.alumni', compact('url', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'allowMessage', 'inSchool'));
+            return view('profile.alumni', compact('url', 'points', 'rank', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'name', 'fields', 'schools'));
+        return view('profile.student', compact('highSchool', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools'));
     }
 
     public function edit() {
-        $heading = "Edit your profile";
-
         $user = Auth::user();
 
         $url = 'profile/edit';
@@ -91,6 +89,7 @@ class ProfileController extends Controller
         $selHighSchool = $user->highSchool;
         $selSchools = explode(',', $user->schools);
         $selFields = explode(',', $user->fields);
+        $selDegrees = explode(',', $user->degrees);
 
         if($type == 'Alumni') {
             $alumni = 'checked';
@@ -102,17 +101,7 @@ class ProfileController extends Controller
 
         if($type == 'Alumni') {
             $bio = $user->bio;
-            $selDegrees = explode(',', $user->degrees);
             $inSchool = $user->inSchool;
-            $allowMessage = $user->allowMessage;
-
-            if($allowMessage) {
-                $allowMessage = "checked";
-                $notAllowMessage = "";
-            } else {
-                $allowMessage = "";
-                $notAllowMessage = "checked";
-            }
 
             if($inSchool) {
                 $inSchool = "checked";
@@ -151,12 +140,10 @@ class ProfileController extends Controller
         $type = $type == 'Alumni' ? 'an Alumni' : 'a Student';
 
 
-        return view('profile.edit',  compact('url', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'allowMessage', 'notAllowMessage', 'inSchool', 'notInSchool', 'heading', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
+        return view('profile.edit',  compact('url', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'inSchool', 'notInSchool', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
     }
 
-    public function complete() {
-        $heading = "We just need a little more information about yourself";
-
+    public function alumniComplete() {
         //get high schools
         $allhighschools = \App\HighSchool::all();
 
@@ -181,9 +168,35 @@ class ProfileController extends Controller
         $fields1 = array_slice($fields, 0, $splitSize);
         $fields2 = array_slice($fields, $splitSize);
 
-        $url = 'profile/edit';
+        return view('profile.complete.alumni',  compact('schools1', 'schools2', 'fields1', 'fields2', 'degrees', 'highschools'));
+    }
 
-        return view('profile.complete',  compact('schools1', 'url', 'heading', 'schools2', 'fields1', 'fields2', 'degrees', 'highschools'));
+    public function studentComplete() {
+        //get high schools
+        $allhighschools = \App\HighSchool::all();
+
+        $highschools = array();
+
+        foreach($allhighschools as $school) {
+            $highschools[$school->name] = $school->name;
+        }
+
+        //get degrees
+        $degrees = DB::table('degrees')->get();
+
+        //get post secondary schools
+        $schools = DB::table('schools')->get()->toArray();
+        $splitSize = ceil(sizeof($schools) / 2);
+        $schools1 = array_slice($schools, 0, $splitSize);
+        $schools2 = array_slice($schools, $splitSize);
+
+        //get fields of study
+        $fields = DB::table('fields')->get()->toArray();
+        $splitSize = ceil(sizeof($fields) / 2);
+        $fields1 = array_slice($fields, 0, $splitSize);
+        $fields2 = array_slice($fields, $splitSize);
+
+        return view('profile.complete.student',  compact('schools1', 'schools2', 'fields1', 'fields2', 'degrees', 'highschools'));
     }
 
     public function save() {
@@ -191,6 +204,19 @@ class ProfileController extends Controller
         $fields = Input::get('fieldOfStudy');
         $schools = Input::get('school');
         $highSchool = Input::get('highSchool');
+        $degree = Input::get('degree');
+
+        //check if user selected other high school or school
+        $otherHighSchool = Input::get('otherHighSchool');
+
+        if($otherHighSchool != null) {
+            $highSchool = $otherHighSchool;
+        }
+
+        $replaceFlag = false;
+        if(in_array('other', $schools)) {
+            $replaceFlag = true;
+        }
 
         if(count($fields) > 0) {
             $fields = implode(",", $fields);
@@ -199,8 +225,14 @@ class ProfileController extends Controller
         }
         if(count($schools) > 0) {
             $schools = implode(",", $schools);
+            if($replaceFlag) {
+                $schools = str_replace('other', Input::get('otherSchool'), $schools);
+            }
         } else {
             $schools = '';
+        }
+        if(count($degree) > 0) {
+            $degree = implode(",", $degree);
         }
 
         DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
@@ -208,25 +240,19 @@ class ProfileController extends Controller
                 'type' => $accType,
                 'fields' => $fields,
                 'schools' => $schools,
+                'degrees' => $degree,
                 'highSchool' => $highSchool
             ]);
 
         if($accType == "Alumni") {
-            $degree = Input::get('degree');
-            $allowMessage = Input::get('allowMessage');
             $inSchool = Input::get('inSchool');
             $bio = Input::get('bio');
 
-            if(count($degree) > 0) {
-                $degree = implode(",", $degree);
-            }
 
             DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
                 [
                     'bio' => $bio,
-                    'degrees' => $degree,
                     'inSchool' => $inSchool == "true" ? true : false,
-                    'allowMessage' => $allowMessage == "true" ? true : false
                 ]);
         }
 

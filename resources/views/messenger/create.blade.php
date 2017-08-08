@@ -37,6 +37,7 @@
                             {{--@endif--}}
 
                             <input type="hidden" name="recipients[]" value="{{ $user->id }}">
+                            <input type="hidden" name="trigger" value="{{ $trigger }}">
 
                         <!-- Submit Form Input -->
                             <div class="form-group">

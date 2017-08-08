@@ -1,21 +1,39 @@
 @extends('layouts.app')
 
+@section('scripts')
+    <script>
+        $('#other').hide();
+
+        $('#showInput').click(function() {
+            $('#showInput').hide();
+            $('#ddHighSchool').hide();
+            $('#other').show();
+        });
+
+    </script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ $heading }}</div>
+                    <div class="panel-heading">
+                        <div class="text-center">
+                            <h4><strong>Edit Profile</strong></h4>
+                        </div>
+                    </div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="GET" action="{{ url('/profile/complete') }}">
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <label for="name" class="col-md-6 control-label">You are currently registered as {{$type}}.</label>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-warning">Switch to {{$otherType}}</button>
-                                </div>
+                        <div class="form-group">
+                            <label for="name" class="col-md-12 control-label text-center">You can change your profile picture at <a href="https://en.gravatar.com/" target="_blank">gravatar.com</a>, using the same email you registered with.</label>
+                        </div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="name" class="col-md-6 control-label text-right">You are currently registered as {{$type}}.</label>
+                            <div class="text-center">
+                                <button class="btn btn-warning" onclick="window.location='{{ url('/profile/complete/' . strtolower($otherType)) }}'">Switch to {{$otherType}}</button>
                             </div>
-                        </form>
+                        </div>
                         @if($accType == 'Student')
                             <form class="form-horizontal" role="form" method="POST" action="{{ url($url) }}">
                                 {{ csrf_field() }}
@@ -23,22 +41,28 @@
 
                                 <div id="studentForm">
                                     <div id="fields" class="form-group">
-                                        <label for="highSchool" class="col-md-6 control-label">What high school do you attend?</label>
+                                        <div class="col-md-6 text-right">
+                                            <label for="highSchool" class="control-label">Which high school do you attend?</label><br/>
+                                            <a href="#" id="showInput">School not listed? Click here.</a>
+                                        </div>
                                         <div class="col-md-6">
-                                            <select name="highSchool" class="form-control">
+                                            <select name="highSchool" class="form-control" id="ddHighSchool">
                                                 @foreach($highschools as $highSchool)
-                                                    @if($student == 'checked' && $highSchool == $selHighSchool)
+                                                    @if($alumni == 'checked' && $highSchool == $selHighSchool)
                                                         <option value="{{ $highSchool }}" selected>{{ $highSchool }}</option>
                                                     @else
                                                         <option value="{{ $highSchool }}">{{ $highSchool }}</option>
                                                     @endif
                                                 @endforeach
                                             </select>
+                                            <div id="other">
+                                                <input type="text" name="otherHighSchool" class="form-control" placeholder="Enter your high school"/>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div id="fields" class="form-group">
-                                        <label for="fieldOfStudy" class="col-md-6 control-label">What fields of study are you interested in?</label>
+                                        <label for="fieldOfStudy" class="col-md-6 control-label">Which fields of study are you interested in?</label>
                                         <br/>
                                         <div class="col-md-12">
                                             <div class="col-md-5">
@@ -64,7 +88,7 @@
                                     </div>
 
                                     <div id="fields" class="form-group">
-                                        <label for="school" class="col-md-6 control-label">What schools are you interested in?</label>
+                                        <label for="school" class="col-md-6 control-label">Which schools are you interested in?</label>
 
                                         <div class="col-md-12">
                                             <div class="col-md-5">
@@ -84,8 +108,23 @@
                                                     @else
                                                         <input type="checkbox" name="school[]" value="{{ $school->name }}">{{ $school->name }}<br/>
                                                     @endif
+                                                        <input type="checkbox" name="school[]" value="other"> <input type="text" name="otherSchool" placeholder="Other school..." /><br/>
                                                 @endforeach
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="fields" class="form-group">
+                                        <label for="degree" class="col-md-6 control-label">Which degree(s) are you pursuing or have achieved?</label>
+
+                                        <div class="col-md-4">
+                                            @foreach($degrees as $degree)
+                                                @if($student == 'checked' && in_array($degree->name, $selDegrees))
+                                                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}" checked>{{ $degree->name }}<br/>
+                                                @else
+                                                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}">{{ $degree->name }}<br/>
+                                                @endif
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -106,9 +145,12 @@
                                 <input type="hidden" value="{{ $accType }}" name="accType" />
                                 <div id="alumniForm">
                                     <div id="fields" class="form-group">
-                                        <label for="highSchool" class="col-md-6 control-label">What high school did you graduate from?</label>
+                                        <div class="col-md-6 text-right">
+                                            <label for="highSchool" class="control-label">Which high school did you graduate from?</label><br/>
+                                            <a href="#" id="showInput">School not listed? Click here.</a>
+                                        </div>
                                         <div class="col-md-6">
-                                            <select name="highSchool" class="form-control">
+                                            <select name="highSchool" class="form-control" id="ddHighSchool">
                                                 @foreach($highschools as $highSchool)
                                                     @if($alumni == 'checked' && $highSchool == $selHighSchool)
                                                         <option value="{{ $highSchool }}" selected>{{ $highSchool }}</option>
@@ -117,11 +159,14 @@
                                                     @endif
                                                 @endforeach
                                             </select>
+                                            <div id="other">
+                                                <input type="text" name="otherHighSchool" class="form-control" placeholder="Enter your high school"/>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div id="fields" class="form-group">
-                                        <label for="fieldOfStudy" class="col-md-6 control-label">What did you study?</label>
+                                        <label for="fieldOfStudy" class="col-md-6 control-label">What are you or did study in post secondary?</label>
 
                                         <div class="col-md-12">
                                             <div class="col-md-5">
@@ -147,20 +192,6 @@
                                     </div>
 
                                     <div id="fields" class="form-group">
-                                        <label for="degree" class="col-md-6 control-label">What kind of degree(s) are you pursuing or have achieved?</label>
-
-                                        <div class="col-md-4">
-                                            @foreach($degrees as $degree)
-                                                @if($alumni == 'checked' && in_array($degree->name, $selDegrees))
-                                                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}" checked>{{ $degree->name }}<br/>
-                                                @else
-                                                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}">{{ $degree->name }}<br/>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
-
-                                    <div id="fields" class="form-group">
                                         <label for="school" class="col-md-6 control-label">Which school(s) did or are attending?</label>
 
                                         <div class="col-md-12">
@@ -182,7 +213,22 @@
                                                         <input type="checkbox" name="school[]" value="{{ $school->name }}">{{ $school->name }}<br/>
                                                     @endif
                                                 @endforeach
+                                                <input type="checkbox" name="school[]" value="other"> <input type="text" name="otherSchool" placeholder="Other school..." /><br/>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="fields" class="form-group">
+                                        <label for="degree" class="col-md-6 control-label">Which degree(s) are you pursuing or have achieved?</label>
+
+                                        <div class="col-md-4">
+                                            @foreach($degrees as $degree)
+                                                @if($alumni == 'checked' && in_array($degree->name, $selDegrees))
+                                                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}" checked>{{ $degree->name }}<br/>
+                                                @else
+                                                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}">{{ $degree->name }}<br/>
+                                                @endif
+                                            @endforeach
                                         </div>
                                     </div>
 
@@ -195,20 +241,11 @@
                                     </div>
 
                                     <div id="fields" class="form-group">
-                                        <label for="inSchool" class="col-md-6 control-label">Are you still in university/college?</label>
+                                        <label for="inSchool" class="col-md-6 control-label">Are you still attending university/college?</label>
 
                                         <div class="col-md-4">
                                             <input type="radio" name="inSchool" value="true" <?php echo  $inSchool ?>>Yes<br/>
                                             <input type="radio" name="inSchool" value="false" <?php echo $notInSchool ?>>No<br/>
-                                        </div>
-                                    </div>
-
-                                    <div id="fields" class="form-group">
-                                        <label for="allowEmail" class="col-md-6 control-label">Allow students to email you with direct questions?</label>
-
-                                        <div class="col-md-4">
-                                            <input type="radio" name="allowMessage" value="true" <?php echo $allowMessage ?>>Yes<br/>
-                                            <input type="radio" name="allowMessage" value="false" <?php echo $notAllowMessage ?>>No<br/>
                                         </div>
                                     </div>
                                 </div>

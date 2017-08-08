@@ -6,27 +6,48 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="col-md-10">
-                        <h3><strong>{{ $name }}</strong></h3>
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <img src="//www.gravatar.com/avatar/{{ md5($email) }} ?s=128" alt="{{ $name }}" class="">
+                        </div>
+                        <div class="col-md-2">
+                            @if($usersProfile)
+                                <button class="btn btn-success" onclick="window.location='{{ url('/profile/edit') }}'">Edit Profile</button>
+                            @endif
+
+                            <form class="form-horizontal" role="form" method="POST" action="{{ url('/messages/create') }}">
+                                {{ csrf_field() }}
+                                <input type="hidden" value="{{ $id }}" name="user" />
+                                <input type="hidden" value="profile" name="trigger" />
+                                @if($id != Auth::user()->id)
+                                    <button class="btn btn-primary">Message</button>
+                                @endif
+                            </form>
+                        </div>
                     </div>
 
-                    <div class="col-md-1">
-                        <h3>Alumni</h3>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3><strong>{{ $name }}</strong></h3>
+                        </div>
+
+                        <div class="col-md-1">
+                            <h3>Alumni</h3>
+                        </div>
                     </div>
-                    <hr>
                 </div>
 
                 <div class="panel-body">
-                    @if($usersProfile)
-                        <form class="form-horizontal" role="form" method="GET" action="{{ url($url) }}">
-                            <button class="btn btn-success">Edit Profile</button>
-                        </form>
-                    @endif
+                    <div>
+                        <img style="display:inline;" src="{{ url(strtolower($rank) . '-cap.png') }}" />
+                        <p style="display:inline;"><strong>Rank {{ $rank }} - {{$points}} points</strong></p>
+                    </div>
 
                     <p>Graduated from {{ $highSchool }}</p>
 
                     @if(!$inSchool)
-                        <p>Has graduated.</p>
+                        <p>Has graduated from post-secondary.</p>
                     @else
                         <p>Currently attending a post-secondary institution.</p>
                     @endif
@@ -54,13 +75,7 @@
 
                     <p>{{ $bio }}</p>
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/messages/create') }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" value="{{ $id }}" name="user" />
-                        @if($allowMessage && $id != Auth::user()->id)
-                            <button class="btn btn-primary">Direct Message</button>
-                        @endif
-                    </form>
+
                 </div>
             </div>
         </div>

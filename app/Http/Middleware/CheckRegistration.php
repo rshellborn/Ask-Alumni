@@ -17,7 +17,7 @@ class CheckRegistration
     public function handle($request, Closure $next)
     {
         if(Auth::user()->type == null) {
-            return redirect('profile/complete');
+            return redirect('profile/complete/type');
         }
 
         return $next($request);

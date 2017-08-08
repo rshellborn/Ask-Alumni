@@ -15,7 +15,25 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 {
     Route::group(['middleware' => 'App\Http\Middleware\CheckRegistration'], function()
     {
-        Route::get('/home', 'HomeController@index');
+        Route::group(['middleware' => 'App\Http\Middleware\AccessReports'], function() {
+            //put middleware here for reports
+            Route::get('/reports', 'ReportsController@index');
+            Route::get('/reports/users', 'ReportsController@users');
+            Route::get('/reports/forums', 'ReportsController@forums');
+            Route::get('/reports/messages', 'ReportsController@messages');
+            Route::get('/reports/advice', 'ReportsController@advice');
+        });
+
+        //Browse
+        Route::get('/discover', 'DiscoverController@index');
+        Route::post('/discover/search', 'DiscoverController@search');
+        Route::get('/discover/search', 'DiscoverController@search');
+
+
+        Route::post('/post/post_vote_up','PointsController@adviceVote');
+        Route::post('/post/give_points','PointsController@givePoints');
+
+        Route::get('/rankings','PointsController@rankings');
 
     // Notifications
         Route::post('notifications', 'NotificationController@store');
@@ -59,16 +77,30 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 
         Route::get('createCommentNotification', 'NotificationController@storeComment');
 
-        Route::get('/matches', 'MatchesController@index')->middleware('check.matches');;
+        Route::get('/matches', 'MatchesController@index');
 
         Route::get('/profile/edit', 'ProfileController@edit');
         Route::get('/profile', 'ProfileController@index');
 
+
+        Route::get('/home', function () {
+            return view('about.about');
+        });
+
+        Route::get('/pointsystem', function () {
+            return view('pointsystem');
+        });
+
+    });
+
+    Route::get('/profile/complete/type', function () {
+        return view('profile.type');
     });
 
     Route::post('/profile/edit', 'ProfileController@save');
-    Route::get('/profile/complete', 'ProfileController@complete');
-    Route::get('/profile/{id}', 'ProfileController@view');
+    Route::get('/profile/complete/student', 'ProfileController@studentComplete');
+    Route::get('/profile/complete/alumni', 'ProfileController@alumniComplete');
+    Route::get('/profile/view/{id}', 'ProfileController@view');
 });
 
 

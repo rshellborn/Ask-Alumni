@@ -2,19 +2,44 @@
 
 @section ('content')
     <div id="thread">
-        <h2>
-            @if ($thread->trashed())
-                <span class="label label-danger">{{ trans('forum::general.deleted') }}</span>
+        <div>
+            <h2>
+                @if ($thread->trashed())
+                    <span class="label label-danger">{{ trans('forum::general.deleted') }}</span>
+                @endif
+                @if ($thread->locked)
+                    <span class="label label-warning">{{ trans('forum::threads.locked') }}</span>
+                @endif
+                @if ($thread->pinned)
+                    <span class="label label-info">{{ trans('forum::threads.pinned') }}</span>
+                @endif
+                {{ $thread->title }}
+            </h2>
+            @if(DB::table('forum_categories')->where('id', $thread->category_id)->value('title') === "Advice")
+                <div class="text-right">
+                    <h4>Like this advice? Give it a thumbs up!</h4>
+                    @if(Auth::guest())
+                        <p>Login to vote.</p>
+                    @endif
+                    <input type="hidden" name="threadID" value="{{$thread->id}}"/>
+                    <input type="hidden" name="authorID" value="{{$thread->author_id}}"/>
+                    <input type="hidden" name="userID" value="{{\Auth::id()}}"/>
+                    <div class="text-right col-md-1" style="float:right;">
+{{--                        {{dd(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count())}}--}}
+                        @if(Auth::guest())
+                            <img style="cursor: pointer; cursor: hand;"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
+                        @elseif(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count() == 0)
+                            <div id="filled" style="display:inline;"></div>
+                            <img id="up-vote" style="cursor: pointer; cursor: hand;"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
+                        @else
+                            <img src=" {{url('/thumbsupfilled.png') }}"/>&nbsp;
+                        @endif
+                        <h4 id="likes" style="font-weight: bold; float:right;">{{ $thread->likes }}</h4>
+                    </div>
+                </div>
             @endif
-            @if ($thread->locked)
-                <span class="label label-warning">{{ trans('forum::threads.locked') }}</span>
-            @endif
-            @if ($thread->pinned)
-                <span class="label label-info">{{ trans('forum::threads.pinned') }}</span>
-            @endif
-            {{ $thread->title }}
-        </h2>
-
+        </div>
+<br/>
         <hr>
 
         @can ('manageThreads', $category)
@@ -103,3 +128,8 @@
     });
     </script>
 @stop
+
+@section('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{{ asset('/vendor/laravelLikeComment/js/script.js') }}" type="text/javascript"></script>
+@endsection

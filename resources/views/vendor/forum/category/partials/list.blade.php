@@ -9,7 +9,7 @@
         <td>
             @if ($category->newestThread)
                 <a href="{{ Forum::route('thread.show', $category->newestThread) }}">
-                    {{ $category->newestThread->title }}
+                    {{ date_format($category->newestThread->created_at, 'F jS g:ia') }}
                     ({{ $category->newestThread->authorName }})
                 </a>
             @endif
@@ -17,7 +17,7 @@
         <td>
             @if ($category->latestActiveThread)
                 <a href="{{ Forum::route('thread.show', $category->latestActiveThread->lastPost) }}">
-                    {{ $category->latestActiveThread->title }}
+                    {{ date_format($category->latestActiveThread->lastPost->created_at, 'F jS g:ia') }}
                     ({{ $category->latestActiveThread->lastPost->authorName }})
                 </a>
             @endif
