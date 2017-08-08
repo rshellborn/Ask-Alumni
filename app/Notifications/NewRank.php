@@ -9,18 +9,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use NotificationChannels\WebPush\WebPushMessage;
 use NotificationChannels\WebPush\WebPushChannel;
 
-class HelloNotification extends Notification
+class NewRank extends Notification
 {
     use Queueable;
+    private $rank;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($rank)
     {
-        //
+        $this->rank = $rank;
     }
 
     /**
@@ -31,7 +32,7 @@ class HelloNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast', WebPushChannel::class];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -43,9 +44,10 @@ class HelloNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Hello from Laravel!',
-            'body' => 'Thank you for using our application.',
-            'action_url' => 'https://laravel.com',
+            'title' => 'New Rank Achieved',
+            'body' => 'You are now rank ' . $this->rank . '!',
+            'action_url' => '/rankings',
+            'icon' => '/' . $this->rank . '-icon.png',
             'created' => Carbon::now()->toIso8601String()
         ];
     }
@@ -61,9 +63,9 @@ class HelloNotification extends Notification
     {
         return WebPushMessage::create()
             ->id($notification->id)
-            ->title('Hello from Laravel!')
-            ->icon('/hello-icon.png')
-            ->body('Thank you for using our application.')
-            ->action('View app', 'view_app');
+            ->title('New Like on Advice')
+            ->icon('/points-icon.png')
+            ->body('You are now rank ' . $this->rank . '!')
+            ->action('View Rankings', '/rankings');
     }
 }

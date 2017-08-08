@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\AdviceThreadLike;
 use App\Notifications\NewMessage;
+use App\Notifications\NewRank;
+use App\Notifications\PointsGiven;
 use App\Notifications\NewComment;
 use Illuminate\Http\Request;
 use NotificationChannels\WebPush\PushSubscription;
 
 use App\Events\NotificationRead;
 use App\Events\NotificationReadAll;
-use App\Notifications\HelloNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use App\User;
@@ -53,19 +55,6 @@ class NotificationController extends Controller
     }
 
     /**
-     * Create a new notification.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->user()->notify(new HelloNotification);
-
-        return response()->json('Notification sent.', 201);
-    }
-
-    /**
      * Create a new comment notification.
      *
      * @param  \Illuminate\Http\Request $request
@@ -91,6 +80,47 @@ class NotificationController extends Controller
                 $user->notify(new NewComment($request->item_id, 'There is a new comment on an Advice post.'));
             }
         }
+
+        return response()->json('Notification sent.', 201);
+    }
+
+    /**
+     * Create a new advice like notification.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAdviceLike($user)
+    {
+        $user->notify(new AdviceThreadLike);
+
+        return response()->json('Notification sent.', 201);
+    }
+
+    /**
+     * Create a points given notification.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeGivePoints($user, $fromUser)
+    {
+        $user->notify(new PointsGiven($fromUser));
+
+        return response()->json('Notification sent.', 201);
+    }
+
+    /**
+     * Create a rank achieved notification.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeRankAchieved($user, $rank)
+    {
+        $user->notify(new NewRank($rank));
+
+        return response()->json('Notification sent.', 201);
     }
 
     /**

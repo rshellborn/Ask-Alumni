@@ -24,16 +24,16 @@ class DiscoverController extends Controller
         $school     = Input::get('school');
         $field      = Input::get('field');
         $degree     = Input::get('degree');
+        $type       = Input::get('type');
 
         $query = User::query();
 
+        if ($type != 'All') {
+            $query = $query->where('type', $type);
+        }
+
         if ($highSchool != 'All') {
-            $query->where([
-                ['highSchool', $highSchool],
-                ['type', 'Alumni']
-            ]);
-        } else {
-            $query->where('type', 'Alumni');
+            $query = $query->where('highSchool', $highSchool);
         }
 
         if ($school != 'All') {
@@ -47,6 +47,9 @@ class DiscoverController extends Controller
         if ($degree != 'All') {
             $query = $query->where('degrees', 'like', '%'.$degree.'%');
         }
+
+        //Do not show current user in results
+        $query = $query->where('id', '!=', Auth::id());
 
         $results = $query->paginate(10);
 

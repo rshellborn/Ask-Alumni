@@ -28,10 +28,10 @@
                         </ul>
 
                         <h3 class="text-center">Have an idea for the website or any questions?</h3>
-                        <h4 class="text-center"><a href="contact">Click here!</a></h4>
+                        <h4 class="text-center"><button class="btn btn-primary" onclick="window.location='{{ url('contact') }}'">Click here!</button></h4>
 
                         <p style="font-style: italic; font-size: 12px;" class="text-right"><a target="_blank" href="http://rachelshellborn.me">RS Web Development</a> &copy; 2017<br/>
-                        Ask Alumni logo created by Melayna Vergara</p>
+                        Graphics created by Melayna Vergara</p>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ return [
     'editing'           => "You're editing :item",
     'generic_confirm'   => "Are you sure?",
     'home_title'        => "Forum",
-    'index'             => "Index",
+    'index'             => "Forums",
     'invalid_selection' => "Invalid selection",
     'last_updated'      => "Last updated",
     'mark_read'         => "Mark as read",

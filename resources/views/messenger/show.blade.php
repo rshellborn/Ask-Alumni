@@ -5,6 +5,45 @@
     var objDiv = document.getElementById("message-box");
     objDiv.scrollTop = objDiv.scrollHeight;
 </script>
+
+<script>
+    var objDiv = document.getElementById("message-box");
+    objDiv.scrollTop = objDiv.scrollHeight;
+</script>
+
+<script type="text/javascript">
+
+
+    $(function(){
+        $('#give-points').click(function(e){
+            e.preventDefault();
+            var userId = $('input[name="userID"]').val();
+            var name = $('input[name="userName"]').val();
+            var fromUser = $('input[name="fromUser"]').val();
+            var data = { user: userId, fromUser: fromUser };
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url:'/post/give_points',
+                type:'POST',
+                data:JSON.stringify(data),
+                contentType:"application/json",
+                processData:false,
+                success:function(data){
+                    $("#pointsBtn").hide();
+                    $("#convoHelp").hide();
+                    $('<p>You gave 10 points to ' + name + '.</p>').appendTo('#pointsGiven');
+                },
+                error:function(data){
+                    console.log('error ' +data.responseJSON);
+                }
+            });
+        })
+    });
+</script>
 @endsection
 
 @section('content')
@@ -12,9 +51,26 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading text-center">
-                        <h4><strong>{{ $thread->subject }}</strong></h4>
+                    <div class="panel-heading">
+                        <div style="width: 100%; display: table;">
+                            <div style="display: table-row">
+                                <div style="width: 400px; display: table-cell;"><h4><strong>{{ $thread->subject }}</strong></h4></div>
+                                <div style="display: table-cell;" class="text-right">
+                                    <span id="convoHelp">Was this conversation helpful?</span>
+                                    <input type="hidden" name="userID" value="{{$user->user_id}}"/>
+                                    <input type="hidden" name="fromUser" value="{{$fromUser->user_id}}"/>
+                                    <input type="hidden" name="userName" value="{{DB::table('users')->where('id', $user->user_id)->value('name')}}"/>
+                                    <div id="pointsBtn">
+                                        <button id="give-points" class="btn btn-success">
+                                            Give Points
+                                        </button>
+                                    </div>
+                                    <div id="pointsGiven"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
 
                     <div class="panel-body">
                         <div class="col-md-12">

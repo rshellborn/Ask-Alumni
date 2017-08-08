@@ -5,10 +5,26 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Discover</div>
+                    <div class="panel-heading">
+                        <div class="text-center">
+                            <h4><strong>Discover</strong></h4>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/discover/search') }}">
                             {{ csrf_field() }}
+
+                            <div id="fields" class="form-group">
+                                <label for="type" class="col-md-4 control-label">User Type</label>
+                                <div class="col-md-8">
+                                    <select name="type" class="form-control">
+                                        <option value="Alumni" selected="selected">Alumni</option>
+                                        <option value="Student">Student</option>
+                                        <option value="All">All</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div id="fields" class="form-group">
                                 <label for="highSchool" class="col-md-4 control-label">High School</label>
                                 <div class="col-md-8">
@@ -46,7 +62,7 @@
                             </div>
 
                             <div id="fields" class="form-group">
-                                <label for="degree" class="col-md-4 control-label">Degrees</label>
+                                <label for="degree" class="col-md-4 control-label">Degree</label>
                                 <div class="col-md-8">
                                     <select name="degree" class="form-control">
                                         <option value="All" selected="selected">All</option>
