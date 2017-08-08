@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
         @if (isset($thread))
@@ -15,9 +16,7 @@
         {{ trans('forum::general.home_title') }}
     </title>
 
-    <!-- Bootstrap -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -39,6 +38,7 @@
         <link rel="manifest" href="/manifest.json">
 @endif
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
@@ -55,6 +55,42 @@
                 'cluster' => config('broadcasting.connections.pusher.options.cluster'),
             ],
         ]) !!};
+    </script>
+
+    <script type="text/javascript">
+        $(function(){
+            $('#up-vote').click(function(e){
+                e.preventDefault();
+                var threadId = $('input[name="threadID"]').val();
+                var userId = $('input[name="userID"]').val();
+                var authorId = $('input[name="authorID"]').val();
+                console.log(threadId);
+                console.log(userId);
+                console.log(authorId);
+                var data = { thread: threadId, user: userId, author: authorId };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url:'/post/post_vote_up',
+                    type:'POST',
+                    data:JSON.stringify(data),
+                    contentType:"application/json",
+                    processData:false,
+                    success:function(data){
+                        console.log(data.author);
+                        $('#likes').text(data.likes);
+                        $('#up-vote').hide();
+                        $('<img id="up-vote" src=" {{url('/thumbsupfilled.png') }}"/>').appendTo('#filled');
+                    },
+                    error:function(data, error, info){
+                        console.log('error ' +info);
+                    }
+                });
+            })
+        });
     </script>
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/icon.min.css" rel="stylesheet">
@@ -106,15 +142,11 @@
                 <ul class="nav navbar-nav">
                     <ul class="nav navbar-nav">
                         @if (Auth::check())
-                            {{-- See resources/assets/js/components/NotificationsDropdown.vue --}}
-                            <notifications-dropdown></notifications-dropdown>
-                            <li><a href="{{ url('/forum') }}">Forum</a></li>
-                            <li><a href="{{ url('/advice') }}">Advice</a></li>
-                            @if(Auth::user()->type == 'Student')
-                                <li><a href="{{ url('/matches') }}">Matches</a></li>
-                            @endif
+                            <li><a href="{{ url('/forum') }}">Forums</a></li>
+                            <li><a href="{{ url('/matches') }}">Matches</a></li>
+                            <li><a href="{{ url('/discover') }}">Discover</a></li>
                             <li><a href="{{ url('/messages') }}">Messages</a></li>
-                            <li><a href="{{ url('/about') }}">About</a></li>
+                            <li><a href="{{ url('/rankings') }}">Rankings</a></li>
                         @endif
                     </ul>
                 </ul>
@@ -122,9 +154,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::check())
-                        @if (Auth::user()->email == 'rachel@shellborn.com' || Auth::user()->email == 'mfisli2@gmail.com')
-                            <li><a href="{{ url('/reports') }}">Reports</a></li>
-                        @endif
+                        <notifications-dropdown></notifications-dropdown>
                     @endif
                     <!-- Authentication Links -->
                     @if (Auth::guest())
@@ -141,6 +171,13 @@
                                     <a href="{{ url('/profile') }}">
                                         My Profile
                                     </a>
+                                </li>
+                                <li>
+                                @if (Auth::check())
+                                    @if (Auth::user()->email == 'rachel@shellborn.com')
+                                        <a href="{{ url('/reports') }}">Reports</a>
+                                    @endif
+                                @endif
                                 </li>
                                 <li>
                                     <a href="{{ url('/logout') }}"

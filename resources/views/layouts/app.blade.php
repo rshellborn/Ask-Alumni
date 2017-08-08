@@ -82,16 +82,11 @@
                     <ul class="nav navbar-nav">
                         <ul class="nav navbar-nav">
                             @if (Auth::check())
-                                {{-- See resources/assets/js/components/NotificationsDropdown.vue --}}
-                                <notifications-dropdown></notifications-dropdown>
-                                <li><a href="{{ url('/forum') }}">Forum</a></li>
-                                <li><a href="{{ url('/advice') }}">Advice</a></li>
-                                @if(Auth::user()->type == 'Student')
-                                    <li><a href="{{ url('/matches') }}">Matches</a></li>
-                                @endif
+                                <li><a href="{{ url('/forum') }}">Forums</a></li>
+                                <li><a href="{{ url('/matches') }}">Matches</a></li>
                                 <li><a href="{{ url('/discover') }}">Discover</a></li>
                                 <li><a href="{{ url('/messages') }}">Messages</a></li>
-                                <li><a href="{{ url('/about') }}">About</a></li>
+                                <li><a href="{{ url('/rankings') }}">Rankings</a></li>
                             @endif
                         </ul>
                     </ul>
@@ -99,9 +94,7 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         @if (Auth::check())
-                            @if (Auth::user()->email == 'rachel@shellborn.com' || Auth::user()->email == 'mfisli2@gmail.com')
-                                <li><a href="{{ url('/reports') }}">Reports</a></li>
-                            @endif
+                            <notifications-dropdown></notifications-dropdown>
                         @endif
                         <!-- Authentication Links -->
                         @if (Auth::guest())
@@ -118,6 +111,13 @@
                                         <a href="{{ url('/profile') }}">
                                             My Profile
                                         </a>
+                                    </li>
+                                    <li>
+                                        @if (Auth::check())
+                                            @if (Auth::user()->email == 'rachel@shellborn.com')
+                                                <a href="{{ url('/reports') }}">Reports</a>
+                                            @endif
+                                        @endif
                                     </li>
                                     <li>
                                         <a href="{{ url('/logout') }}"

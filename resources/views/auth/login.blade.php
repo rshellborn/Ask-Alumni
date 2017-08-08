@@ -7,6 +7,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
+                        @if(session()->has('registered'))
+                            <div class="alert alert-info text-center" role="alert">
+                                <span>{{session()->get('registered')}}</span>
+                            </div>
+                        @endif
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 

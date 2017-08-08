@@ -95,6 +95,8 @@ class RegisterController extends Controller
     protected function registered(Request $request)
     {
         Auth::logout();
+        $request->session()->flash('registered', 'Please check your email to activate your account.');
+        return redirect('login');
     }
 
     /**

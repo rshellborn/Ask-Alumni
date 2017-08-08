@@ -79,7 +79,10 @@ class MessagesController extends Controller
 
         $thread->markAsRead($userId);
 
-        return view('messenger.show', compact('thread', 'users'));
+        $user = DB::table('participants')->where('user_id', '!=', Auth::id())->where('thread_id', $thread->id)->first();
+        $fromUser = DB::table('participants')->where('user_id', '=', Auth::id())->where('thread_id', $thread->id)->first();
+
+        return view('messenger.show', compact('thread', 'users', 'user', 'fromUser'));
     }
 
     /**
@@ -90,10 +93,11 @@ class MessagesController extends Controller
     public function create()
     {
         $id = Input::get('user');
+        $trigger = Input::get('trigger');
 
         $user = DB::table('users')->where('id', $id)->first();
 
-        return view('messenger.create', compact('user'));
+        return view('messenger.create', compact('user', 'trigger'));
     }
 
     /**
@@ -117,6 +121,7 @@ class MessagesController extends Controller
                 'thread_id' => $thread->id,
                 'user_id'   => Auth::user()->id,
                 'body'      => $input['message'],
+                'trigger'   => $input['trigger'],
             ]
         );
 
@@ -139,6 +144,48 @@ class MessagesController extends Controller
         $notification = new NotificationController();
         $notification->storeMessage($recipient);
 
+        //Give user who created the conversation 2 points
+        $points = DB::table('users')->where('id', Auth::user()->id)->value('points');
+        $oldPoints = $points;
+        $points += 5;
+
+        DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
+            [
+                'points' => $points,
+            ]);
+
+        //check if user has reached next rank
+        if($points > 99 && $oldPoints < 99) {
+            \DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
+                [
+                    'rank' => 'Silver',
+                ]);
+
+            //attempting to create notification
+            $user = User::where('id', Auth::user()->id)->first();
+            $notification = new NotificationController();
+            $notification->storeRankAchieved($user, 'Silver');
+        } else if ($points > 299 && $oldPoints < 299) {
+            \DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
+                [
+                    'rank' => 'Gold',
+                ]);
+
+            //attempting to create notification
+            $user = User::where('id', Auth::user()->id)->first();
+            $notification = new NotificationController();
+            $notification->storeRankAchieved($user, 'Gold');
+        } else if ($points > 499 && $oldPoints < 499) {
+            \DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
+                [
+                    'rank' => 'Platinum',
+                ]);
+
+            //attempting to create notification
+            $user = User::where('id', Auth::user()->id)->first();
+            $notification = new NotificationController();
+            $notification->storeRankAchieved($user, 'Platinum');
+        }
 
         return redirect('messages');
     }
@@ -167,6 +214,7 @@ class MessagesController extends Controller
                 'thread_id' => $thread->id,
                 'user_id'   => Auth::id(),
                 'body'      => Input::get('message'),
+                'trigger'   => 'reply'
             ]
         );
 
@@ -185,11 +233,19 @@ class MessagesController extends Controller
             $thread->addParticipant(Input::get('recipients'));
         }
 
-        //i think this works, need to test with two users
-//        $recipient = User::where('id', (int)Input::get('recipients'))->first();
+
+        $users = DB::table('participants')->where('thread_id', $thread->id)->select('user_id')->get();
+
+        if($users[0]->user_id == Auth::id()) {
+            $userid = $users[1]->user_id;
+        } else {
+            $userid = $users[0]->user_id;
+        }
+
+        $recipient = User::where('id', $userid)->first();
         //attempting to create notification
-//        $notification = new NotificationController();
-//        $notification->storeMessage($recipient);
+        $notification = new NotificationController();
+        $notification->storeMessage($recipient);
 
         return redirect('messages/' . $id);
     }

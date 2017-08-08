@@ -15,7 +15,8 @@ class ActivateController extends Controller
 
         DB::table('users')->where('verification_code', $code)->limit(1)->update(
             [
-                'active' => 1
+                'active' => 1,
+                'points' => 10
             ]);
 
         return view('activate');

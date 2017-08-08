@@ -36,10 +36,10 @@
             | {{ trans('forum::general.last_updated') }} {{ $post->updated }}
         @endif
         <span class="pull-right">
-            <a href="{{ Forum::route('thread.show', $post) }}">#{{ $post->sequence }}</a>
+{{--            <a href="{{ Forum::route('thread.show', $post) }}">#{{ $post->sequence }}</a>--}}
             @if (!$post->trashed())
                 @can ('reply', $post->thread)
-                    - <a href="{{ Forum::route('post.create', $post) }}">{{ trans('forum::general.reply') }}</a>
+                    <a href="{{ Forum::route('post.create', $post) }}">{{ trans('forum::general.reply') }}</a>
                 @endcan
             @endif
             @if (Request::fullUrl() != Forum::route('post.show', $post))
