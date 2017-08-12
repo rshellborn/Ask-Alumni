@@ -65,13 +65,13 @@ class PointsController extends Controller
     // Points from other user in a message convo
     public function givePoints(Request $request) {
         $userID   = $request->input('user');
-        $fromUser = $request->input('fromUser');
+        $fromUserId = $request->input('fromUser');
 
         //attempting to create notification
         $user = User::where('id', $userID)->first();
-        $fromUser = User::where('id', $fromUser)->value('name');
+        $fromUser = User::where('id', $fromUserId)->value('name');
         $notification = new NotificationController();
-        $notification->storeGivePoints($user, $fromUser);
+        $notification->storeGivePoints($user, $fromUser, $fromUserId);
 
         $points = DB::table('users')->where('id', $userID)->value('points');
         $oldPoints = $points;
@@ -87,7 +87,7 @@ class PointsController extends Controller
 
     private function checkRank($points, $oldPoints, $id) {
         //check if user has reached next rank
-        if($points > 99 && $oldPoints < 99) {
+        if($points > 149 && $oldPoints < 149) {
             \DB::table('users')->where('id', $id)->limit(1)->update(
                 [
                     'rank' => 'Silver',
@@ -97,7 +97,7 @@ class PointsController extends Controller
             $user = User::where('id', $id)->first();
             $notification = new NotificationController();
             $notification->storeRankAchieved($user, 'Silver');
-        } else if ($points > 299 && $oldPoints < 299) {
+        } else if ($points > 399 && $oldPoints < 399) {
             \DB::table('users')->where('id', $id)->limit(1)->update(
                 [
                     'rank' => 'Gold',
@@ -107,7 +107,7 @@ class PointsController extends Controller
             $user = User::where('id', $id)->first();
             $notification = new NotificationController();
             $notification->storeRankAchieved($user, 'Gold');
-        } else if ($points > 499 && $oldPoints < 499) {
+        } else if ($points > 799 && $oldPoints < 799) {
             \DB::table('users')->where('id', $id)->limit(1)->update(
                 [
                     'rank' => 'Platinum',
@@ -121,9 +121,9 @@ class PointsController extends Controller
     }
 
     public function rankings() {
-        $allUsers     = \DB::table('users')->orderBy('points', 'desc')->limit(10)->get();
-        $studentUsers = \DB::table('users')->where('type', 'Student')->orderBy('points', 'desc')->limit(10)->get();
-        $alumniUsers  = \DB::table('users')->where('type', 'Alumni')->orderBy('points', 'desc')->limit(10)->get();
+        $allUsers     = \DB::table('users')->where('type', '!=', null)->orderBy('points', 'desc')->limit(10)->get();
+        $studentUsers = \DB::table('users')->where('type', '!=', null)->where('type', 'Student')->orderBy('points', 'desc')->limit(10)->get();
+        $alumniUsers  = \DB::table('users')->where('type', '!=', null)->where('type', 'Alumni')->orderBy('points', 'desc')->limit(10)->get();
 
         return view('rankings', compact('allUsers', 'studentUsers', 'alumniUsers'));
     }

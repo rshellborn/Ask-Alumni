@@ -21,7 +21,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             Route::get('/reports/users', 'ReportsController@users');
             Route::get('/reports/forums', 'ReportsController@forums');
             Route::get('/reports/messages', 'ReportsController@messages');
-            Route::get('/reports/advice', 'ReportsController@advice');
+            Route::get('/reports/searches', 'ReportsController@searches');
         });
 
         //Browse
@@ -64,18 +64,6 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
         });
 
-    // Advice pages
-        Route::get('/advice/post', function () {
-            return view('advice.post');
-        });
-        Route::get('/advice', 'AdviceController@index');
-        Route::get('/advice/{id}', 'AdviceController@view');
-        Route::get('/advice/edit/{id}', 'AdviceController@edit');
-        Route::post('/advice/edit/{id}', 'AdviceController@save');
-        Route::post('/advice', 'AdviceController@post');
-
-
-        Route::get('createCommentNotification', 'NotificationController@storeComment');
 
         Route::get('/matches', 'MatchesController@index');
 

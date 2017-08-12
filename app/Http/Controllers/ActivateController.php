@@ -19,6 +19,10 @@ class ActivateController extends Controller
                 'points' => 10
             ]);
 
+
+        session_start();
+        $_SESSION['registered'] = 'true';
+
         return view('activate');
 
     }

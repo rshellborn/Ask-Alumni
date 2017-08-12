@@ -4,24 +4,24 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Reports</div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"><h4>Users</h4></div>
                     <div class="panel-body">
                         <div class="col-md-12">
                             <div class="col-md-3 text-center">
                                 <button class="btn btn-primary" onclick="window.location='{{ url('reports/users') }}'">Browse Users</button>
                             </div>
-                            <div class="col-md-3 text-center">
+                            <div class="col-md-2 text-center">
                                 <div class="panel panel-primary">
                                     <div class=panel-heading>
-                                        <h3 class=panel-title>Users</h3>
+                                        <h3 class=panel-title>Registered</h3>
                                     </div>
                                     <div class=panel-body>
                                         {{$users}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 text-center">
+                            <div class="col-md-2 text-center">
                                 <div class="panel panel-primary">
                                     <div class=panel-heading>
                                         <h3 class=panel-title>Students</h3>
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 text-center">
+                            <div class="col-md-2 text-center">
                                 <div class="panel panel-primary">
                                     <div class=panel-heading>
                                         <h3 class=panel-title>Alumni</h3>
@@ -41,50 +41,92 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-2 text-center">
+                                <div class="panel panel-primary">
+                                    <div class=panel-heading>
+                                        <h3 class=panel-title>All Users</h3>
+                                    </div>
+                                    <div class=panel-body>
+                                        {{$users}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading text-center"><h4>Forums</h4></div>
+                    <div class="panel-body">
                         <div class="col-md-12">
                             <div class="col-md-3 text-center">
                                 <button class="btn btn-success" onclick="window.location='{{ url('reports/forums') }}'">Browse Forums</button>
                             </div>
-                            <div class="col-md-3 text-center">
+                            <div class="col-md-2 text-center">
                                 <div class="panel panel-success">
                                     <div class=panel-heading>
-                                        <h3 class=panel-title>Forum Categories</h3>
-                                    </div>
-                                    <div class=panel-body>
-                                        {{$forumCategories}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 text-center">
-                                <div class="panel panel-success">
-                                    <div class=panel-heading>
-                                        <h3 class=panel-title>Forum Threads</h3>
+                                        <h3 class=panel-title>Threads</h3>
                                     </div>
                                     <div class=panel-body>
                                         {{$forumThreads}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 text-center">
+                            <div class="col-md-2 text-center">
                                 <div class="panel panel-success">
                                     <div class=panel-heading>
-                                        <h3 class=panel-title>Forum Posts</h3>
+                                        <h3 class=panel-title>Posts</h3>
                                     </div>
                                     <div class=panel-body>
                                         {{$forumPosts}}
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-2 text-center">
+                                <div class="panel panel-success">
+                                    <div class=panel-heading>
+                                        <h3 class=panel-title>Advice</h3>
+                                    </div>
+                                    <div class=panel-body>
+                                        {{$adviceThreads}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <div class="panel panel-success">
+                                    <div class=panel-heading>
+                                        <h3 class=panel-title>Likes</h3>
+                                    </div>
+                                    <div class=panel-body>
+                                        {{$adviceLikes}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-danger">
+                    <div class="panel-heading text-center"><h4>Messages</h4></div>
+                    <div class="panel-body">
                         <div class="col-md-12">
                             <div class="col-md-3 text-center">
                                 <button class="btn btn-danger" onclick="window.location='{{ url('reports/messages') }}'">Browse Messages</button>
                             </div>
-                            <div class="col-md-3 text-center">
+                            <div class="col-md-2 text-center">
                                 <div class="panel panel-danger">
                                     <div class=panel-heading>
                                         <h3 class=panel-title>Conversations</h3>
@@ -94,59 +136,70 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 text-center">
+                            <div class="col-md-2 text-center">
                                 <div class="panel panel-danger">
                                     <div class=panel-heading>
-                                        <h3 class=panel-title>Messages</h3>
+                                        <h3 class=panel-title>From Search</h3>
                                     </div>
                                     <div class=panel-body>
-                                        {{$messages}}
+                                        {{$searchTrigger}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <div class="panel panel-danger">
+                                    <div class=panel-heading>
+                                        <h3 class=panel-title>From Matches</h3>
+                                    </div>
+                                    <div class=panel-body>
+                                        {{$matchesTrigger}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <div class="panel panel-danger">
+                                    <div class=panel-heading>
+                                        <h3 class=panel-title>From Profile</h3>
+                                    </div>
+                                    <div class=panel-body>
+                                        {{$profileTrigger}}
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-warning">
+                    <div class="panel-heading text-center"><h4>Other</h4></div>
+                    <div class="panel-body">
                         <div class="col-md-12">
                             <div class="col-md-3 text-center">
-                                <button class="btn btn-warning" onclick="window.location='{{ url('reports/advice') }}'">Browse Advice</button>
+                                <button class="btn btn-warning" onclick="window.location='{{ url('reports/searches') }}'">Browse Searches</button>
                             </div>
                             <div class="col-md-2 text-center">
                                 <div class="panel panel-warning">
                                     <div class=panel-heading>
-                                        <h3 class=panel-title>Advice Posts</h3>
+                                        <h3 class=panel-title>Searches</h3>
                                     </div>
                                     <div class=panel-body>
-                                        {{$advicePosts}}
+                                        {{$searches}}
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2 text-center">
                                 <div class="panel panel-warning">
                                     <div class=panel-heading>
-                                        <h3 class=panel-title>Comments</h3>
+                                        <h3 class=panel-title>Favourites</h3>
                                     </div>
                                     <div class=panel-body>
-                                        {{$comments}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <div class="panel panel-warning">
-                                    <div class=panel-heading>
-                                        <h3 class=panel-title>Likes</h3>
-                                    </div>
-                                    <div class=panel-body>
-                                        {{$likes}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 text-center">
-                                <div class="panel panel-warning">
-                                    <div class=panel-heading>
-                                        <h3 class=panel-title>Dislikes</h3>
-                                    </div>
-                                    <div class=panel-body>
-                                        {{$dislikes}}
+                                        {{$favourites}}
                                     </div>
                                 </div>
                             </div>

@@ -60,19 +60,19 @@
                             <tbody>
                             <tr>
                                 <td><img style="display:inline;" src="{{ url('bronze-cap.png') }}" /> Bronze</td>
-                                <td>0-99</td>
+                                <td>0-149</td>
                             </tr>
                             <tr>
                                 <td><img style="display:inline;" src="{{ url('silver-cap.png') }}" /> Silver</td>
-                                <td>100-299</td>
+                                <td>150-399</td>
                             </tr>
                             <tr>
                                 <td><img style="display:inline;" src="{{ url('gold-cap.png') }}" /> Gold</td>
-                                <td>300-499</td>
+                                <td>400-799</td>
                             </tr>
                             <tr>
                                 <td><img style="display:inline;" src="{{ url('platinum-cap.png') }}" /> Platinum</td>
-                                <td>500</td>
+                                <td>800</td>
                             </tr>
                             </tbody>
                         </table>

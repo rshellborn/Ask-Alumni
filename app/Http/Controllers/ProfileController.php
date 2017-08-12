@@ -11,6 +11,14 @@ use App\User;
 class ProfileController extends Controller
 {
     public function index() {
+        session_start();
+        $displayModal = false;
+        if(isset($_SESSION["registered"])) {
+            unset($_SESSION['registered']);
+            $displayModal = true;
+            dd('WOOHOO');
+        }
+
         $user = Auth::user();
 
         $type = $user->type;
@@ -24,6 +32,7 @@ class ProfileController extends Controller
         $email = $user->email;
         $name = $user->name;
         $highSchool = $user->highSchool;
+        $inSchool = $user->inSchool;
 
         $usersProfile = true;
 
@@ -34,14 +43,12 @@ class ProfileController extends Controller
         $degrees = explode(",", $degrees);
 
         if($type == "Alumni") {
-            $inSchool = $user->inSchool;
-
             $bio = $user->bio;
 
-            return view('profile.alumni', compact('url', 'rank', 'points', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
+            return view('profile.alumni', compact('url', 'displayModal', 'rank', 'points', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'email', 'rank', 'degrees', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools'));
+        return view('profile.student', compact('highSchool', 'displayModal', 'email', 'rank', 'degrees', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function view($id) {
@@ -75,7 +82,7 @@ class ProfileController extends Controller
             return view('profile.alumni', compact('url', 'points', 'rank', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools'));
+        return view('profile.student', compact('highSchool', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function edit() {
@@ -100,7 +107,6 @@ class ProfileController extends Controller
         }
 
         if($type == 'Alumni') {
-            $bio = $user->bio;
             $inSchool = $user->inSchool;
 
             if($inSchool) {
@@ -110,6 +116,8 @@ class ProfileController extends Controller
                 $inSchool = "";
                 $notInSchool = "checked";
             }
+
+            $bio = $user->bio;
         }
 
         //get high schools
@@ -213,9 +221,11 @@ class ProfileController extends Controller
             $highSchool = $otherHighSchool;
         }
 
-        $replaceFlag = false;
-        if(in_array('other', $schools)) {
-            $replaceFlag = true;
+        if($schools != null) {
+            $replaceFlag = false;
+            if (in_array('other', $schools)) {
+                $replaceFlag = true;
+            }
         }
 
         if(count($fields) > 0) {
@@ -241,13 +251,12 @@ class ProfileController extends Controller
                 'fields' => $fields,
                 'schools' => $schools,
                 'degrees' => $degree,
-                'highSchool' => $highSchool
+                'highSchool' => $highSchool,
             ]);
 
         if($accType == "Alumni") {
-            $inSchool = Input::get('inSchool');
             $bio = Input::get('bio');
-
+            $inSchool = Input::get('inSchool');
 
             DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
                 [

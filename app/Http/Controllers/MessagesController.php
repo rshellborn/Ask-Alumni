@@ -26,6 +26,7 @@ class MessagesController extends Controller
     public function index(Request $request)
     {
         $currentUserId = Auth::user()->id;
+        $currentUserName = Auth::user()->name;
 
         // All threads, ignore deleted/archived participants
         //$threads = Thread::getAllLatest()->get();
@@ -46,7 +47,7 @@ class MessagesController extends Controller
 
         // set url path for generted links
         $paginatedItems->setPath($request->url());
-        return view('messenger.index', ['threads' => $paginatedItems, 'currentUserId' => $currentUserId]);
+        return view('messenger.index', ['threads' => $paginatedItems, 'currentUserId' => $currentUserId, 'currentUserName' => $currentUserName]);
 
         // All threads that user is participating in, with new messages
         //$threads = Thread::forUserWithNewMessages($currentUserId)->latest('updated_at')->get();
@@ -155,7 +156,7 @@ class MessagesController extends Controller
             ]);
 
         //check if user has reached next rank
-        if($points > 99 && $oldPoints < 99) {
+        if($points > 149 && $oldPoints < 149) {
             \DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
                 [
                     'rank' => 'Silver',
@@ -165,7 +166,7 @@ class MessagesController extends Controller
             $user = User::where('id', Auth::user()->id)->first();
             $notification = new NotificationController();
             $notification->storeRankAchieved($user, 'Silver');
-        } else if ($points > 299 && $oldPoints < 299) {
+        } else if ($points > 399 && $oldPoints < 399) {
             \DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
                 [
                     'rank' => 'Gold',
@@ -175,7 +176,7 @@ class MessagesController extends Controller
             $user = User::where('id', Auth::user()->id)->first();
             $notification = new NotificationController();
             $notification->storeRankAchieved($user, 'Gold');
-        } else if ($points > 499 && $oldPoints < 499) {
+        } else if ($points > 799 && $oldPoints < 799) {
             \DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
                 [
                     'rank' => 'Platinum',
