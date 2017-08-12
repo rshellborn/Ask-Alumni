@@ -103,9 +103,9 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function storeGivePoints($user, $fromUser)
+    public function storeGivePoints($user, $fromUser, $fromUserId)
     {
-        $user->notify(new PointsGiven($fromUser));
+        $user->notify(new PointsGiven($fromUser, $fromUserId));
 
         return response()->json('Notification sent.', 201);
     }

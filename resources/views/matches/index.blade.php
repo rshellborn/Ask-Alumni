@@ -8,10 +8,25 @@
                     <div class="panel-heading">
                         <div class="text-center">
                             <h4><strong>Matches</strong></h4>
+                            @if(DB::table('users')->where('id', Auth::id())->value('type') == 'Alumni')
+                                <span>These high school students are interested in your school, degree, or field of study.<br/>
+                                      Help them out by sending them a message!</span>
+                            @elseif(DB::table('users')->where('id', Auth::id())->value('type') == 'Student')
+                                <span>These Alumni have information on schools, degrees, and fields of study you are interested in.<br/>
+                                      Send them a message!</span>
+                            @endif
                         </div>
                     </div>
 
                     <div class="panel-body">
+                            <h4 class="text-success text-center" style="font-weight: bold">You have {{count($matches)}}
+                                @if(count($matches)==1)
+                                    match
+                                @else
+                                    matches
+                                @endif
+                            </h4>
+                        <br/>
                         <div class="container">
                             @foreach($matches as $match)
                                 <div class="col-md-7">

@@ -12,6 +12,14 @@
                     </div>
 
                     <div class="panel-body">
+                        <h4 class="text-success text-center" style="font-weight: bold">{{count($results)}}
+                            @if(count($results)==1)
+                                result were found
+                            @else
+                                results were found
+                            @endif
+                        </h4>
+                        <br/>
                         <div class="container">
                             @foreach($results as $user)
                                 <div class="col-md-7">

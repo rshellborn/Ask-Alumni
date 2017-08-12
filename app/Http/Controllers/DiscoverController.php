@@ -26,7 +26,21 @@ class DiscoverController extends Controller
         $degree     = Input::get('degree');
         $type       = Input::get('type');
 
+        DB::table('search_queries')->insert(
+            [
+                'user_id' => Auth::id(),
+                'user_type' => $type,
+                'high_school' => $highSchool,
+                'school' => $school,
+                'field' => $field,
+                'degree' => $degree,
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            ]);
+
         $query = User::query();
+
+        $query = $query->where('active', 1);
 
         if ($type != 'All') {
             $query = $query->where('type', $type);

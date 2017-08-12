@@ -108,26 +108,13 @@
                                                     @else
                                                         <input type="checkbox" name="school[]" value="{{ $school->name }}">{{ $school->name }}<br/>
                                                     @endif
-                                                        <input type="checkbox" name="school[]" value="other"> <input type="text" name="otherSchool" placeholder="Other school..." /><br/>
                                                 @endforeach
+                                                <input type="checkbox" name="school[]" value="other"> <input type="text" name="otherSchool" placeholder="Other school..." /><br/>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div id="fields" class="form-group">
-                                        <label for="degree" class="col-md-6 control-label">Which degree(s) are you pursuing or have achieved?</label>
-
-                                        <div class="col-md-4">
-                                            @foreach($degrees as $degree)
-                                                @if($student == 'checked' && in_array($degree->name, $selDegrees))
-                                                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}" checked>{{ $degree->name }}<br/>
-                                                @else
-                                                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}">{{ $degree->name }}<br/>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    </div>
                                 </div>
+
                                 <div class="form-group">
                                     <div class="col-md-12 text-center">
                                         <button type="submit" class="btn btn-primary">
@@ -166,7 +153,16 @@
                                     </div>
 
                                     <div id="fields" class="form-group">
-                                        <label for="fieldOfStudy" class="col-md-6 control-label">What are you or did study in post secondary?</label>
+                                        <label for="inSchool" class="col-md-6 control-label">Are you still attending a post-secondary institution?</label>
+
+                                        <div class="col-md-4">
+                                            <input type="radio" name="inSchool" value="true" <?php echo  $inSchool ?>>Yes<br/>
+                                            <input type="radio" name="inSchool" value="false" <?php echo $notInSchool ?>>No<br/>
+                                        </div>
+                                    </div>
+
+                                    <div id="fields" class="form-group">
+                                        <label for="fieldOfStudy" class="col-md-6 control-label">What are you studying or did you study in post secondary?</label>
 
                                         <div class="col-md-12">
                                             <div class="col-md-5">
@@ -192,7 +188,7 @@
                                     </div>
 
                                     <div id="fields" class="form-group">
-                                        <label for="school" class="col-md-6 control-label">Which school(s) did or are attending?</label>
+                                        <label for="school" class="col-md-6 control-label">Which school(s) are you attending or did you attend?</label>
 
                                         <div class="col-md-12">
                                             <div class="col-md-5">
@@ -237,15 +233,6 @@
 
                                         <div class="col-md-12">
                                             <textarea name="bio" id="bio" rows ="3" placeholder="Current student at {school} studying {field} and am expected to graduate in June 2018..." class="form-control">@if($alumni == 'checked') {{$bio}} @endif</textarea>
-                                        </div>
-                                    </div>
-
-                                    <div id="fields" class="form-group">
-                                        <label for="inSchool" class="col-md-6 control-label">Are you still attending university/college?</label>
-
-                                        <div class="col-md-4">
-                                            <input type="radio" name="inSchool" value="true" <?php echo  $inSchool ?>>Yes<br/>
-                                            <input type="radio" name="inSchool" value="false" <?php echo $notInSchool ?>>No<br/>
                                         </div>
                                     </div>
                                 </div>

@@ -13,15 +13,17 @@ class PointsGiven extends Notification
 {
     use Queueable;
     private $user;
+    private $userid;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $userid)
     {
         $this->user = $user;
+        $this->userid = $userid;
     }
 
     /**
@@ -46,7 +48,7 @@ class PointsGiven extends Notification
         return [
             'title' => 'Points Awarded',
             'body' => 'You were given 10 points from ' . $this->user . '!',
-            'action_url' => '/messages',
+            'action_url' => '/profile/view/' . $this->userid,
             'icon' => '/points-icon.png',
             'created' => Carbon::now()->toIso8601String()
         ];
@@ -66,6 +68,6 @@ class PointsGiven extends Notification
             ->title('New Like on Advice')
             ->icon('/points-icon.png')
             ->body('You were given 10 points from ' . $this->user . '!')
-            ->action('View Messages', '/messages');
+            ->action('View Profile', '/profile/view/' / $this->userid);
     }
 }

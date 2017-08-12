@@ -8,6 +8,7 @@
                     <div class="panel-heading">
                         <div class="text-center">
                             <h4><strong>Discover</strong></h4>
+                            <span>Search for alumni or high school students you wish to talk to.</span>
                         </div>
                     </div>
                     <div class="panel-body">

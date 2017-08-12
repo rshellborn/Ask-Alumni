@@ -19,13 +19,13 @@
                             <!-- Subject Form Input -->
                             <div class="form-group">
                                 {!! Form::label('subject', 'Subject', ['class' => 'control-label']) !!}
-                                {!! Form::text('subject', null, ['class' => 'form-control']) !!}
+                                <input type="text" name="subject" class="form-control" required />
                             </div>
 
                             <!-- Message Form Input -->
                             <div class="form-group">
                                 {!! Form::label('message', 'Message', ['class' => 'control-label']) !!}
-                                {!! Form::textarea('message', null, ['class' => 'form-control']) !!}
+                                <textarea class="form-control" name="message" required></textarea>
                             </div>
 
                             {{--@if($users->count() > 0)--}}

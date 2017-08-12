@@ -17,11 +17,17 @@
                             </thead>
                             <tbody>
                             @foreach($threads as $thread)
+                                <?php
+                                    $users = \DB::table('participants')->where('thread_id', $thread->id)->get();
+                                ?>
                                 <tr>
                                     <td>{{ $thread->subject }}</td>
-                                    <td>{{ \DB::table('users')->where('id', \DB::table('participants')->where('thread_id', $thread->id)->pluck('user_id')[0])->pluck('name')[0] }} - {{\DB::table('users')->where('id', \DB::table('participants')->where('thread_id', $thread->id)->pluck('user_id')[0])->pluck('type')[0]}}
-                                        <br/>
-                                        {{ \DB::table('users')->where('id', \DB::table('participants')->where('thread_id', $thread->id)->pluck('user_id')[1])->pluck('name')[0] }} - {{ \DB::table('users')->where('id', \DB::table('participants')->where('thread_id', $thread->id)->pluck('user_id')[1])->pluck('type')[0] }}</td>
+                                    <td>
+                                        @foreach($users as $user)
+                                            {{ str_replace(array('[', ']', '"'), '', \DB::table('users')->where('id', $user->user_id)->pluck('name')) }}
+                                            <br/>
+                                        @endforeach
+                                    </td>
                                     <td>{{ \DB::table('messages')->where('thread_id', $thread->id)->count() }}</td>
                                 </tr>
                             @endforeach
