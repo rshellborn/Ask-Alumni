@@ -6,14 +6,65 @@
             $('#myModal').modal('show');
         </script>
     @endif
+
+    <script type="text/javascript">
+        $(function(){
+            $('#favourite').click(function(e){
+                e.preventDefault();
+                var userId = $('input[name="user"]').val();
+                var data = { user: userId };
+                console.log(data);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url:'/profile/addfavourite',
+                    type:'POST',
+                    data:JSON.stringify(data),
+                    contentType:"application/json",
+                    processData:false,
+                    success:function(data){
+                        $('#favourite').hide();
+                        $('#unfavourite').show();
+                    },
+                    error:function(data){
+                        console.log('error ' +data.responseJSON);
+                    }
+                });
+            });
+
+            $('#unfavourite').click(function(e){
+                e.preventDefault();
+                var userId = $('input[name="user"]').val();
+                var data = { user: userId };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url:'/profile/removefavourite',
+                    type:'POST',
+                    data:JSON.stringify(data),
+                    contentType:"application/json",
+                    processData:false,
+                    success:function(data){
+                        $('#favourite').show();
+                        $('#unfavourite').hide();
+                    },
+                    error:function(data){
+                        console.log('error ' +data.responseJSON);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
 
 @section('content')
-        <!-- Trigger the modal with a button -->
-        {{--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>--}}
-
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
+    <div id="myModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -33,8 +84,6 @@
 
             </div>
         </div>
-
-
 
     <div class="container">
         <div class="row">
@@ -59,6 +108,13 @@
                                         <button class="btn btn-primary">Message</button>
                                     @endif
                                 </form>
+                                    @if(\DB::table('users')->where('id', Auth::user()->id)->where('favourites_user_ids', 'like', '%'.$id.'%')->count() == 0)
+                                        <img id="favourite" style="cursor: pointer; cursor: hand;"  src="{{url('star.png')}}" />
+                                        <img id="unfavourite" style="cursor: pointer; cursor: hand; display:none;" src="{{url('star-filled.png')}}" />
+                                    @else
+                                        <img id="favourite" style="cursor: pointer; cursor: hand; display:none;"  src="{{url('star.png')}}" />
+                                        <img id="unfavourite" style="cursor: pointer; cursor: hand;" src="{{url('star-filled.png')}}" />
+                                    @endif
                             </div>
                         </div>
 

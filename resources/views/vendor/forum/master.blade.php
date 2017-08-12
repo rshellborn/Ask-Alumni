@@ -173,6 +173,11 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="{{ url('/favourites') }}">
+                                        Favourites
+                                    </a>
+                                </li>
+                                <li>
                                 @if (Auth::check())
                                     @if (Auth::user()->email == 'rachel@shellborn.com')
                                         <a href="{{ url('/reports') }}">Reports</a>
