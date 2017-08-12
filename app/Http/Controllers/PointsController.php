@@ -34,8 +34,8 @@ class PointsController extends Controller
         } else if($userLikes == 1) {
             $users = $users . ',' . $userID;
         } else {
-            $usersArr = explode(',', $users);
-            $users = array_push($usersArr, $userID);
+            $users = explode(',', $users);
+            array_push($users, $userID);
             $users = implode(',', $users);
         }
 
@@ -53,7 +53,7 @@ class PointsController extends Controller
                 'points' => $points,
             ]);
 
-        $this->checkRank($points, $authorID);
+        $this->checkRank($points, $authorID, $authorID);
 
         return response()->json([
             'likes' => $likes,

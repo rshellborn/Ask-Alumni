@@ -16,7 +16,6 @@ class ProfileController extends Controller
         if(isset($_SESSION["registered"])) {
             unset($_SESSION['registered']);
             $displayModal = true;
-            dd('WOOHOO');
         }
 
         $user = Auth::user();
@@ -52,6 +51,7 @@ class ProfileController extends Controller
     }
 
     public function view($id) {
+        $displayModal = false;
         $user = DB::table('users')->where('id', $id)->first();
 
         $usersProfile = false;
@@ -79,10 +79,10 @@ class ProfileController extends Controller
 
             $bio = $user->bio;
 
-            return view('profile.alumni', compact('url', 'points', 'rank', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
+            return view('profile.alumni', compact('url', 'displayModal', 'points', 'rank', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        return view('profile.student', compact('highSchool', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function edit() {
@@ -266,5 +266,69 @@ class ProfileController extends Controller
         }
 
         return redirect()->action('ProfileController@index');
+    }
+
+    public function addfavourite(Request $request) {
+        $userID   = $request->input('user');
+
+        $favourites = DB::table('users')->where('id', Auth::user()->id)->value('favourites');
+        $users = DB::table('users')->where('id', Auth::user()->id)->value('favourites_user_ids');
+        if($favourites == 0) {
+            $users = $userID;
+        } else if($favourites == 1) {
+            $users = $users . ',' . $userID;
+        } else {
+            $users = explode(',', $users);
+            array_push($users, $userID);
+            $users = implode(',', $users);
+        }
+
+        $favourites++;
+        DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
+            [
+                'favourites_user_ids' => $users,
+                'favourites' => $favourites
+            ]);
+    }
+
+    public function removefavourite(Request $request) {
+        $userID   = $request->input('user');
+
+        $favourites = DB::table('users')->where('id', Auth::user()->id)->value('favourites');
+        $users = DB::table('users')->where('id', Auth::user()->id)->value('favourites_user_ids');
+
+        $favourites--;
+        if($favourites == 0) {
+            $users = '';
+        } else if($favourites == 1) {
+            $usersArr = explode(',', $users);
+            $index = array_search($userID, $usersArr);
+            $users = $index == 1 ? $usersArr[0]: $usersArr[1];
+        } else {
+            $usersArr = explode(',', $users);
+            $index = array_search($userID, $usersArr);
+            unset($usersArr[$index]);
+            $users = implode(',', $usersArr);
+        }
+
+        DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
+            [
+                'favourites_user_ids' => $users,
+                'favourites' => $favourites
+            ]);
+    }
+
+    public function favourites() {
+        $favourites = DB::table('users')->where('id', Auth::user()->id)->value('favourites');
+        $userids = DB::table('users')->where('id', Auth::user()->id)->value('favourites_user_ids');
+        $userids = explode(',', $userids);
+
+        $users = array();
+        foreach($userids as $userid) {
+            $user = DB::table('users')->where('id', $userid)->first();
+            array_push($users, $user);
+        }
+
+        return view('profile.favourites',  compact('favourites', 'users'));
     }
 }
