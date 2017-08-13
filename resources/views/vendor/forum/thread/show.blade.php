@@ -61,7 +61,6 @@
             <div class="col-xs-4">
                 @can ('reply', $thread)
                     <div class="btn-group" role="group">
-                        <a href="{{ Forum::route('post.create', $thread) }}" class="btn btn-primary">{{ trans('forum::general.new_reply') }}</a>
                         <a href="#quick-reply" class="btn btn-primary">{{ trans('forum::general.quick_reply') }}</a>
                     </div>
                 @endcan
@@ -112,7 +111,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button type="submit" class="btn btn-success pull-right">{{ trans('forum::general.reply') }}</button>
+                        <button type="submit" class="btn btn-success pull-right">{{ trans('forum::general.post') }}</button>
                     </div>
                 </form>
             </div>

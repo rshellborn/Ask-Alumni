@@ -271,6 +271,18 @@ class ProfileController extends Controller
                 ]);
         }
 
+        if(Auth::user()->avatar == 'default') {
+            $user = Auth::user();
+
+            if($accType == 'Alumni') {
+                $user->avatar = 'default-alumni.png';
+            } elseif ($accType == 'Student') {
+                $user->avatar = 'default-student.png';
+            }
+
+            $user->save();
+        }
+
         return redirect()->action('ProfileController@index');
     }
 

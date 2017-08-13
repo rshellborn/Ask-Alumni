@@ -1,6 +1,6 @@
 <tr id="post-{{ $post->sequence }}" class="{{ $post->trashed() ? 'deleted' : '' }}" class="post-body">
     <td class="author-info">
-        <strong>{!! $post->authorName !!}</strong>
+        <a href="{{ '/profile/view/' . $post->author_id}}"><strong>{{ $post->authorName }}</strong></a>
     </td>
     <td class="content">
         @if (!is_null($post->parent))

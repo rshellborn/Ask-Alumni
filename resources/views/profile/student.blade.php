@@ -93,7 +93,7 @@
 
                         <div class="row">
                             <div class="col-md-10">
-                                <img src="//www.gravatar.com/avatar/{{ md5($email) }} ?s=128" alt="{{ $name }}" class="">
+                                <img src="/avatars/{{ $avatar }}" style="width:150px; height:150px; float:left; margin-right:25px;">
                             </div>
                             <div class="col-md-2">
                                 @if($usersProfile)
@@ -108,12 +108,14 @@
                                         <button class="btn btn-primary">Message</button>
                                     @endif
                                 </form>
-                                    @if(\DB::table('users')->where('id', Auth::user()->id)->where('favourites_user_ids', 'like', '%'.$id.'%')->count() == 0)
-                                        <img id="favourite" style="cursor: pointer; cursor: hand;"  src="{{url('star.png')}}" />
-                                        <img id="unfavourite" style="cursor: pointer; cursor: hand; display:none;" src="{{url('star-filled.png')}}" />
-                                    @else
-                                        <img id="favourite" style="cursor: pointer; cursor: hand; display:none;"  src="{{url('star.png')}}" />
-                                        <img id="unfavourite" style="cursor: pointer; cursor: hand;" src="{{url('star-filled.png')}}" />
+                                    @if($id != Auth::user()->id)
+                                        @if(\DB::table('users')->where('id', Auth::user()->id)->where('favourites_user_ids', 'like', '%'.$id.'%')->count() == 0)
+                                            <img id="favourite" style="cursor: pointer; cursor: hand;"  src="{{url('star.png')}}" />
+                                            <img id="unfavourite" style="cursor: pointer; cursor: hand; display:none;" src="{{url('star-filled.png')}}" />
+                                        @else
+                                            <img id="favourite" style="cursor: pointer; cursor: hand; display:none;"  src="{{url('star.png')}}" />
+                                            <img id="unfavourite" style="cursor: pointer; cursor: hand;" src="{{url('star-filled.png')}}" />
+                                        @endif
                                     @endif
                             </div>
                         </div>
