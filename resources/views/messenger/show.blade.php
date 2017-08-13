@@ -78,7 +78,7 @@
                             @foreach($thread->messages as $message)
                                 <div class="media">
                                     <a class="pull-left" href="#">
-                                        <img src="//www.gravatar.com/avatar/{{ md5($message->user->email) }} ?s=64" alt="{{ $message->user->name }}" class="img-circle">
+                                        <img src="/avatars/{{ $message->user->avatar }}" class="img-circle" style="width:64px; height:64px;">
                                     </a>
                                     <div class="media-body">
                                         <h5 class="media-heading">{{ $message->user->name }}</h5>

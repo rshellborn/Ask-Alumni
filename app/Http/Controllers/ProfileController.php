@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\User;
+use App\Http\Requests;
+use Image;
 
 class ProfileController extends Controller
 {
@@ -20,6 +22,7 @@ class ProfileController extends Controller
 
         $user = Auth::user();
 
+        $avatar = $user->avatar;
         $type = $user->type;
         $points = $user->points;
         $rank = $user->rank;
@@ -44,10 +47,10 @@ class ProfileController extends Controller
         if($type == "Alumni") {
             $bio = $user->bio;
 
-            return view('profile.alumni', compact('url', 'displayModal', 'rank', 'points', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
+            return view('profile.alumni', compact('url', 'avatar', 'displayModal', 'rank', 'points', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'displayModal', 'email', 'rank', 'degrees', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        return view('profile.student', compact('highSchool', 'avatar', 'displayModal', 'email', 'rank', 'degrees', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function view($id) {
@@ -59,6 +62,7 @@ class ProfileController extends Controller
         $type = $user->type;
         $points = $user->points;
         $rank = $user->rank;
+        $avatar = $user->avatar;
 
         $fields = $user->fields;
         $fields = explode(",", $fields);
@@ -79,16 +83,18 @@ class ProfileController extends Controller
 
             $bio = $user->bio;
 
-            return view('profile.alumni', compact('url', 'displayModal', 'points', 'rank', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
+            return view('profile.alumni', compact('url', 'avatar', 'displayModal', 'points', 'rank', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        return view('profile.student', compact('highSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function edit() {
         $user = Auth::user();
 
         $url = 'profile/edit';
+
+        $avatar = $user->avatar;
 
         $type = $user->type;
         $accType = $type;
@@ -148,7 +154,7 @@ class ProfileController extends Controller
         $type = $type == 'Alumni' ? 'an Alumni' : 'a Student';
 
 
-        return view('profile.edit',  compact('url', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'inSchool', 'notInSchool', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
+        return view('profile.edit',  compact('url', 'avatar', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'inSchool', 'notInSchool', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
     }
 
     public function alumniComplete() {
@@ -330,5 +336,48 @@ class ProfileController extends Controller
         }
 
         return view('profile.favourites',  compact('favourites', 'users'));
+    }
+
+    public function avatar(Request $request) {
+        // Handle the user upload of avatar
+        if($request->input('action') == 'upload') {
+            if ($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $filename = time() . '.' . $avatar->getClientOriginalExtension();
+                $prevAvatar = DB::table('users')->where('id', Auth::user()->id)->value('avatar');
+
+                Image::make($avatar)->fit(300)->save(public_path('/avatars/' . $filename));
+
+                if($prevAvatar != 'default-student.png' && $prevAvatar != 'default-alumni.png') {
+                    if (file_exists(public_path('/avatars/' . $prevAvatar))) {
+                        unlink(public_path('/avatars/' . $prevAvatar));
+                    }
+                }
+
+                $user = Auth::user();
+                $user->avatar = $filename;
+                $user->save();
+            }
+        } else if ($request->input('action') == 'delete') {
+            $prevAvatar = DB::table('users')->where('id', Auth::user()->id)->value('avatar');
+
+            if($prevAvatar != 'default-student.png' && $prevAvatar != 'default-alumni.png') {
+                if (file_exists(public_path('/avatars/' . $prevAvatar))) {
+                    unlink(public_path('/avatars/' . $prevAvatar));
+                }
+            }
+
+            if($request->input('type') == 'a Student') {
+                $filename = 'default-student.png';
+            } else if($request->input('type') == 'an Alumni') {
+                $filename = 'default-alumni.png';
+            }
+
+            $user = Auth::user();
+            $user->avatar = $filename;
+            $user->save();
+        }
+
+        return $this->edit();
     }
 }

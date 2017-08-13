@@ -73,6 +73,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         Route::post('/profile/removefavourite', 'ProfileController@removefavourite');
         Route::get('/favourites', 'ProfileController@favourites');
 
+        Route::post('/profile/avatar', 'ProfileController@avatar');
 
         Route::get('/home', function () {
             return view('about.about');

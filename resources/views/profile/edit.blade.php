@@ -10,10 +10,64 @@
             $('#other').show();
         });
 
+        $(function(){
+            $('#uploadAvatar').click(function(e){
+                e.preventDefault();
+                var image = $('input[name="avatar"]').val();
+                var data = { avatar: image, action: 'upload' };
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url:'/profile/avatar',
+                    type:'POST',
+                    data:JSON.stringify(data),
+                    contentType:"application/json",
+                    processData:false,
+                    success:function(data){
+                        if(data.error) {
+                            $('<p>' + data.errorDescription + '</p>').appendTo('#uploaded');
+                        } else {
+                            $('#myModal').modal('toggle');
+                            $('<p>Profile picture uploaded!</p>').appendTo('#uploaded');
+                        }
+                    },
+                    error:function(data){
+                        console.log('error ' +data.responseJSON);
+                    }
+                });
+            })
+        });
     </script>
 @endsection
 
 @section('content')
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Upload Profile Picture</h4>
+                </div>
+                <div class="modal-body">
+                    <form enctype="multipart/form-data" action="/profile/avatar" method="POST">
+                        <label>Update Profile Image</label>
+                        <input type="file" name="avatar">
+                        <input type="hidden" name="action" value="upload">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -25,14 +79,21 @@
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
-                            <label for="name" class="col-md-12 control-label text-center">You can change your profile picture at <a href="https://en.gravatar.com/" target="_blank">gravatar.com</a>, using the same email you registered with.</label>
-                        </div>
-                        <br/>
-                        <div class="form-group">
                             <label for="name" class="col-md-6 control-label text-right">You are currently registered as {{$type}}.</label>
                             <div class="text-center">
                                 <button class="btn btn-warning" onclick="window.location='{{ url('/profile/complete/' . strtolower($otherType)) }}'">Switch to {{$otherType}}</button>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <img src="/avatars/{{ $avatar }}" style="width:50px; height:50px; float:left; margin-right:25px;">
+                            <label for="name" class="col-md-6 control-label text-right">Profile Picture</label>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Upload</button>
+                            <form class="form-horizontal" role="form" method="POST" action="/profile/avatar">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="action" value="delete" />
+                                <input type="hidden" name="type" value="{{$type}}">
+                                <input type="submit" class="btn btn-danger" value="Delete" />
+                            </form>
                         </div>
                         @if($accType == 'Student')
                             <form class="form-horizontal" role="form" method="POST" action="{{ url($url) }}">
