@@ -93,7 +93,7 @@
 
                         <div class="row">
                             <div class="col-md-10">
-                                <img src="//www.gravatar.com/avatar/{{ md5($email) }} ?s=128" alt="{{ $name }}" class="">
+                                <img src="/avatars/{{ $avatar }}" style="width:150px; height:150px; float:left; margin-right:25px;">
                             </div>
                             <div class="col-md-2">
                                 @if($usersProfile)

@@ -192,7 +192,9 @@ return [
         Riari\Forum\Frontend\ForumFrontendServiceProvider::class,
 
         //Like/Comment System
-        risul\LaravelLikeComment\LikeCommentServiceProvider::class
+        risul\LaravelLikeComment\LikeCommentServiceProvider::class,
+
+        Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -245,6 +247,8 @@ return [
 
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
+
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 
