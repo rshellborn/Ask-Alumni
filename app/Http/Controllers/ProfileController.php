@@ -12,6 +12,16 @@ use Image;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) { Talk::setAuthUserId(Auth::user()->id); return $next($request); });
+
+        View::composer('partials.peoplelist', function($view) {
+            $threads = Talk::threads();
+            $view->with(compact('threads'));
+        });
+    }
+
     public function index() {
         session_start();
         $displayModal = false;
@@ -269,6 +279,18 @@ class ProfileController extends Controller
                     'bio' => $bio,
                     'inSchool' => $inSchool == "true" ? true : false,
                 ]);
+        }
+
+        if(Auth::user()->avatar == 'default') {
+            $user = Auth::user();
+
+            if($accType == 'Alumni') {
+                $user->avatar = 'default-alumni.png';
+            } elseif ($accType == 'Student') {
+                $user->avatar = 'default-student.png';
+            }
+
+            $user->save();
         }
 
         return redirect()->action('ProfileController@index');

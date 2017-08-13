@@ -55,13 +55,12 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             ];
         });
 
-        Route::group(['prefix' => 'messages'], function () {
-            Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
-            //Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
-            Route::post('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
-            Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
-            Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
-            Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
+        Route::get('message/{id}', 'MessageController@chatHistory')->name('message.read');
+        Route::get('messages', 'MessageController@index');
+
+        Route::group(['prefix'=>'ajax', 'as'=>'ajax::'], function() {
+            Route::post('message/send', 'MessageController@ajaxSendMessage')->name('message.new');
+            Route::delete('message/delete/{id}', 'MessageController@ajaxDeleteMessage')->name('message.delete');
         });
 
 

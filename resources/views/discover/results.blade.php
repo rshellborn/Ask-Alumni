@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="text-center">
@@ -31,12 +31,7 @@
                                         <p><strong>High school:</strong> {{$user->highSchool}}</p>
                                     </div>
                                     <div class="col-md-2">
-                                        <form role="form" method="POST" action="{{ url('/messages/create') }}">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" value="{{ $user->id }}" name="user" />
-                                            <input type="hidden" value="search" name="trigger" />
-                                            <button class="btn btn-primary">Message</button>
-                                        </form>
+                                        <a href="{{route('message.read', ['id'=>$user->id])}}" class="btn btn-success pull-right">Message</a>
                                     </div>
                                 </div>
                             @endforeach

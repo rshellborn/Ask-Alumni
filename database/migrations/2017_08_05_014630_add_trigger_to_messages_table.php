@@ -14,7 +14,7 @@ class AddTriggerToMessagesTable extends Migration
     public function up()
     {
         Schema::table('messages', function (Blueprint $table) {
-            $table->string('trigger');
+            $table->string('trigger')->default('unknown');
         });
     }
 

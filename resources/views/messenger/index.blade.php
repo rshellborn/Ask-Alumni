@@ -1,43 +1,37 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading text-center">
                         <h4><strong>Messages</strong></h4>
                     </div>
 
                     <div class="panel-body">
-                        <div class="text-right">
-                            <button class="btn btn-primary" onclick="window.location='{{ url('/discover') }}'">New Message</button>
-                        </div>
-                        <br/>
-                        @if (Session::has('error_message'))
-                            <div class="alert alert-danger" role="alert">
-                                {{ Session::get('error_message') }}
-                            </div>
-                        @endif
-                        @if($threads->count() > 0)
-                            @foreach($threads as $thread)
-                                <?php $class = $thread->isUnread($currentUserId) ? 'alert-info' : 'border rounded'; ?>
+                        <div class="row">
+                            @foreach($threads as $inbox)
+                                @if(!is_null($inbox->thread))
+                                    <a href="{{route('message.read', ['id'=>$inbox->withUser->id])}}">
+                                        <div class="col-md-12" id="convoSelect">
+                                            <img src="{{'/avatars/' . $inbox->withUser->avatar}}" alt="avatar" style="width: 50px;height: 50px;border-radius:50px;" />
 
-                            <a style="text-decoration: none; cursor: pointer;" href={{url("messages/" . $thread->id)}}>
-                                <div class="media alert {{ $class }}" style="border:2px solid #3097d1;">
-                                    <h4 class="media-heading"><strong>{{$thread->subject}}</strong></h4>
-                                    <h5><strong>{{ str_replace(array(',', $currentUserName), '', $thread->participantsString()) }}</strong></h5>
-                                    <p style="font-style: italic ">{{ $thread->latestMessage->body }}</p>
-                                </div>
-                            </a>
+                                            <div><strong>{{$inbox->withUser->name}}</strong></div>
+                                            <div>
+                                                @if(auth()->user()->id == $inbox->thread->sender->id)
+                                                    <span class="fa fa-reply"></span>
+                                                @endif
+                                                <span>{{substr($inbox->thread->message, 0, 20)}}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                @endif
                             @endforeach
-                        @else
-                            <p>You currently have no conversations.</p>
-                        @endif
-
-                            <div class="text-center">{{ $threads->links() }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@stop
+@endsection
