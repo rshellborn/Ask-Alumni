@@ -181,9 +181,6 @@ return [
 
         //Add on service providers
 
-        //Messages
-        Cmgmyr\Messenger\MessengerServiceProvider::class,
-
         //HTML
         Collective\Html\HtmlServiceProvider::class,
 
@@ -191,10 +188,9 @@ return [
         Riari\Forum\ForumServiceProvider::class,
         Riari\Forum\Frontend\ForumFrontendServiceProvider::class,
 
-        //Like/Comment System
-        risul\LaravelLikeComment\LikeCommentServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
-        Intervention\Image\ImageServiceProvider::class
+        Nahid\Talk\TalkServiceProvider::class,
     ],
 
     /*
@@ -248,7 +244,9 @@ return [
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
 
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+
+        'Talk'      => Nahid\Talk\Facades\Talk::class,
 
     ],
 

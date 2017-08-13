@@ -36,7 +36,12 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/comment.min.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/form.min.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/button.min.css" rel="stylesheet">
-    <link href="{{ asset('/vendor/laravelLikeComment/css/style.css') }}" rel="stylesheet">
+
+    <style>
+        #convoSelect:hover {
+            background-color: #4c5454;
+        }
+    </style>
 </head>
 <body>
 <script>
@@ -49,7 +54,7 @@
     ga('send', 'pageview');
 
 </script>
-    <div id="app" v-cloak>
+    <div id="app" v-cloak style="margin-bottom:10px">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -143,7 +148,28 @@
             </div>
         </nav>
 
-        @yield('content')
+        <div class="container-fluid text-center">
+            <div class="row content">
+                <div class="col-md-2 sidenav">
+                    @if (Auth::check() && !request()->is('messages'))
+                        @include('partials.peoplelist')
+                    @endif
+                </div>
+                <div class="col-md-8">
+                    @yield('content')
+                </div>
+                <div class="col-md-2 sidenav">
+                    @if (Auth::check())
+                        <div class="well">
+                            <p>ADS</p>
+                        </div>
+                        <div class="well">
+                            <p>ADS</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
     <script src="/js/app.js"></script>
     @yield('scripts')

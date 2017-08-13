@@ -32,7 +32,8 @@ class DatabaseSeeder extends Seeder
             'degrees' => "Diploma",
             'schools' => "British Columbia Institute of Technology",
             "inSchool" => true,
-            "allowMessage" => true
+            "allowMessage" => true,
+            'favourites_user_ids' => ''
         ]);
 
         DB::table('users')->insert([
@@ -49,7 +50,8 @@ class DatabaseSeeder extends Seeder
             'degrees' => "Bachelors,Masters",
             'schools' => "Simon Fraser University,University of British Columbia",
             "inSchool" => false,
-            "allowMessage" => true
+            "allowMessage" => true,
+            'favourites_user_ids' => ''
         ]);
 
         DB::table('users')->insert([
@@ -66,7 +68,8 @@ class DatabaseSeeder extends Seeder
             'degrees' => "Bachelors",
             'schools' => "Simon Fraser University",
             "inSchool" => true,
-            "allowMessage" => true
+            "allowMessage" => true,
+            'favourites_user_ids' => ''
         ]);
 
         DB::table('users')->insert([
@@ -83,7 +86,8 @@ class DatabaseSeeder extends Seeder
             'degrees' => "Bachelors",
             'schools' => "Douglas College",
             "inSchool" => true,
-            "allowMessage" => true
+            "allowMessage" => true,
+            'favourites_user_ids' => ''
         ]);
 
         DB::table('users')->insert([
@@ -100,7 +104,8 @@ class DatabaseSeeder extends Seeder
             'degrees' => "Bachelors",
             'schools' => "University of Victoria,Langara College,Douglas College",
             "inSchool" => true,
-            "allowMessage" => true
+            "allowMessage" => true,
+            'favourites_user_ids' => ''
         ]);
     }
 
@@ -115,7 +120,8 @@ class DatabaseSeeder extends Seeder
             'type' => "Student",
             'highSchool' => "Terry Fox Secondary School",
             'fields' => "Computer Science,Law,Psychology,Applied Sciences",
-            'schools' => "British Columbia Institute of Technology,University of British Columbia,Kwantlen Polytechnic University,University of Victoria"
+            'schools' => "British Columbia Institute of Technology,University of British Columbia,Kwantlen Polytechnic University,University of Victoria",
+            'favourites_user_ids' => ''
         ]);
 
         DB::table('users')->insert([
@@ -128,7 +134,8 @@ class DatabaseSeeder extends Seeder
             'type' => "Student",
             'highSchool' => "Port Moody Secondary School",
             'fields' => "Biology,Physics,Earth and Space Sciences,Sciences",
-            'schools' => "University of the Fraser Valley,University of British Columbia,Douglas College,University of Victoria"
+            'schools' => "University of the Fraser Valley,University of British Columbia,Douglas College,University of Victoria",
+            'favourites_user_ids' => ''
         ]);
 
         DB::table('users')->insert([
@@ -141,7 +148,8 @@ class DatabaseSeeder extends Seeder
             'type' => "Student",
             'highSchool' => "Centennial Secondary School",
             'fields' => "Arts,Languages and Literature,Performing Arts,Visual Arts",
-            'schools' => "Langara College,Douglas College,Emily Carr University of Art and Design,University of Victoria"
+            'schools' => "Langara College,Douglas College,Emily Carr University of Art and Design,University of Victoria",
+            'favourites_user_ids' => ''
         ]);
 
         DB::table('users')->insert([
@@ -154,7 +162,8 @@ class DatabaseSeeder extends Seeder
             'type' => "Student",
             'highSchool' => "Terry Fox Secondary School",
             'fields' => "Sociology,Psychology,Philosophy",
-            'schools' => "University of British Columbia,Douglas College,Simon Fraser University,University of Victoria"
+            'schools' => "University of British Columbia,Douglas College,Simon Fraser University,University of Victoria",
+            'favourites_user_ids' => ''
         ]);
     }
 }

@@ -15,7 +15,7 @@ class AddFavouritesToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->integer('favourites')->unsigned()->default(0);
-            $table->string('favourites_user_ids');
+            $table->string('favourites_user_ids')->default('');
         });
     }
 
