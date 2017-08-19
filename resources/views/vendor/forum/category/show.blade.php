@@ -48,7 +48,7 @@
             <div class="col-xs-4">
                 @if ($category->threadsEnabled)
                     @can ('createThreads', $category)
-                        <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-primary">{{ trans('forum::threads.new_thread') }}</a>
+                        <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-pink">{{ trans('forum::threads.new_thread') }}</a>
                     @endcan
                 @endif
             </div>
@@ -117,7 +117,7 @@
                                     <td class="text-right">
                                         <a href="{{ '/profile/view/' . $thread->lastPost->author_id}}">{{ $thread->lastPost->authorName }}</a>
                                         <p class="text-muted">({{ $thread->lastPost->posted }})</p>
-                                        <a href="{{ Forum::route('thread.show', $thread->lastPost) }}" class="btn btn-primary btn-xs">{{ trans('forum::posts.view') }} &raquo;</a>
+                                        <a href="{{ Forum::route('thread.show', $thread->lastPost) }}" class="btn btn-pink btn-xs">{{ trans('forum::posts.view') }} &raquo;</a>
                                     </td>
                                 @endif
                                 @can ('manageThreads', $category)
@@ -152,7 +152,7 @@
             <div class="col-xs-4">
                 @if ($category->threadsEnabled)
                     @can ('createThreads', $category)
-                        <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-primary">{{ trans('forum::threads.new_thread') }}</a>
+                        <a href="{{ Forum::route('thread.create', $category) }}" class="btn btn-pink">{{ trans('forum::threads.new_thread') }}</a>
                     @endcan
                 @endif
             </div>

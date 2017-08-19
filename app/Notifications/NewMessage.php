@@ -12,15 +12,16 @@ use NotificationChannels\WebPush\WebPushChannel;
 class NewMessage extends Notification
 {
     use Queueable;
+    private $userId;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($userId)
     {
-        //
+        $this->userId = $userId;
     }
 
     /**
@@ -45,7 +46,7 @@ class NewMessage extends Notification
         return [
             'title' => 'New Message',
             'body' => 'You have a new message.',
-            'action_url' => '/messages',
+            'action_url' => '/message/' . $this->userId,
             'icon' => '/message-icon.png',
             'created' => Carbon::now()->toIso8601String()
         ];

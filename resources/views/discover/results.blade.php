@@ -1,45 +1,40 @@
-@extends('layouts.app')
+@extends('layouts.maincontent')
+
+@section('title')
+    Results
+@endsection
 
 @section('content')
-    <div class="container">
+    <h4 class="text-right" style="font-weight: bold">{{count($results)}}
+        @if(count($results)==1)
+            result found
+        @else
+            results found
+        @endif
+    </h4>
+    <br/>
+    @foreach($results as $user)
         <div class="row">
-            <div class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="text-center">
-                            <h4><strong>Results</strong></h4>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <h4 class="text-success text-center" style="font-weight: bold">{{count($results)}}
-                            @if(count($results)==1)
-                                result were found
-                            @else
-                                results were found
-                            @endif
-                        </h4>
-                        <br/>
-                        <div class="container">
-                            @foreach($results as $user)
-                                <div class="col-md-7">
-                                    <div class="col-md-10">
-                                        <h4><a href="{{ url("profile/view/" . $user->id) }}">{{  $user->name }}</a></h4>
-                                        <p><strong>Post secondary institutions:</strong> {{$user->schools}}</p>
-                                        <p><strong>Fields of study:</strong> {{$user->fields}}</p>
-                                        <p><strong>Degrees:</strong> {{$user->degrees}}</p>
-                                        <p><strong>High school:</strong> {{$user->highSchool}}</p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <a href="{{route('message.read', ['id'=>$user->id])}}" class="btn btn-success pull-right">Message</a>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="text-center">{{ $results->appends($_REQUEST)->render() }}</div>
-                    </div>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-2">
+                    <img src="{{url('/avatars/' . $user->avatar)}}" style="width: 80px; height: 80px; border-radius:50px;margin:10px" />
+                </div>
+                <div class="col-md-8">
+                    <h4><a href="{{ url("profile/view/" . $user->id) }}" style="text-decoration: underline;">{{  $user->name }}</a></h4>
+                    <h5>{{ $user->type }}</h5>
+                    <strong>Post secondary institutions:</strong> {{$user->schools}}<br/>
+                    <strong>Fields of study:</strong> {{$user->fields}}<br/>
+                    <strong>Degrees:</strong> {{$user->degrees}}<br/>
+                    <strong>High school:</strong> {{$user->highSchool}}
+                </div>
+                <div class="col-md-2">
+                    <a href="{{route('message.read', ['id'=>$user->id])}}" class="btn btn-pink pull-right">Message</a>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-md-8 col-md-offset-2">
+            <hr class="thick-hr"/>
+        </div>
+    @endforeach
+    <div class="text-center">{{ $results->appends($_REQUEST)->render() }}</div>
 @endsection

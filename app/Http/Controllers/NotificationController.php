@@ -129,9 +129,9 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function storeMessage($user)
+    public function storeMessage($user, $userId)
     {
-        $user->notify(new NewMessage);
+        $user->notify(new NewMessage($userId));
 
         return response()->json('Notification sent.', 201);
     }

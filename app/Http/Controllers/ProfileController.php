@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Http\Requests;
 use Image;
+use Nahid\Talk\Facades\Talk;
+use View;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProfileController extends Controller
 {
@@ -20,6 +23,10 @@ class ProfileController extends Controller
             $threads = Talk::threads();
             $view->with(compact('threads'));
         });
+    }
+
+    public function type() {
+        return view('profile.type');
     }
 
     public function index() {
@@ -56,11 +63,9 @@ class ProfileController extends Controller
 
         if($type == "Alumni") {
             $bio = $user->bio;
-
-            return view('profile.alumni', compact('url', 'avatar', 'displayModal', 'rank', 'points', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'avatar', 'displayModal', 'email', 'rank', 'degrees', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        return view('profile.view', compact('highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function view($id) {
@@ -88,21 +93,20 @@ class ProfileController extends Controller
 
         $url = 'profile/edit';
 
+        $inSchool = false;
+        $bio = "";
+
         if($type == "Alumni") {
             $inSchool = $user->inSchool;
 
             $bio = $user->bio;
-
-            return view('profile.alumni', compact('url', 'avatar', 'displayModal', 'points', 'rank', 'usersProfile', 'highSchool', 'id', 'name', 'bio', 'email', 'fields', 'schools', 'degrees', 'inSchool'));
         }
 
-        return view('profile.student', compact('highSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        return view('profile.view', compact('highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function edit() {
         $user = Auth::user();
-
-        $url = 'profile/edit';
 
         $avatar = $user->avatar;
 
@@ -164,10 +168,12 @@ class ProfileController extends Controller
         $type = $type == 'Alumni' ? 'an Alumni' : 'a Student';
 
 
-        return view('profile.edit',  compact('url', 'avatar', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'inSchool', 'notInSchool', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
+        return view('profile.edit',  compact('avatar', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'inSchool', 'notInSchool', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
     }
 
     public function alumniComplete() {
+        $avatar = Auth::user()->avatar;
+
         //get high schools
         $allhighschools = \App\HighSchool::all();
 
@@ -192,10 +198,12 @@ class ProfileController extends Controller
         $fields1 = array_slice($fields, 0, $splitSize);
         $fields2 = array_slice($fields, $splitSize);
 
-        return view('profile.complete.alumni',  compact('schools1', 'schools2', 'fields1', 'fields2', 'degrees', 'highschools'));
+        return view('profile.complete.alumni',  compact('avatar', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees', 'highschools'));
     }
 
     public function studentComplete() {
+        $avatar = Auth::user()->avatar;
+
         //get high schools
         $allhighschools = \App\HighSchool::all();
 
@@ -220,7 +228,7 @@ class ProfileController extends Controller
         $fields1 = array_slice($fields, 0, $splitSize);
         $fields2 = array_slice($fields, $splitSize);
 
-        return view('profile.complete.student',  compact('schools1', 'schools2', 'fields1', 'fields2', 'degrees', 'highschools'));
+        return view('profile.complete.student',  compact('avatar', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees', 'highschools'));
     }
 
     public function save() {
@@ -237,28 +245,66 @@ class ProfileController extends Controller
             $highSchool = $otherHighSchool;
         }
 
-        if($schools != null) {
-            $replaceFlag = false;
-            if (in_array('other', $schools)) {
-                $replaceFlag = true;
+        //check if they entered any extra stuff
+        $otherInputs = Input::get('otherSchools');
+        if($otherInputs != null) {
+            $otherInputs = explode(',', $otherInputs);
+            foreach($otherInputs as $school) {
+                $formatted = trim($school);
+                $formatted = ucwords($formatted);
+                if(count($schools) > 0) {
+                    array_push($schools, $formatted);
+                } else {
+                    $schools = $formatted;
+                }
             }
         }
 
+        $otherInputs = Input::get('otherFields');
+        if($otherInputs != null) {
+            $otherInputs = explode(',', $otherInputs);
+            foreach($otherInputs as $school) {
+                $formatted = trim($school);
+                $formatted = ucwords($formatted);
+                if(count($fields) > 0) {
+                    array_push($fields, $formatted);
+                } else {
+                    $fields = $formatted;
+                }
+            }
+        }
+
+        $otherInputs = Input::get('otherDegrees');
+        if($otherInputs != null) {
+            $otherInputs = explode(',', $otherInputs);
+            foreach($otherInputs as $school) {
+                $formatted = trim($school);
+                $formatted = ucwords($formatted);
+                if(count($degree) > 0) {
+                    array_push($degree, $formatted);
+                } else {
+                    $degree = $formatted;
+                }
+            }
+        }
+
+
         if(count($fields) > 0) {
             $fields = implode(",", $fields);
-        } else {
+        } else if (count($fields) == 0) {
             $fields = '';
         }
+
         if(count($schools) > 0) {
             $schools = implode(",", $schools);
-            if($replaceFlag) {
-                $schools = str_replace('other', Input::get('otherSchool'), $schools);
-            }
-        } else {
+        } else if(count($schools) == 0) {
             $schools = '';
         }
+
         if(count($degree) > 0) {
             $degree = implode(",", $degree);
+        } else if(count($schools) == 0) {
+            $degree = '';
         }
 
         DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
@@ -344,9 +390,36 @@ class ProfileController extends Controller
                 'favourites_user_ids' => $users,
                 'favourites' => $favourites
             ]);
+
+        if($request->input('return') == 'true') {
+            $favourites = DB::table('users')->where('id', Auth::user()->id)->value('favourites');
+            $userids = DB::table('users')->where('id', Auth::user()->id)->value('favourites_user_ids');
+            $userids = explode(',', $userids);
+
+            $users = array();
+            foreach($userids as $userid) {
+                $user = DB::table('users')->where('id', $userid)->first();
+                array_push($users, $user);
+            }
+
+            // Get current page form url e.x. &page=1
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            // Create a new Laravel collection from the array data
+            $itemCollection = collect($users);
+            // Define how many items we want to be visible in each page
+            $perPage = 10;
+            // Slice the collection to get the items to display in current page
+            $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+            // Create our paginator and pass it to the view
+            $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+
+            // set url path for generted links
+            $paginatedItems->setPath($request->url());
+            return view('profile.favourites', ['users' => $paginatedItems, 'favourites' => $favourites]);
+        }
     }
 
-    public function favourites() {
+    public function favourites(Request $request) {
         $favourites = DB::table('users')->where('id', Auth::user()->id)->value('favourites');
         $userids = DB::table('users')->where('id', Auth::user()->id)->value('favourites_user_ids');
         $userids = explode(',', $userids);
@@ -357,7 +430,20 @@ class ProfileController extends Controller
             array_push($users, $user);
         }
 
-        return view('profile.favourites',  compact('favourites', 'users'));
+        // Get current page form url e.x. &page=1
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        // Create a new Laravel collection from the array data
+        $itemCollection = collect($users);
+        // Define how many items we want to be visible in each page
+        $perPage = 10;
+        // Slice the collection to get the items to display in current page
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        // Create our paginator and pass it to the view
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+
+        // set url path for generted links
+        $paginatedItems->setPath($request->url());
+        return view('profile.favourites', ['users' => $paginatedItems, 'favourites' => $favourites]);
     }
 
     public function avatar(Request $request) {

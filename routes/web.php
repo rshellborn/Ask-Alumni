@@ -74,19 +74,13 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 
         Route::post('/profile/avatar', 'ProfileController@avatar');
 
-        Route::get('/home', function () {
-            return view('about.about');
-        });
+        Route::get('/home', 'ContactController@about');
 
-        Route::get('/pointsystem', function () {
-            return view('pointsystem');
-        });
+        Route::get('/pointsystem', 'PointsController@points');
 
     });
 
-    Route::get('/profile/complete/type', function () {
-        return view('profile.type');
-    });
+    Route::get('/profile/complete/type', 'ProfileController@type');
 
     Route::post('/profile/edit', 'ProfileController@save');
     Route::get('/profile/complete/student', 'ProfileController@studentComplete');
@@ -97,13 +91,9 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 
 Route::get('/activate/{code}', 'ActivateController@index');
 
-Route::get('/about', function () {
-    return view('about.about');
-});
+Route::get('/about', 'ContactController@about');
 
-Route::get('/contact', function () {
-    return view('about.contact');
-});
+Route::get('/contact', 'ContactController@contact');
 
 Route::post('/contact', 'ContactController@send');
 

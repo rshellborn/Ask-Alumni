@@ -31,8 +31,8 @@
                 <textarea name="content" class="form-control">{{ !is_null(old('content')) ? old('content') : $post->content }}</textarea>
             </div>
 
-            <button type="submit" class="btn btn-success pull-right">{{ trans('forum::general.proceed') }}</button>
-            <a href="{{ URL::previous() }}" class="btn btn-default">{{ trans('forum::general.cancel') }}</a>
+            <button type="submit" class="btn btn-pink pull-right">{{ trans('forum::general.proceed') }}</button>
+            <a href="{{ URL::previous() }}" class="btn btn-pink">{{ trans('forum::general.cancel') }}</a>
         </form>
     </div>
 @stop
