@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @if (config('webpush.gcm.sender_id'))
+        <link rel="manifest" href="/manifest.json">
+    @endif
+
     <title>
         @if (isset($thread))
             {{ $thread->title }} -
@@ -16,27 +20,8 @@
         {{ trans('forum::general.home_title') }}
     </title>
 
-
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <style>
-
-        textarea {
-            min-height: 200px;
-        }
-
-        .deleted {
-            opacity: 0.65;
-        }
-    </style>
-
-
-    <!-- GCM Manifest (optional if VAPID is used) -->
-    @if (config('webpush.gcm.sender_id'))
-        <link rel="manifest" href="/manifest.json">
-@endif
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
@@ -44,7 +29,104 @@
     <link href="/css/app.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <!-- Scripts -->
+    <style>
+        textarea {
+            min-height: 200px;
+        }
+        .deleted {
+            opacity: 0.65;
+        }
+        a {
+            color:#FF715b;
+        }
+        a:hover {
+            color:#FF6146;
+        }
+        .convoSelect {
+            background-color: transparent;
+        }
+        .toggleWhite {
+            color: black;
+        }
+        .toggleWhite:hover {
+            color: white;
+        }
+        .convoSelectIndex {
+            color: black;
+        }
+        .convoSelectIndex:hover {
+            background-color: #1ea896;
+            cursor: hand;
+            cursor: pointer;
+            border-radius: 10px;
+            color: white;
+        }
+        .convoSelect:hover {
+            background-color: #1ea896;
+            cursor: hand;
+            cursor: pointer;
+        }
+        .profileNav:hover {
+            background-color: #178e7f;
+            cursor: hand;
+            cursor: pointer;
+            color: white;
+        }
+        .profileNavLink:hover {
+            text-decoration: none;
+            color: white;
+        }
+        .profileNav {
+            background-color: #1ea896;
+        }
+        .profileNavLink {
+            text-decoration: none;
+            color: white;
+        }
+        @media (min-width: 768px) {
+            .navbar-nav.navbar-center {
+                position: absolute;
+                left: 50%;
+                transform: translatex(-50%);
+            }
+        }
+        .navbar-default .navbar-nav>li>a, .navbar-default .navbar-text {
+            color: #fff;
+        }
+        .navbar-default:hover .navbar-nav>li>a:hover, .navbar-default:hover .navbar-text:hover {
+            background-color: #1EA896;
+            color: #fff;
+        }
+        .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+            color: #fff;
+        }
+        .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+            background-color: #1EA896;
+            color: #fff;
+        }
+        body {
+            background-color: #e9ebee;
+        }
+        .breadcrumb>li+li:before {
+            content: "/";
+            padding: 0 5px;
+            color: #ccc;
+        }
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            background-color: #1EA896;
+        }
+        .btn-pink {
+            background-color: #FF715b;
+            border-color: #FF715b;
+            color: white;
+        }
+        .btn-pink:hover {
+            background-color: #FF6146;
+            border-color: #FF6146;
+            color: white;
+        }
+    </style>
+
     <script>
         window.Laravel ={!! json_encode([
             'user' => Auth::user(),
@@ -110,105 +192,80 @@
 
 </script>
 <div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
+    <nav class="navbar navbar-default" style="background-color: #4C5454;">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
-                <!-- Branding Image -->
-                <a href="{{ url('/') }}">
-                    <img style="float:left; margin-right:5px" width="30px" src="{{ url('/alumnilogo.png') }}"/>
+                <a class="navbar-brand" href="#">
+                    @if (Auth::check())
+                        <a href="{{ url('/forum') }}">
+                            <img style="float:left; margin-right:5px" width="30px" src="{{ url('/alumnilogo.png') }}"/>
+                        </a>
+                        <a class="navbar-brand" href="{{ url('/forum') }}" style="color: white;">
+                            {{ config('app.name', 'Ask Alumni') }}
+                        </a>
+                    @else
+                        <a href="{{ url('/') }}">
+                            <img style="float:left; margin-right:5px" width="30px" src="{{ url('/alumnilogo.png') }}"/>
+                        </a>
+                        <a class="navbar-brand" href="{{ url('/') }}" style="color: white;">
+                            {{ config('app.name', 'Ask Alumni') }}
+                        </a>
+                    @endif
                 </a>
-                @if (Auth::check())
-                    <a class="navbar-brand" href="{{ url('/home') }}">
-                        {{ config('app.name', 'Ask Alumni') }}
-                    </a>
-                @else
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Ask Alumni') }}
-                    </a>
-                @endif
             </div>
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <ul class="nav navbar-nav">
-                        @if (Auth::check())
-                            <li><a href="{{ url('/forum') }}">Forums</a></li>
-                            <li><a href="{{ url('/matches') }}">Matches</a></li>
-                            <li><a href="{{ url('/discover') }}">Discover</a></li>
-                            <li><a href="{{ url('/messages') }}">Messages</a></li>
-                            <li><a href="{{ url('/rankings') }}">Rankings</a></li>
-                        @endif
-                    </ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-center">
+                    @if (Auth::check())
+                        <li><a href="{{ url('/forum') }}">Forums</a></li>
+                        <li><a href="{{ url('/matches') }}">Matches</a></li>
+                        <li><a href="{{ url('/discover') }}">Discover</a></li>
+                        <li><a href="{{ url('/messages') }}">Messages</a></li>
+                        <li><a href="{{ url('/rankings') }}">Rankings</a></li>
+                    @endif
                 </ul>
 
-                <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::check())
                         <notifications-dropdown></notifications-dropdown>
                     @endif
-                    <!-- Authentication Links -->
+                <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
                         <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ url('/profile') }}">
-                                        My Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/favourites') }}">
-                                        Favourites
-                                    </a>
-                                </li>
-                                <li>
-                                @if (Auth::check())
-                                    @if (Auth::user()->email == 'rachel@shellborn.com')
-                                        <a href="{{ url('/reports') }}">Reports</a>
-                                    @endif
-                                @endif
-                                </li>
-                                <li>
-                                    <a href="{{ url('/logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
                     @endif
                 </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row content">
+            <div class="col-md-2 sidenav hidden-xs text-center">
+                @if (Auth::check() && !request()->is('messages'))
+                    @include('partials.peoplelist')
+                @endif
+            </div>
+            <div class="col-md-8" style="margin-bottom: 10px;">
+                @include ('forum::partials.breadcrumbs')
+                @include ('forum::partials.alerts')
+                @yield('content')
+            </div>
+            <div class="col-md-2 sidenav text-center">
+                @if (Auth::check())
+                    @include('partials.personinfo')
+                @endif
             </div>
         </div>
-    </nav>
-</div>
-
-<div class="container">
-    @include ('forum::partials.breadcrumbs')
-    @include ('forum::partials.alerts')
-
-    @yield('content')
+    </div>
 </div>
 
 <script>

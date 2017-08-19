@@ -10,9 +10,25 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\NotificationController;
 use App\Notifications\AdviceThreadLike;
+use Nahid\Talk\Facades\Talk;
+use View;
 
 class PointsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) { Talk::setAuthUserId(Auth::user()->id); return $next($request); });
+
+        View::composer('partials.peoplelist', function($view) {
+            $threads = Talk::threads();
+            $view->with(compact('threads'));
+        });
+    }
+
+    public function points() {
+        return view('pointsystem');
+    }
+
     // Points from users up voting an advice thread
     public function adviceVote(Request $request) {
         $threadID = $request->input('thread');

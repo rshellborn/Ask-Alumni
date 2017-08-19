@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Nahid\Talk\Facades\Talk;
+use View;
 
 class ContactController extends Controller
 {
@@ -36,5 +38,13 @@ class ContactController extends Controller
         });
 
         return view('about.thankyou');
+    }
+
+    public function about() {
+        return view('about.about');
+    }
+
+    public function contact() {
+        return view('about.contact');
     }
 }
