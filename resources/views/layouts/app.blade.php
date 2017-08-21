@@ -37,10 +37,10 @@
 
     <style>
         a {
-            color:#FF715b;
+            color:#1ea896;
         }
         a:hover {
-            color:#FF6146;
+            color:#178e7f;
         }
         .convoSelect {
             background-color: transparent;
@@ -55,7 +55,7 @@
             color: black;
         }
         .convoSelectIndex:hover {
-            background-color: #ff715b;
+            background-color: #1ea896;
             cursor: hand;
             cursor: pointer;
             border-radius: 10px;
@@ -114,6 +114,7 @@
         }
         body {
             background-color: #e9ebee;
+            margin-top: 80px;
         }
         .breadcrumb>li+li:before {
             content: "/";
@@ -124,13 +125,13 @@
             background-color: #1EA896;
         }
         .btn-pink {
-            background-color: #FF715b;
-            border-color: #FF715b;
+            background-color: #1ea896;
+            border-color: #1ea896;
             color: white;
         }
         .btn-pink:hover {
-            background-color: #FF6146;
-            border-color: #FF6146;
+            background-color: #178e7f;
+            border-color: #178e7f;
             color: white;
         }
         .nav>li>a:focus, .nav>li>a:hover {
@@ -147,7 +148,7 @@
             border-top: 1px solid #ccc;
             margin: 1em 0;
             padding: 0;
-            background-color: #FF715b;
+            background-color: #1ea896;
         }
         .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
             z-index: 3;
@@ -183,7 +184,7 @@
 
 </script>
     <div id="app" v-cloak style="margin-bottom:10px">
-        <nav class="navbar navbar-default" style="background-color: #4C5454;">
+        <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #4C5454;">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -241,16 +242,25 @@
         @yield('modal')
         <div class="container-fluid">
             <div class="row content">
-                <div class="col-md-2 sidenav hidden-xs text-center">
-                    @if (Auth::check() && !request()->is('messages'))
-                        @include('partials.peoplelist')
-                    @endif
+                <div class="col-md-2" style="padding-left: 0;">
+                    <div class="sidebar-nav-fixed affix hidden-xs hidden-sm">
+                {{--<div class="col-md-2 sidebar-nav-fixed affix hidden-xs text-center">--}}
+                        @if(Auth::check() && !request()->is('messages')
+                        && !request()->is('profile/complete/alumni') && !request()->is('profile/complete/student')
+                        && !request()->is('profile/complete/type'))
+                            @include('partials.peoplelist')
+                        @endif
+                    </div>
                 </div>
+
                 <div class="col-md-8">
                     @yield('body')
                 </div>
-                <div class="col-md-2 sidenav text-center">
-                    @if (Auth::check())
+
+                <div>
+                    @if(Auth::check() && !request()->is('profile')
+                    && !request()->is('profile/complete/alumni') && !request()->is('profile/complete/student')
+                    && !request()->is('profile/complete/type'))
                         @include('partials.personinfo')
                     @endif
                 </div>

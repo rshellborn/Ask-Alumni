@@ -15,8 +15,8 @@
 @endsection
 
 @section('content')
-    <h4 class="text-right" style="font-weight: bold">{{count($matches)}}
-        @if(count($matches)==1)
+    <h4 class="text-right" style="font-weight: bold">{{$totalMatches}}
+        @if($totalMatches==1)
             match
         @else
             matches
@@ -62,5 +62,8 @@
             <hr class="thick-hr"/>
         </div>
     @endforeach
-    <div class="text-center">{{ $matches->links() }}</div>
+
+    <div class="col-md-4 col-md-offset-4">
+        <div class="text-center">{{ $matches->links() }}</div>
+    </div>
 @endsection

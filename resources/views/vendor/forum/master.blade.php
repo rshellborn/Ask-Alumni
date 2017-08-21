@@ -37,10 +37,10 @@
             opacity: 0.65;
         }
         a {
-            color:#FF715b;
+            color:#1ea896;
         }
         a:hover {
-            color:#FF6146;
+            color:#178e7f;
         }
         .convoSelect {
             background-color: transparent;
@@ -106,6 +106,7 @@
         }
         body {
             background-color: #e9ebee;
+            margin-top: 80px;
         }
         .breadcrumb>li+li:before {
             content: "/";
@@ -116,14 +117,18 @@
             background-color: #1EA896;
         }
         .btn-pink {
-            background-color: #FF715b;
-            border-color: #FF715b;
+            background-color: #1ea896;
+            border-color: #1ea896;
             color: white;
         }
         .btn-pink:hover {
-            background-color: #FF6146;
-            border-color: #FF6146;
+            background-color: #178e7f;
+            border-color: #178e7f;
             color: white;
+        }
+        #up-vote:hover {
+            cursor: pointer;
+            cursor: hand;
         }
     </style>
 
@@ -143,6 +148,12 @@
         $(function(){
             $('#up-vote').click(function(e){
                 e.preventDefault();
+
+                $('#up-vote').hide();
+                $('<img id="up-vote" src=" {{url('/thumbsupfilled.png') }}"/>').appendTo('#filled');
+                $likes = parseInt($('input[name="likes"]').val());
+                $('#likes').text($likes + 1);
+
                 var threadId = $('input[name="threadID"]').val();
                 var userId = $('input[name="userID"]').val();
                 var authorId = $('input[name="authorID"]').val();
@@ -162,10 +173,6 @@
                     contentType:"application/json",
                     processData:false,
                     success:function(data){
-                        console.log(data.author);
-                        $('#likes').text(data.likes);
-                        $('#up-vote').hide();
-                        $('<img id="up-vote" src=" {{url('/thumbsupfilled.png') }}"/>').appendTo('#filled');
                     },
                     error:function(data, error, info){
                         console.log('error ' +info);
@@ -192,7 +199,7 @@
 
 </script>
 <div id="app">
-    <nav class="navbar navbar-default" style="background-color: #4C5454;">
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #4C5454;">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -249,17 +256,20 @@
 
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-md-2 sidenav hidden-xs text-center">
-                @if (Auth::check() && !request()->is('messages'))
-                    @include('partials.peoplelist')
-                @endif
+            <div class="col-md-2" style="padding-left: 0;">
+                <div class="sidebar-nav-fixed affix hidden-xs hidden-sm">
+                    {{--<div class="col-md-2 sidebar-nav-fixed affix hidden-xs text-center">--}}
+                    @if (Auth::check() && !request()->is('messages'))
+                        @include('partials.peoplelist')
+                    @endif
+                </div>
             </div>
             <div class="col-md-8" style="margin-bottom: 10px;">
                 @include ('forum::partials.breadcrumbs')
                 @include ('forum::partials.alerts')
                 @yield('content')
             </div>
-            <div class="col-md-2 sidenav text-center">
+            <div>
                 @if (Auth::check())
                     @include('partials.personinfo')
                 @endif

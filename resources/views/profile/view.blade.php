@@ -67,7 +67,7 @@
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content text-center">
-                <div class="modal-header" style="background-color: #ff715b; color: white">
+                <div class="modal-header" style="background-color: #1ea896; color: white">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"><strong>Congratulations!</strong></h4>
                 </div>
@@ -98,7 +98,7 @@
                     <div class="col-md-8 text-center" style="padding-bottom: 10px;">
                         <div class="row" style="background-color: #4c5454;border-radius: 10px">
                             <div class="media">
-                                <div class="media-left" style="background-color: #FF715b; padding-right: 0; border-top-left-radius: 10px; border-bottom-left-radius: 10px">
+                                <div class="media-left" style="background-color: #1ea896; padding-right: 0; border-top-left-radius: 10px; border-bottom-left-radius: 10px">
                                     <img src="{{url('/avatars/' . $avatar)}}" style="width: 200px; height: 200px; border-radius:100px;margin:10px" />
                                 </div>
                                 <div class="media-body media-middle" style="background-color: #4c5454; color: white; border-radius: 10px">
@@ -148,7 +148,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <div class="panel-heading text-center" style="background-color: #ff715b; color: white; font-weight: bold;">
+                                <div class="panel-heading text-center" style="background-color: #1ea896; color: white; font-weight: bold;">
                                     @if($type == 'Alumni')
                                         Post Secondary Institutions
                                     @elseif($type == 'Student')
@@ -164,7 +164,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="panel panel-default">
-                                <div class="panel-heading text-center" style="background-color: #ff715b; color: white; font-weight: bold;">
+                                <div class="panel-heading text-center" style="background-color: #1ea896; color: white; font-weight: bold;">
                                     @if($type == 'Alumni')
                                         Degrees
                                     @elseif($type == 'Student')
@@ -180,7 +180,7 @@
                         </div>
                         <div class="col-md-5">
                             <div class="panel panel-default">
-                                <div class="panel-heading text-center" style="background-color: #ff715b; color: white; font-weight: bold;">
+                                <div class="panel-heading text-center" style="background-color: #1ea896; color: white; font-weight: bold;">
                                     @if($type == 'Alumni')
                                         Fields of Study
                                     @elseif($type == 'Student')

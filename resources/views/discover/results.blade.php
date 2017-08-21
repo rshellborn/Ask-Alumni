@@ -5,8 +5,8 @@
 @endsection
 
 @section('content')
-    <h4 class="text-right" style="font-weight: bold">{{count($results)}}
-        @if(count($results)==1)
+    <h4 class="text-right" style="font-weight: bold">{{$totalResults}}
+        @if(count($totalResults)==1)
             result found
         @else
             results found
@@ -36,5 +36,8 @@
             <hr class="thick-hr"/>
         </div>
     @endforeach
-    <div class="text-center">{{ $results->appends($_REQUEST)->render() }}</div>
+
+    <div class="col-md-4 col-md-offset-4">
+        <div class="text-center">{{ $results->appends($_REQUEST)->render() }}</div>
+    </div>
 @endsection

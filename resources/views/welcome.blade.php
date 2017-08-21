@@ -47,9 +47,14 @@
                 text-align: center;
             }
 
+            .featureTitle {
+                color: #178e7f;
+            }
+
             .title {
                 font-size: 50px;
                 font-weight: bold;
+                color: #1ea896;
             }
 
             .subtitle {
@@ -65,19 +70,19 @@
                 text-align: left;
             }
             a {
-                color:#FF715b;
+                color:#1ea896;
             }
             a:hover {
-                color:#FF6146;
+                color:#178e7f;
             }
             .btn-pink {
-                background-color: #FF715b;
-                border-color: #FF715b;
+                background-color: #1ea896;
+                border-color: #1ea896;
                 color: white;
             }
             .btn-pink:hover {
-                background-color: #FF6146;
-                border-color: #FF6146;
+                background-color: #178e7f;
+                border-color: #178e7f;
                 color: white;
             }
         </style>

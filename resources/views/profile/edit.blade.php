@@ -70,7 +70,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #ff715b; color: white">
+                <div class="modal-header" style="background-color: #1ea896; color: white">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title text-center"><strong>Upload Profile Picture</strong></h4>
                 </div>
@@ -91,6 +91,12 @@
 @endsection
 
 @section('content')
+    @if(session()->has('error'))
+        <div class="alert alert-danger text-center" role="alert">
+            <span>{{session()->get('error')}}</span>
+        </div>
+    @endif
+
     <div class="row">
         <div class="form-group">
             <h4 class="col-md-6 control-label text-right">You are currently registered as {{$type}}.</h4>

@@ -231,7 +231,7 @@ class ProfileController extends Controller
         return view('profile.complete.student',  compact('avatar', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees', 'highschools'));
     }
 
-    public function save() {
+    public function save(Request $request) {
         $accType = Input::get('accType');
         $fields = Input::get('fieldOfStudy');
         $schools = Input::get('school');
@@ -242,7 +242,7 @@ class ProfileController extends Controller
         $otherHighSchool = Input::get('otherHighSchool');
 
         if($otherHighSchool != null) {
-            $highSchool = $otherHighSchool;
+            $highSchool = ucwords($otherHighSchool);
         }
 
         //check if they entered any extra stuff
@@ -320,6 +320,11 @@ class ProfileController extends Controller
             $bio = Input::get('bio');
             $inSchool = Input::get('inSchool');
 
+            if($this->wordFilter($bio)) {
+                $request->session()->flash('error', 'Your bio cannot contain profanity.');
+                return back();
+            }
+
             DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
                 [
                     'bio' => $bio,
@@ -340,6 +345,17 @@ class ProfileController extends Controller
         }
 
         return redirect()->action('ProfileController@index');
+    }
+
+    private function wordFilter($text) {
+        $words = file(base_path('resources/assets/profanitylist.txt'), FILE_IGNORE_NEW_LINES);
+
+        foreach($words as $word) {
+            if (strpos($text, $word) !== false) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function addfavourite(Request $request) {
