@@ -102,7 +102,7 @@ class MatchesController extends Controller
 
         // set url path for generted links
         $paginatedItems->setPath($request->url());
-        return view('matches.index', ['matches' => $paginatedItems]);
+        return view('matches.index', ['matches' => $paginatedItems, 'totalMatches' => count($matches)]);
     }
 
     public function view($id) {

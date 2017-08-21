@@ -39,7 +39,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #ff715b; color: white">
+                <div class="modal-header" style="background-color: #1ea896; color: white">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title text-center"><strong>Upload Profile Picture</strong></h4>
                 </div>

@@ -56,6 +56,8 @@ class DiscoverController extends Controller
 
         if ($type != 'All') {
             $query = $query->where('type', $type);
+        } else {
+            $query = $query->where('type', '<>', null);
         }
 
         if ($highSchool != 'All') {
@@ -77,9 +79,11 @@ class DiscoverController extends Controller
         //Do not show current user in results
         $query = $query->where('id', '!=', Auth::id());
 
+        $totalResults = count($query->get());
+
         $results = $query->paginate(10);
 
-        return view('discover.results', ['results' => $results]);
+        return view('discover.results', ['results' => $results, 'totalResults' => $totalResults]);
     }
 
 }

@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading" style="background-color: #ff715b; color: white">
+                    <div class="panel-heading" style="background-color: #1ea896; color: white">
                         <div class="text-center">
                             <h4><strong>Top Users</strong></h4>
                         </div>
@@ -87,7 +87,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading" style="background-color: #ff715b; color: white">
+                    <div class="panel-heading" style="background-color: #1ea896; color: white">
                         <div class="text-center">
                             <h4><strong>Top Alumni Users</strong></h4>
                         </div>
@@ -126,7 +126,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading" style="background-color: #ff715b; color: white">
+                    <div class="panel-heading" style="background-color: #1ea896; color: white">
                         <div class="text-center">
                             <h4><strong>Top Student Users</strong></h4>
                         </div>
