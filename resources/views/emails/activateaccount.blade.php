@@ -467,12 +467,12 @@
                         <div class="column" style="text-align: left;color: #8e959c;font-size: 14px;line-height: 21px;font-family: sans-serif;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);">
 
                             <div style="Margin-left: 20px;Margin-right: 20px;">
-                                <h2 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #e31212;font-size: 26px;line-height: 34px;font-family: Avenir,sans-serif;text-align: center;"><span style="color:#ff715b"><strong>Hello {{$name}}, Welcome to Ask Alumni!</strong></span></h2><p style="Margin-top: 16px;Margin-bottom: 20px;text-align: center;"><strong>Please click the link below to activate your account.</strong></p>
+                                <h2 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #e31212;font-size: 26px;line-height: 34px;font-family: Avenir,sans-serif;text-align: center;"><span style="color:#1ea896"><strong>Hello {{$name}}, Welcome to Ask Alumni!</strong></span></h2><p style="Margin-top: 16px;Margin-bottom: 20px;text-align: center;"><strong>Please click the link below to activate your account.</strong></p>
                             </div>
 
                             <div style="Margin-left: 20px;Margin-right: 20px;">
                                 <div class="btn btn--flat btn--medium" style="text-align:center;">
-                                    <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 12px;font-weight: bold;line-height: 22px;padding: 10px 20px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #fff !important;background-color: #ff715b;font-family: Avenir, sans-serif;" href="{!! url('/activate', ['code'=>$verification_code]) !!}">Activate My Account</a><![endif]>
+                                    <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 12px;font-weight: bold;line-height: 22px;padding: 10px 20px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #fff !important;background-color: #1ea896;font-family: Avenir, sans-serif;" href="{!! url('/activate', ['code'=>$verification_code]) !!}">Activate My Account</a><![endif]>
                                     <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="{!! url('/activate', ['code'=>$verification_code]) !!}" style="width:156px" arcsize="10%" fillcolor="#FF715B" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,9px,0px,9px"><center style="font-size:12px;line-height:22px;color:#FFFFFF;font-family:Avenir,sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">Activate My<br>
                                         Account</center></v:textbox></v:roundrect><![endif]--></div>
                             </div>

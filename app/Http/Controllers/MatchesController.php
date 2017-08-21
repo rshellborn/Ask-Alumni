@@ -8,9 +8,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Match;
+use Nahid\Talk\Facades\Talk;
+use View;
 
 class MatchesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) { Talk::setAuthUserId(Auth::user()->id); return $next($request); });
+
+        View::composer('partials.peoplelist', function($view) {
+            $threads = Talk::threads();
+            $view->with(compact('threads'));
+        });
+    }
 
     public function index(Request $request) {
         $curUser = Auth::user();
@@ -36,6 +47,8 @@ class MatchesController extends Controller
         $matches = array();
 
         foreach($users as $user) {
+            $avatar = $user->avatar;
+
             //match with fields of study
             $fields = $user->fields;
             $fields = explode(",", $fields);
@@ -58,7 +71,7 @@ class MatchesController extends Controller
                 $highSchoolMatch = true;
             }
 
-            array_push($matches, new Match($user->id, $user->name, $degreeMatches, $fieldMatches, $schoolMatches, $highSchoolMatch, $highSchool));
+            array_push($matches, new Match($user->id, $user->name, $avatar, $degreeMatches, $fieldMatches, $schoolMatches, $highSchoolMatch, $highSchool));
         }
 
         //remove no matches
@@ -81,7 +94,7 @@ class MatchesController extends Controller
         // Create a new Laravel collection from the array data
         $itemCollection = collect($matches);
         // Define how many items we want to be visible in each page
-        $perPage = 5;
+        $perPage = 10;
         // Slice the collection to get the items to display in current page
         $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
         // Create our paginator and pass it to the view
@@ -89,7 +102,7 @@ class MatchesController extends Controller
 
         // set url path for generted links
         $paginatedItems->setPath($request->url());
-        return view('matches.index', ['matches' => $paginatedItems]);
+        return view('matches.index', ['matches' => $paginatedItems, 'totalMatches' => count($matches)]);
     }
 
     public function view($id) {

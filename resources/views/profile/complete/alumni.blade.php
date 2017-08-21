@@ -1,133 +1,219 @@
-@extends('layouts.app')
+@extends('layouts.maincontent')
 
 @section('scripts')
     <script>
-        $('#other').hide();
-
-        $('#showInput').click(function() {
-            $('#showInput').hide();
+        $('#otherHS').hide();
+        $('#showInputHS').click(function() {
+            $('#showInputHS').hide();
             $('#ddHighSchool').hide();
-            $('#other').show();
+            $('#otherHS').show();
         });
 
+        $('#otherPS').hide();
+        $('#showInputPS').click(function() {
+            $('#showInputPS').hide();
+            $('#otherPS').show();
+        });
+
+        $('#otherFOS').hide();
+        $('#showInputFOS').click(function() {
+            $('#showInputFOS').hide();
+            $('#otherFOS').show();
+        });
+
+        $('#otherD').hide();
+        $('#showInputD').click(function() {
+            $('#showInputD').hide();
+            $('#otherD').show();
+        });
     </script>
 @endsection
 
+@section('title')
+    Alumni Registration
+@endsection
+
+@section('modal')
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #1ea896; color: white">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center"><strong>Upload Profile Picture</strong></h4>
+                </div>
+                <div class="modal-body text-center">
+                    <form enctype="multipart/form-data" action="/profile/avatar" method="POST">
+                        <label>Update Profile Image</label>
+                        <input class="form-control" type="file" name="avatar">
+                        <input type="hidden" name="action" value="upload">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <br/>
+                        <input type="submit" class="btn btn-pink" value="Upload">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+@endsection
+
 @section('content')
-    <div class="container">
+    @if(session()->has('error'))
+        <div class="alert alert-danger text-center" role="alert">
+            <span>{{session()->get('error')}}</span>
+        </div>
+    @endif
+
+    <div class="row">
+        <div class="form-group">
+            <h4 class="col-md-6 control-label text-right">You are currently registering as an Alumni.</h4>
+            <div class="text-center">
+                <button class="btn btn-warning" onclick="window.location='{{ url('/profile/complete/student') }}'">Switch to Student</button>
+            </div>
+        </div>
+    </div>
+    <hr class="thick-hr"/>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h4><strong>Profile Picture</strong></h4>
+            <div class="row">
+                <img src="/avatars/{{ $avatar }}" style="width:50px; height:50px; border-radius: 50px; margin-bottom: 5px">
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Upload</button>
+                <form style="display: inline" role="form" method="POST" action="/profile/avatar">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="action" value="delete" />
+                    <input type="hidden" name="type" value="Alumni">
+                    <input type="submit" class="btn btn-danger" value="Delete" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr class="thick-hr"/>
+
+    <form class="form-horizontal" role="form" method="POST" action="{{ url('/profile/edit') }}">
+        {{ csrf_field() }}
+        <input type="hidden" name="accType" value="Alumni"/>
+
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="text-center">
-                            <h4><strong>Alumni Registration</strong></h4>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label for="name" class="col-md-6 control-label text-right">You are currently registering as an Alumni.</label>
-                            <div class="text-center">
-                                <button class="btn btn-warning" onclick="window.location='{{ url('/profile/complete/student') }}'">Switch to Student</button>
-                            </div>
-                        </div>
-
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/profile/edit') }}">
-                            {{ csrf_field() }}
-
-                            <input type="hidden" name="accType" value="Alumni"/>
-
-                            <div id="fields" class="form-group">
-                                <div class="col-md-6 text-right">
-                                    <label for="highSchool" class="control-label">Which high school did you graduate from?</label><br/>
-                                    <a href="#" id="showInput">School not listed? Click here.</a>
-                                </div>
-                                <div class="col-md-6">
-                                    <select name="highSchool" class="form-control" id="ddHighSchool">
-                                        @foreach($highschools as $highSchool)
-                                            <option value="{{ $highSchool }}">{{ $highSchool }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div id="other">
-                                        <input type="text" name="otherHighSchool" class="form-control" placeholder="Enter your high school"/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="fields" class="form-group">
-                                <label for="fieldOfStudy" class="col-md-6 control-label">What did you study?</label>
-
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        @foreach($fields1 as $field)
-                                            <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}">{{ $field->name }}<br/>
-                                        @endforeach
-                                    </div>
-
-                                    <div class="col-md-5">
-                                        @foreach($fields2 as $field)
-                                            <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}">{{ $field->name }}<br/>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="fields" class="form-group">
-                                <label for="school" class="col-md-6 control-label">Which school(s) did or are attending?</label>
-
-                                <div class="col-md-12">
-                                    <div class="col-md-5">
-                                        @foreach($schools1 as $school)
-                                            <input type="checkbox" name="school[]" value="{{ $school->name }}">{{ $school->name }}<br/>
-                                        @endforeach
-                                    </div>
-
-                                    <div class="col-md-5">
-                                        @foreach($schools2 as $school)
-                                            <input type="checkbox" name="school[]" value="{{ $school->name }}">{{ $school->name }}<br/>
-                                        @endforeach
-                                        <input type="checkbox" name="school[]" value="other"> <input type="text" name="otherSchool" placeholder="Other school..." /><br/>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="fields" class="form-group">
-                                <label for="degree" class="col-md-6 control-label">Which degree(s) are you pursuing or have achieved?</label>
-
-                                <div class="col-md-4">
-                                    @foreach($degrees as $degree)
-                                        <input type="checkbox" name="degree[]" value="{{ $degree->name }}">{{ $degree->name }}<br/>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            <div id="fields" class="form-group">
-                                <label for="inSchool" class="col-md-6 control-label">Tell us a bit about yourself.</label>
-
-                                <div class="col-md-12">
-                                    <textarea name="bio" id="bio" rows ="3" placeholder="Current student at {school} studying {field} and am expected to graduate in June 2018..." class="form-control"></textarea>
-                                </div>
-                            </div>
-
-                            <div id="fields" class="form-group">
-                                <label for="inSchool" class="col-md-6 control-label">Are you still attending university/college?</label>
-
-                                <div class="col-md-4">
-                                    <input type="radio" name="inSchool" value="true" checked>Yes<br/>
-                                    <input type="radio" name="inSchool" value="false">No<br/>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12 text-center">
-                                    <button type="submit" class="btn btn-primary">
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+            <div class="col-md-12 text-center">
+                <h4><strong>Education</strong></h4>
+                <div class="col-md-6 col-md-offset-3">
+                    <label for="ddhighschool">Which high school did you attend?</label>
+                    <select name="highSchool" class="form-control" id="ddHighSchool">
+                        @foreach($highschools as $highSchool)
+                            <option value="{{ $highSchool }}">{{ $highSchool }}</option>
+                        @endforeach
+                    </select>
+                    <a href="javascript:void(0);" id="showInputHS">High school not listed? Click here.</a>
+                    <div id="otherHS">
+                        <input type="text" name="otherHighSchool" class="form-control" placeholder="Enter your high school"/>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <label for="school[]">Which post secondary institutions are you attending or did you attend?</label>
+            </div>
+            <div class="col-md-5 col-md-offset-2">
+                @foreach($schools1 as $school)
+                    <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                @endforeach
+            </div>
+
+            <div class="col-md-5">
+                @foreach($schools2 as $school)
+                    <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                @endforeach
+            </div>
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <br/>
+                <a href="javascript:void(0);" id="showInputPS">Post secondary institution not listed? Click here.</a>
+                <div id="otherPS">
+                    <label>Enter in schools separated by commas</label>
+                    <input type="text" name="otherSchools" class="form-control" placeholder="Example University,Example College"/>
+                </div>
+            </div>
+        </div>
+        <hr/>
+
+        <div class="row text-center">
+            <label for="inSchool">Are you still attending a post secondary institution?</label>
+            <div class="col-md-6 col-md-offset-3">
+                <input type="radio" name="inSchool" value="true" checked> Yes<br/>
+                <input type="radio" name="inSchool" value="false"> No<br/>
+            </div>
+        </div>
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <label for="fieldOfStudy[]">What are you studying or did you study in post secondary?</label>
+            </div>
+            <div class="col-md-5 col-md-offset-2">
+                @foreach($fields1 as $field)
+                    <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                @endforeach
+            </div>
+
+            <div class="col-md-5">
+                @foreach($fields2 as $field)
+                    <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                @endforeach
+            </div>
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <br/>
+                <a href="javascript:void(0);" id="showInputFOS">Field of study not listed? Click here.</a>
+                <div id="otherFOS">
+                    <label>Enter in fields of study separated by commas</label>
+                    <input type="text" name="otherFields" class="form-control" placeholder="Example,Example2"/>
+                </div>
+            </div>
+        </div>
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <label for="degree[]">Which degrees are you pursuing or have achieved?</label>
+            </div>
+            <div class="col-md-6 col-md-offset-5">
+                @foreach($degrees as $degree)
+                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}"> {{ $degree->name }}<br/>
+                @endforeach
+            </div>
+
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <br/>
+                <a href="javascript:void(0);" id="showInputD">Degree not listed? Click here.</a>
+                <div id="otherD">
+                    <label>Enter in degrees separated by commas</label>
+                    <input type="text" name="otherDegrees" class="form-control" placeholder="Example,Example2"/>
+                </div>
+            </div>
+        </div>
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 text-center">
+                <label for="bio">Tell everyone a bit about yourself.</label>
+                <textarea name="bio" id="bio" rows ="3" placeholder="Current student at {school} studying {field} and am expected to graduate in June 2018..." class="form-control"></textarea>
+            </div>
+        </div>
+        <hr/>
+
+        <div class="form-group">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-pink">
+                    Save
+                </button>
+            </div>
+        </div>
+    </form>
 @endsection

@@ -47,9 +47,14 @@
                 text-align: center;
             }
 
+            .featureTitle {
+                color: #178e7f;
+            }
+
             .title {
                 font-size: 50px;
                 font-weight: bold;
+                color: #1ea896;
             }
 
             .subtitle {
@@ -63,6 +68,22 @@
 
             .feature {
                 text-align: left;
+            }
+            a {
+                color:#1ea896;
+            }
+            a:hover {
+                color:#178e7f;
+            }
+            .btn-pink {
+                background-color: #1ea896;
+                border-color: #1ea896;
+                color: white;
+            }
+            .btn-pink:hover {
+                background-color: #178e7f;
+                border-color: #178e7f;
+                color: white;
             }
         </style>
     </head>
@@ -80,10 +101,10 @@
 
                 @if (Route::has('login'))
                     @if (Auth::check())
-                        <button class="btn btn-primary" onclick="window.location='{{ url("about") }}'">Continue to site</button>
+                        <button class="btn btn-pink" onclick="window.location='{{ url("about") }}'">Continue to site</button>
                     @else
-                        <button class="btn btn-primary" onclick="window.location='{{ url("login") }}'">Login</button>
-                        <button class="btn btn-primary" onclick="window.location='{{ url("register") }}'">Register</button>
+                        <button class="btn btn-pink" onclick="window.location='{{ url("login") }}'">Login</button>
+                        <button class="btn btn-pink" onclick="window.location='{{ url("register") }}'">Register</button>
                     @endif
                 @endif
 

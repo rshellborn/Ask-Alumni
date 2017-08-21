@@ -42,7 +42,7 @@
                           <td class="text-right">
                               {{ $thread->lastPost->authorName }}
                               <p class="text-muted">({{ $thread->lastPost->posted }})</p>
-                              <a href="{{ Forum::route('thread.show', $thread->lastPost) }}" class="btn btn-primary btn-xs">{{ trans('forum::posts.view') }} &raquo;</a>
+                              <a href="{{ Forum::route('thread.show', $thread->lastPost) }}" class="btn btn-pink btn-xs">{{ trans('forum::posts.view') }} &raquo;</a>
                           </td>
                       </tr>
                   @endforeach
@@ -54,7 +54,7 @@
                   <form action="{{ Forum::route('mark-new') }}" method="POST" data-confirm>
                       {!! csrf_field() !!}
                       {!! method_field('patch') !!}
-                      <button class="btn btn-primary btn-small">{{ trans('forum::general.mark_read') }}</button>
+                      <button class="btn btn-pink btn-small">{{ trans('forum::general.mark_read') }}</button>
                   </form>
               </div>
           @endcan

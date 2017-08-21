@@ -38,30 +38,27 @@
     </script>
 @endsection
 
-@section('content')
-    <div class="container">
-        <ul class="nav nav-pills nav-justified">
-            <li id="liAlumni"><a href="#" id="tabAlumni">Alumni Users</a></li>
-            <li id="liAll" class="active"><a href="#" id="tabAll">All Users</a></li>
-            <li id="liStudent"><a href="#" id="tabStudent">Student Users</a></li>
-        </ul>
-        <br/>
-        <div class="text-right">
-            <button class="btn btn-success" onclick="window.location='{{ url('/pointsystem') }}'">How do I earn points?</button>
-        </div>
-    </div>
+@section('body')
+    <ul class="nav nav-pills nav-justified">
+        <li id="liAlumni"><a href="#" id="tabAlumni">Alumni Users</a></li>
+        <li id="liAll" class="active"><a href="#" id="tabAll">All Users</a></li>
+        <li id="liStudent"><a href="#" id="tabStudent">Student Users</a></li>
+    </ul>
     <br/>
-
-    <div class="container" id="all">
+    <div id="all">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color: #1ea896; color: white">
                         <div class="text-center">
                             <h4><strong>Top Users</strong></h4>
                         </div>
                     </div>
                     <div class="panel-body">
+                        <div class="text-right">
+                            <button class="btn btn-pink" onclick="window.location='{{ url('/pointsystem') }}'">How do I earn points?</button>
+                        </div>
+
                         <table class="table table-hover table-responsive">
                             <thead>
                             <tr>
@@ -86,16 +83,20 @@
         </div>
     </div>
 
-    <div class="container" id="alumni">
+    <div id="alumni">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color: #1ea896; color: white">
                         <div class="text-center">
                             <h4><strong>Top Alumni Users</strong></h4>
                         </div>
                     </div>
                     <div class="panel-body">
+                        <div class="text-right">
+                            <button class="btn btn-pink" onclick="window.location='{{ url('/pointsystem') }}'">How do I earn points?</button>
+                        </div>
+
                         <table class="table table-hover table-responsive">
                             <thead>
                             <tr>
@@ -121,16 +122,20 @@
     </div>
 
 
-    <div class="container" id="student">
+    <div id="student">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color: #1ea896; color: white">
                         <div class="text-center">
                             <h4><strong>Top Student Users</strong></h4>
                         </div>
                     </div>
                     <div class="panel-body">
+                        <div class="text-right">
+                            <button class="btn btn-pink" onclick="window.location='{{ url('/pointsystem') }}'">How do I earn points?</button>
+                        </div>
+
                         <table class="table table-hover table-responsive">
                             <thead>
                             <tr>

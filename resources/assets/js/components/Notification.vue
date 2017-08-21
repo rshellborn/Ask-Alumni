@@ -13,7 +13,7 @@
         </a>
 
         <strong class="notification-title">
-          <a :href="notification.action_url">{{ notification.title }}</a>
+          <a :href="notification.action_url" @click.prevent="markAsRead">{{ notification.title }}</a>
         </strong>
 
         <p class="notification-desc">

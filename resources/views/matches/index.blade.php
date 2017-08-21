@@ -1,54 +1,69 @@
-@extends('layouts.app')
+@extends('layouts.maincontent')
+
+@section('title')
+    Matches
+@endsection
+
+@section('subtitle')
+    @if(DB::table('users')->where('id', Auth::id())->value('type') == 'Alumni')
+        These high school students are interested in your school, degree, or field of study.<br/>
+                                      Help them out by sending them a message!
+    @elseif(DB::table('users')->where('id', Auth::id())->value('type') == 'Student')
+        These Alumni have information on schools, degrees, and fields of study you are interested in.<br/>
+                                      Send them a message!
+    @endif
+@endsection
 
 @section('content')
-    <div class="container">
+    <h4 class="text-right" style="font-weight: bold">{{$totalMatches}}
+        @if($totalMatches==1)
+            match
+        @else
+            matches
+        @endif
+    </h4>
+    <br/>
+    @foreach($matches as $match)
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="text-center">
-                            <h4><strong>Matches</strong></h4>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="container">
-                            @foreach($matches as $match)
-                                <div class="col-md-7">
-                                    <div class="col-md-10">
-                                        <h4><a href="{{ url("profile/view/" . $match->user_id) }}">{{  $match->user_name }}</a></h4>
-                                        <span>Matched on fields of study: </span>
-                                        @foreach($match->fieldMatches as $field)
-                                            <span>{{ $field }}</span>
-                                        @endforeach
-                                        <br/>
-                                        <span>Matched on schools: </span>
-                                        @foreach($match->schoolMatches as $school)
-                                            <span>{{ $school }}</span>
-                                        @endforeach
-                                        <br/>
-                                        <span>Matched on degrees: </span>
-                                        @foreach($match->degrees as $degree)
-                                            <span>{{ $degree }}</span>
-                                        @endforeach
-                                        <br/>
-                                        <span>Matched on same high school: {{ $match->highSchool }}</span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <form role="form" method="POST" action="{{ url('/messages/create') }}">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" value="{{ $match->user_id }}" name="user" />
-                                            <input type="hidden" value="matches" name="trigger" />
-                                            <button class="btn btn-primary">Message</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="text-center">{{ $matches->links() }}</div>
-                    </div>
+                <div class="col-md-2">
+                    <img src="{{url('/avatars/' . $match->avatar)}}" style="width: 80px; height: 80px; border-radius:50px;margin:10px" />
+                </div>
+                <div class="col-md-8">
+                    <h4><a href="{{ url("profile/view/" . $match->user_id) }}" style="text-decoration: underline;">{{  $match->user_name }}</a></h4>
+                    <strong>Matched on post secondary institutions: </strong>
+                    @foreach($match->schoolMatches as $school)
+                        <span>{{ $school }}, </span>
+                    @endforeach
+                    <br/>
+                    <strong>Matched on fields of study: </strong>
+                    @foreach($match->fieldMatches as $field)
+                        <span>{{ $field }}, </span>
+                    @endforeach
+                    <br/>
+                    <strong>Matched on degrees: </strong>
+                    @foreach($match->degrees as $degree)
+                        <span>{{ $degree }}, </span>
+                    @endforeach
+                    <br/>
+                    <span><strong>Matched on same high school: </strong>{{ $match->highSchool }}</span>
+                </div>
+                <div class="col-md-2">
+                    <form role="form" method="POST" action="{{ url('/messages/create') }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" value="{{ $match->user_id }}" name="user" />
+                        <input type="hidden" value="matches" name="trigger" />
+                        <button class="btn btn-pink">Message</button>
+                    </form>
                 </div>
             </div>
         </div>
+        <div class="col-md-8 col-md-offset-2">
+            <hr class="thick-hr"/>
+        </div>
+    @endforeach
+
+    <div class="col-md-4 col-md-offset-4">
+        <div class="text-center">{{ $matches->links() }}</div>
     </div>
 @endsection

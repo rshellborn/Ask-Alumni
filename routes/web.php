@@ -21,7 +21,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             Route::get('/reports/users', 'ReportsController@users');
             Route::get('/reports/forums', 'ReportsController@forums');
             Route::get('/reports/messages', 'ReportsController@messages');
-            Route::get('/reports/advice', 'ReportsController@advice');
+            Route::get('/reports/searches', 'ReportsController@searches');
         });
 
         //Browse
@@ -55,47 +55,32 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             ];
         });
 
-        Route::group(['prefix' => 'messages'], function () {
-            Route::get('/', ['as' => 'messages', 'uses' => 'MessagesController@index']);
-            //Route::get('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
-            Route::post('create', ['as' => 'messages.create', 'uses' => 'MessagesController@create']);
-            Route::post('/', ['as' => 'messages.store', 'uses' => 'MessagesController@store']);
-            Route::get('{id}', ['as' => 'messages.show', 'uses' => 'MessagesController@show']);
-            Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
+        Route::get('message/{id}', 'MessageController@chatHistory')->name('message.read');
+        Route::get('messages', 'MessageController@index');
+
+        Route::group(['prefix'=>'ajax', 'as'=>'ajax::'], function() {
+            Route::post('message/send', 'MessageController@ajaxSendMessage')->name('message.new');
+            Route::delete('message/delete/{id}', 'MessageController@ajaxDeleteMessage')->name('message.delete');
         });
 
-    // Advice pages
-        Route::get('/advice/post', function () {
-            return view('advice.post');
-        });
-        Route::get('/advice', 'AdviceController@index');
-        Route::get('/advice/{id}', 'AdviceController@view');
-        Route::get('/advice/edit/{id}', 'AdviceController@edit');
-        Route::post('/advice/edit/{id}', 'AdviceController@save');
-        Route::post('/advice', 'AdviceController@post');
-
-
-        Route::get('createCommentNotification', 'NotificationController@storeComment');
 
         Route::get('/matches', 'MatchesController@index');
 
         Route::get('/profile/edit', 'ProfileController@edit');
         Route::get('/profile', 'ProfileController@index');
+        Route::post('/profile/addfavourite', 'ProfileController@addfavourite');
+        Route::post('/profile/removefavourite', 'ProfileController@removefavourite');
+        Route::get('/favourites', 'ProfileController@favourites');
 
+        Route::post('/profile/avatar', 'ProfileController@avatar');
 
-        Route::get('/home', function () {
-            return view('about.about');
-        });
+        Route::get('/home', 'ContactController@about');
 
-        Route::get('/pointsystem', function () {
-            return view('pointsystem');
-        });
+        Route::get('/pointsystem', 'PointsController@points');
 
     });
 
-    Route::get('/profile/complete/type', function () {
-        return view('profile.type');
-    });
+    Route::get('/profile/complete/type', 'ProfileController@type');
 
     Route::post('/profile/edit', 'ProfileController@save');
     Route::get('/profile/complete/student', 'ProfileController@studentComplete');
@@ -106,13 +91,9 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 
 Route::get('/activate/{code}', 'ActivateController@index');
 
-Route::get('/about', function () {
-    return view('about.about');
-});
+Route::get('/about', 'ContactController@about');
 
-Route::get('/contact', function () {
-    return view('about.contact');
-});
+Route::get('/contact', 'ContactController@contact');
 
 Route::post('/contact', 'ContactController@send');
 

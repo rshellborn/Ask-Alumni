@@ -24,13 +24,14 @@
                     <input type="hidden" name="threadID" value="{{$thread->id}}"/>
                     <input type="hidden" name="authorID" value="{{$thread->author_id}}"/>
                     <input type="hidden" name="userID" value="{{\Auth::id()}}"/>
-                    <div class="text-right col-md-1" style="float:right;">
+                    <input type="hidden" name="likes" value="{{ $thread->likes }}"/>
+                    <div class="text-right col-md-2" style="float:right;">
 {{--                        {{dd(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count())}}--}}
                         @if(Auth::guest())
                             <img style="cursor: pointer; cursor: hand;"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
                         @elseif(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count() == 0)
                             <div id="filled" style="display:inline;"></div>
-                            <img id="up-vote" style="cursor: pointer; cursor: hand;"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
+                            <img id="up-vote"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
                         @else
                             <img src=" {{url('/thumbsupfilled.png') }}"/>&nbsp;
                         @endif
@@ -61,8 +62,7 @@
             <div class="col-xs-4">
                 @can ('reply', $thread)
                     <div class="btn-group" role="group">
-                        <a href="{{ Forum::route('post.create', $thread) }}" class="btn btn-primary">{{ trans('forum::general.new_reply') }}</a>
-                        <a href="#quick-reply" class="btn btn-primary">{{ trans('forum::general.quick_reply') }}</a>
+                        <a href="#quick-reply" class="btn btn-pink">{{ trans('forum::general.quick_reply') }}</a>
                     </div>
                 @endcan
             </div>
@@ -112,7 +112,7 @@
                     </div>
 
                     <div class="text-right">
-                        <button type="submit" class="btn btn-success pull-right">{{ trans('forum::general.reply') }}</button>
+                        <button type="submit" class="btn btn-pink pull-right">{{ trans('forum::general.post') }}</button>
                     </div>
                 </form>
             </div>

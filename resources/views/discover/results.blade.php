@@ -1,42 +1,43 @@
-@extends('layouts.app')
+@extends('layouts.maincontent')
+
+@section('title')
+    Results
+@endsection
 
 @section('content')
-    <div class="container">
+    <h4 class="text-right" style="font-weight: bold">{{$totalResults}}
+        @if(count($totalResults)==1)
+            result found
+        @else
+            results found
+        @endif
+    </h4>
+    <br/>
+    @foreach($results as $user)
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="text-center">
-                            <h4><strong>Results</strong></h4>
-                        </div>
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="container">
-                            @foreach($results as $user)
-                                <div class="col-md-7">
-                                    <div class="col-md-10">
-                                        <h4><a href="{{ url("profile/view/" . $user->id) }}">{{  $user->name }}</a></h4>
-                                        <p><strong>Post secondary institutions:</strong> {{$user->schools}}</p>
-                                        <p><strong>Fields of study:</strong> {{$user->fields}}</p>
-                                        <p><strong>Degrees:</strong> {{$user->degrees}}</p>
-                                        <p><strong>High school:</strong> {{$user->highSchool}}</p>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <form role="form" method="POST" action="{{ url('/messages/create') }}">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" value="{{ $user->id }}" name="user" />
-                                            <input type="hidden" value="search" name="trigger" />
-                                            <button class="btn btn-primary">Message</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="text-center">{{ $results->appends($_REQUEST)->render() }}</div>
-                    </div>
+                <div class="col-md-2">
+                    <img src="{{url('/avatars/' . $user->avatar)}}" style="width: 80px; height: 80px; border-radius:50px;margin:10px" />
+                </div>
+                <div class="col-md-8">
+                    <h4><a href="{{ url("profile/view/" . $user->id) }}" style="text-decoration: underline;">{{  $user->name }}</a></h4>
+                    <h5>{{ $user->type }}</h5>
+                    <strong>Post secondary institutions:</strong> {{$user->schools}}<br/>
+                    <strong>Fields of study:</strong> {{$user->fields}}<br/>
+                    <strong>Degrees:</strong> {{$user->degrees}}<br/>
+                    <strong>High school:</strong> {{$user->highSchool}}
+                </div>
+                <div class="col-md-2">
+                    <a href="{{route('message.read', ['id'=>$user->id])}}" class="btn btn-pink pull-right">Message</a>
                 </div>
             </div>
         </div>
+        <div class="col-md-8 col-md-offset-2">
+            <hr class="thick-hr"/>
+        </div>
+    @endforeach
+
+    <div class="col-md-4 col-md-offset-4">
+        <div class="text-center">{{ $results->appends($_REQUEST)->render() }}</div>
     </div>
 @endsection

@@ -7,9 +7,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\User;
+use Nahid\Talk\Facades\Talk;
+use View;
 
 class DiscoverController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) { Talk::setAuthUserId(Auth::user()->id); return $next($request); });
+
+        View::composer('partials.peoplelist', function($view) {
+            $threads = Talk::threads();
+            $view->with(compact('threads'));
+        });
+    }
+
     public function index() {
         $highschools = DB::table('highschools')->pluck('name');
         $schools     = DB::table('schools')->pluck('name');
@@ -26,10 +38,26 @@ class DiscoverController extends Controller
         $degree     = Input::get('degree');
         $type       = Input::get('type');
 
+        DB::table('search_queries')->insert(
+            [
+                'user_id' => Auth::id(),
+                'user_type' => $type,
+                'high_school' => $highSchool,
+                'school' => $school,
+                'field' => $field,
+                'degree' => $degree,
+                'created_at' => new \DateTime(),
+                'updated_at' => new \DateTime(),
+            ]);
+
         $query = User::query();
+
+        $query = $query->where('active', 1);
 
         if ($type != 'All') {
             $query = $query->where('type', $type);
+        } else {
+            $query = $query->where('type', '<>', null);
         }
 
         if ($highSchool != 'All') {
@@ -51,9 +79,11 @@ class DiscoverController extends Controller
         //Do not show current user in results
         $query = $query->where('id', '!=', Auth::id());
 
+        $totalResults = count($query->get());
+
         $results = $query->paginate(10);
 
-        return view('discover.results', ['results' => $results]);
+        return view('discover.results', ['results' => $results, 'totalResults' => $totalResults]);
     }
 
 }

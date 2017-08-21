@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="panel-footer clearfix">
-                <button type="submit" class="btn btn-default pull-right">{{ trans('forum::general.create') }}</button>
+                <button type="submit" class="btn btn-pink pull-right">{{ trans('forum::general.create') }}</button>
             </div>
         </div>
     </div>

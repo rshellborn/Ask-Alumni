@@ -12,7 +12,7 @@ class ReportsController extends Controller
 {
     public function index() {
         //User stats
-        $users       = DB::table('users')->count();
+        $users       = DB::table('users')->where('type', '!=', null)->count();
         $students    = DB::table('users')->where('type', 'Student')->count();
         $alumni      = DB::table('users')->where('type', 'Alumni')->count();
 
@@ -20,31 +20,31 @@ class ReportsController extends Controller
         $forumCategories = DB::table('forum_categories')->count();
         $forumThreads    = DB::table('forum_threads')->count();
         $forumPosts      = DB::table('forum_posts')->count();
-
-        //Messages stats
-        $conversations = DB::table('threads')->count();
-        $messages      = DB::table('messages')->count();
-
-        //Advice stats
-        $advicePosts = DB::table('advice')->count();
-        $comments    = DB::table('laravellikecomment_comments')->count();
-        $totalLikes  = DB::table('laravellikecomment_total_likes')->get();
-
-        $likes = 0;
-        $dislikes = 0;
-
-        foreach($totalLikes as $vote) {
-            $likes += $vote->total_like;
-            $dislikes += $vote->total_dislike;
+        $adviceCategory  = DB::table('forum_categories')->where('title', 'Advice')->value('id');
+        $advices   = DB::table('forum_threads')->where('category_id', $adviceCategory)->get();
+        $adviceThreads   = DB::table('forum_threads')->where('category_id', $adviceCategory)->count();
+        $adviceLikes = 0;
+        foreach($advices as $advice) {
+            $adviceLikes += $advice->likes;
         }
 
-        return view('reports.dashboard', compact('users', 'students', 'dislikes', 'alumni', 'advicePosts', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations', 'messages', 'comments', 'likes'));
+        //Messages stats
+        $conversations  = DB::table('threads')->count();
+        $searchTrigger  = DB::table('messages')->where('trigger', 'search')->count();
+        $matchesTrigger = DB::table('messages')->where('trigger', 'matches')->count();
+        $profileTrigger = DB::table('messages')->where('trigger', 'profile')->count();
+
+        $searches = DB::table('search_queries')->count();
+        $favourites = 0;
+
+        return view('reports.dashboard', compact('users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations', 'profileTrigger', 'searchTrigger', 'matchesTrigger'));
     }
 
     public function users() {
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->orderBy('active', 'desc')->get();
+        $adviceCategory  = DB::table('forum_categories')->where('title', 'Advice')->value('id');
 
-        return view('reports.users', compact('users'));
+        return view('reports.users', compact('users', 'adviceCategory'));
     }
 
     public function forums() {
@@ -89,9 +89,9 @@ class ReportsController extends Controller
         return view('reports.messages', compact('threads'));
     }
 
-    public function advice() {
-        $advice = DB::table('advice')->get();
+    public function searches() {
+        $searches = DB::table('search_queries')->get();
 
-        return view('reports.advice', compact('advice'));
+        return view('reports.searches', compact('searches'));
     }
 }
