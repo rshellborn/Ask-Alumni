@@ -85,7 +85,9 @@
                 <h4>
                     <strong>
                         @if(isset($user))
-                            {{'Chat with ' . @$user->name}}
+                            <a href="{{'/profile/view/' . $user->id}} " style="color: white;">
+                                {{'Chat with ' . @$user->name}}
+                            </a>
                         @else
                             No Thread Selected
                         @endif
@@ -115,7 +117,7 @@
         @if($message->sender->id == auth()->user()->id)
             <div class="col-md-10 col-md-offset-1">
                 <div class="row text-right" id="message-{{$message->id}}">
-                    <span>{{$message->sender->name}}</span>
+                    <strong>{{$message->sender->name}}</strong>
                     <div class="text-right">
                         <div class="well well-sm col-md-8 col-md-offset-4" style="margin-bottom: 0px; background-color: #1ea896; border-radius: 30px">
                             <span style="color: white">{{$message->message}}</span>
@@ -129,7 +131,9 @@
         @else
             <div class="col-md-10 col-md-offset-1">
                 <div class="row text-left" id="message-{{$message->id}}">
-                    <span>{{$message->sender->name}}</span>
+                    <a href="{{ '/profile/view/' . $message->sender->id }}">
+                        <strong>{{$message->sender->name}}</strong>
+                    </a>
                     <div class="text-left">
                         <div class="well well-sm col-md-8" style="margin-bottom: 0px; background-color: #4c5454; border-radius: 30px">
                             <img src="{{'/avatars/' . $message->sender->avatar}}" alt="avatar" style="width: 50px;height: 50px;border-radius:50px" />

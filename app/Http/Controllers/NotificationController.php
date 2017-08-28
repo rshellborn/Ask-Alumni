@@ -7,6 +7,7 @@ use App\Notifications\NewMessage;
 use App\Notifications\NewRank;
 use App\Notifications\PointsGiven;
 use App\Notifications\NewComment;
+use App\Notifications\NewContact;
 use Illuminate\Http\Request;
 use NotificationChannels\WebPush\PushSubscription;
 
@@ -119,6 +120,19 @@ class NotificationController extends Controller
     public function storeRankAchieved($user, $rank)
     {
         $user->notify(new NewRank($rank));
+
+        return response()->json('Notification sent.', 201);
+    }
+
+    /**
+     * Create a rank achieved notification.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeContact($user)
+    {
+        $user->notify(new NewContact());
 
         return response()->json('Notification sent.', 201);
     }

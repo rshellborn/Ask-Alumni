@@ -10,8 +10,8 @@
         <div class="form-group">
             <label for="type">Reason for contacting us</label><br/>
             <select id='type' name="type" class="form-control">
+                <option value="QuestionIssueBug">Question/Issue/Bug Found</option>
                 <option value="Idea">Suggestion for the site</option>
-                <option value="Question">Question/Issue/Bug Found</option>
                 <option value="Request">Request to add school, field, or degree</option>
                 <option value="Other">Other</option>
             </select>

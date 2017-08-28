@@ -1,10 +1,26 @@
 @extends('layouts.maincontent')
 
+@section('styles')
+    <style>
+        .btn-grey {
+        background-color: #4c5454;
+        border-color: #4c5454;
+        color: white;
+        }
+        .btn-grey:hover {
+        background-color: #464b4e;
+        border-color: #464b4e;
+        color: white;
+        }
+    </style>
+@endsection
+
 @section('title')
     Favourites
 @endsection
 
 @section('content')
+    @if($favourites != 0)
     <h4 class="text-right" style="font-weight: bold">{{$favourites}}
         @if($favourites==1)
             favourite
@@ -12,6 +28,7 @@
             favourites
         @endif
     </h4>
+    @endif
     <br/>
     @if($favourites != 0)
         @foreach($users as $user)
@@ -30,7 +47,7 @@
                             {{ csrf_field() }}
                             <input type="hidden" value="{{$user->id}}" name="user"/>
                             <input type="hidden" value="true" name="return"/>
-                            <button type="submit" class="btn btn-sm pull-right">X</button>
+                            <button type="submit" class="btn btn-sm pull-right btn-grey">X</button>
                         </form>
                         <a href="{{route('message.read', ['id'=>$user->id])}}" class="btn btn-pink pull-right" style="margin-top: 25px">Message</a>
                     </div>
@@ -42,8 +59,22 @@
                 </div>
             </div>
         @endforeach
+    @else
+        <div class="row text-center">
+            <div class="col-md-12">
+                <h4>Add favourites by clicking on the star on someones profile.</h4>
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+                <img src="{{url('bookmarking.png')}}" class="img-responsive" />
+            </div>
+            <div class="col-md-12">
+                <h4>View them here later to start a conversation with them.</h4>
+            </div>
+        </div>
     @endif
     <div class="row">
+        @if($favourites != 0)
         <div class="text-center">{{ $users->links() }}</div>
+        @endif
     </div>
 @endsection

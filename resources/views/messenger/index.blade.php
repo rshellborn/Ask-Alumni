@@ -5,10 +5,41 @@
 @endsection
 
 @section('content')
-    <div class="media" style="margin-left: 2px; margin-right: 2px; border-radius: 10px;">
+    @if($flag == false)
+        <div class="text-right">
+            <button class="btn btn-pink" onclick="window.location='/discover'">New Message</button>
+        </div>
+    @endif
+    <div class="media" style="margin-left: 2px; margin-right: 2px;">
         @if($flag == true)
-            <h5>No messages</h5>
-        @endif
+            <div class="row text-center">
+                <div class="col-md-12">
+                    <h4><strong>You Currently Have No Messages</strong></h4>
+                </div>
+                <div class="col-md-6">
+                    <h4>Search for people using Discover</h4>
+                    <br/>
+                    <div class="col-md-6 col-md-offset-3">
+                        <img src="{{url('search.png')}}" class="img-responsive" />
+                        <br/>
+                    </div>
+                    <div class="col-md-6 col-md-offset-3">
+                        <button class="btn btn-pink" onclick="window.location='/discover'">Discover</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4>Find people with similar interests using matches</h4>
+                    <br/>
+                    <div class="col-md-6 col-md-offset-3">
+                        <img src="{{url('matches.png')}}" class="img-responsive" />
+                        <br/>
+                    </div>
+                    <div class="col-md-6 col-md-offset-3">
+                        <button class="btn btn-pink" onclick="window.location='/discover'">Matches</button>
+                    </div>
+                </div>
+            </div>
+        @else
         @foreach($threads as $inbox)
             @if(!is_null($inbox->thread))
                 <a href="{{route('message.read', ['id'=>$inbox->withUser->id])}}">
@@ -29,5 +60,6 @@
                 </a>
             @endif
         @endforeach
+        @endif
     </div>
 @endsection

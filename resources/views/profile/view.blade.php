@@ -106,7 +106,7 @@
                                     <h4>{{$type}}</h4>
                                     <a href="/rankings" style="text-decoration: none;">
                                         <div>
-                                            <img src="{{url(strtolower(Auth::user()->rank) . '-cap.png')}}" />
+                                            <img src="{{url(strtolower($rank) . '-cap.png')}}" />
                                             <h5 style="color: white; display:inline">Rank {{ $rank }} - {{$points}} points</h5>
                                         </div>
                                     </a>
@@ -142,7 +142,9 @@
                 <div class="row" style="padding-right: 20px; padding-left: 20px">
 
                     @if($type == 'Alumni')
-                        <p class="text-center" style="font-weight: bold; padding-bottom: 20px">{{$bio}}</p>
+                        <div class="col-md-12">
+                            <p class="text-center" style="font-weight: bold; padding-bottom: 20px">{{$bio}}</p>
+                        </div>
                     @endif
 
                     <div class="row">

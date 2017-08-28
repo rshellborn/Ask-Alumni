@@ -103,7 +103,7 @@
                     @if (Auth::check())
                         <button class="btn btn-pink" onclick="window.location='{{ url("about") }}'">Continue to site</button>
                     @else
-                        <button class="btn btn-pink" onclick="window.location='{{ url("login") }}'">Login</button>
+                        <button class="btn btn-pink" onclick="window.location='{{ url("login") }}'" style="width: 80px">Login</button>
                         <button class="btn btn-pink" onclick="window.location='{{ url("register") }}'">Register</button>
                     @endif
                 @endif

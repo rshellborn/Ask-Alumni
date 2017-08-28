@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Nahid\Talk\Facades\Talk;
 use View;
+use App\User;
+
 class ContactController extends Controller
 {
     public function __construct()
@@ -18,16 +20,25 @@ class ContactController extends Controller
         });
     }
     public function send() {
-        $data = array();
-        $data['name'] = Auth::user()->name;
-        $data['email'] = Auth::user()->email;
-        $data['type'] = Input::get('type');
-        $data['body'] = Input::get('message');
-        Mail::send('emails.contact', $data, function($message) use ($data)
-        {
-            $message->subject("Contact - Ask Alumni");
-            $message->to('rachel@shellborn.com');
-        });
+        $user_id = Auth::user()->id;
+        $name = Auth::user()->name;
+        $email = Auth::user()->email;
+        $type = Input::get('type');
+        $message = Input::get('message');
+
+        $notification = new NotificationController();
+        $user = User::where('email', 'rachel@shellborn.com')->first();
+        $notification->storeContact($user);
+
+        DB::table('contact')->insert(
+            [
+                'type' => $type,
+                'name' => $name,
+                'email' => $email,
+                'message' => $message,
+                'user_id' => $user_id,
+            ]);
+
         return view('about.thankyou');
     }
     public function about() {

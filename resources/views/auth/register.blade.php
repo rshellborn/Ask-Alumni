@@ -4,8 +4,20 @@
     Register
 @endsection
 
+@section('scripts')
+    <script>
+        function onSubmit(token) {
+            document.getElementById("registerForm").submit();
+        }
+    </script>
+@endsection
+
+@section('gCaptcha')
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endsection
+
 @section('content')
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}" id="registerForm">
         {{ csrf_field() }}
 
         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -60,7 +72,9 @@
 
         <div class="form-group">
             <div class="col-md-6 col-md-offset-5">
-                <button type="submit" class="btn btn-pink">
+                <button class="btn btn-pink g-recaptcha"
+                        data-sitekey="6Lc-Zi4UAAAAAJdiGPQs-xUxeqmRitXasgls6roi"
+                        data-callback='onSubmit'>
                     Register
                 </button>
             </div>

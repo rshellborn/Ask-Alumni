@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificationController;
 use App\Notifications\AdviceThreadLike;
 use Nahid\Talk\Facades\Talk;
 use View;
+use Illuminate\Support\Facades\Input;
 
 class PointsController extends Controller
 {
@@ -62,6 +63,7 @@ class PointsController extends Controller
             ]);
 
         $points = DB::table('users')->where('id', $authorID)->value('points');
+        $oldPoints = $points;
         $points += 10;
 
         DB::table('users')->where('id', $authorID)->limit(1)->update(
@@ -69,7 +71,7 @@ class PointsController extends Controller
                 'points' => $points,
             ]);
 
-        $this->checkRank($points, $authorID, $authorID);
+        $this->checkRank($points, $oldPoints, $authorID);
 
         return response()->json([
             'likes' => $likes,
@@ -140,7 +142,18 @@ class PointsController extends Controller
         $allUsers     = \DB::table('users')->where('type', '!=', null)->orderBy('points', 'desc')->limit(10)->get();
         $studentUsers = \DB::table('users')->where('type', '!=', null)->where('type', 'Student')->orderBy('points', 'desc')->limit(10)->get();
         $alumniUsers  = \DB::table('users')->where('type', '!=', null)->where('type', 'Alumni')->orderBy('points', 'desc')->limit(10)->get();
+        $schools     = DB::table('schools')->pluck('name');
 
-        return view('rankings', compact('allUsers', 'studentUsers', 'alumniUsers'));
+        return view('rankings', compact('allUsers', 'studentUsers', 'alumniUsers', 'schools'));
+    }
+
+    public function filter() {
+        $filterSchool = Input::get('school');
+        $allUsers     = \DB::table('users')->where('type', '!=', null)->where('schools', 'like', '%'.$filterSchool.'%')->orderBy('points', 'desc')->limit(10)->get();
+        $studentUsers = \DB::table('users')->where('type', '!=', null)->where('type', 'Student')->orderBy('points', 'desc')->limit(10)->get();
+        $alumniUsers  = \DB::table('users')->where('type', '!=', null)->where('type', 'Alumni')->orderBy('points', 'desc')->limit(10)->get();
+        $schools     = DB::table('schools')->pluck('name');
+
+        return view('rankings', compact('allUsers', 'studentUsers', 'alumniUsers', 'schools', 'filterSchool'));
     }
 }

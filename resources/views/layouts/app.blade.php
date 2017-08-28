@@ -171,6 +171,7 @@
     </style>
 
     @yield('styles')
+    @yield('gCaptcha')
 </head>
 <body>
 <script>

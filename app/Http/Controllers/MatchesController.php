@@ -23,8 +23,17 @@ class MatchesController extends Controller
         });
     }
 
+    public function findMatches() {
+        DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(['seenMatches' => 1]);
+        return redirect('matches');
+    }
+
     public function index(Request $request) {
         $curUser = Auth::user();
+
+        if(DB::table('users')->where('id', $curUser->id)->value('seenMatches') == false) {
+            return view('matches.first');
+        }
 
         $curFields = $curUser->fields;
         $curFields = explode(",", $curFields);

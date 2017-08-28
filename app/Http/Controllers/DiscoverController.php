@@ -32,6 +32,23 @@ class DiscoverController extends Controller
     }
 
     public function search() {
+        if(Input::get('search') == 'name') {
+            $query = User::query();
+
+            $query = $query->where('name', 'like', '%'. Input::get('name') .'%');
+
+            //Do not show current user in results
+            $query = $query->where('id', '!=', Auth::id());
+
+            $totalResults = count($query->get());
+
+            $results = $query->paginate(10);
+
+            return view('discover.results', ['results' => $results, 'totalResults' => $totalResults]);
+        }
+
+
+
         $highSchool = Input::get('highSchool');
         $school     = Input::get('school');
         $field      = Input::get('field');

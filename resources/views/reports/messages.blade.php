@@ -1,41 +1,37 @@
-@extends('layouts.app')
+@extends('layouts.maincontent')
+
+@section('title')
+    Messages Report
+@endsection
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Messages Report</div>
-                    <div class="panel-body">
-                        <table class="table table-hover table-responsive">
-                            <thead>
-                            <tr>
-                                <th>Subject</th>
-                                <th>Participants</th>
-                                <th>Messages</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($threads as $thread)
-                                <?php
-                                    $users = \DB::table('participants')->where('thread_id', $thread->id)->get();
-                                ?>
-                                <tr>
-                                    <td>{{ $thread->subject }}</td>
-                                    <td>
-                                        @foreach($users as $user)
-                                            {{ str_replace(array('[', ']', '"'), '', \DB::table('users')->where('id', $user->user_id)->pluck('name')) }}
-                                            <br/>
-                                        @endforeach
-                                    </td>
-                                    <td>{{ \DB::table('messages')->where('thread_id', $thread->id)->count() }}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <table class="table table-hover table-responsive">
+        <thead>
+        <tr>
+            <th>Participants</th>
+            <th>Messages</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($conversations as $convo)
+            <?php
+                $users = array();
+                $user1 = \DB::table('conversations')->where('id', $convo->id)->pluck('user_one');
+                $user2 = \DB::table('conversations')->where('id', $convo->id)->pluck('user_two');
+
+                array_push($users, \DB::table('users')->where('id', $user1)->first());
+                array_push($users, \DB::table('users')->where('id', $user2)->first());
+            ?>
+            <tr>
+                <td>
+                    @foreach($users as $user)
+                        {{ str_replace(array('[', ']', '"'), '', $user->name) }} ({{$user->type}})
+                        <br/>
+                    @endforeach
+                </td>
+                <td>{{ count(\DB::table('messages')->where('conversation_id', $convo->id)->get()) }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 @endsection
