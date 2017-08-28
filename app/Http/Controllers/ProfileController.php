@@ -150,16 +150,16 @@ class ProfileController extends Controller
         }
 
         //get degrees
-        $degrees = DB::table('degrees')->get();
+        $degrees = DB::table('degrees')->orderBy('name')->get();
 
         //get post secondary schools
-        $schools = DB::table('schools')->get()->toArray();
+        $schools = DB::table('schools')->orderBy('name')->get()->toArray();
         $splitSize = ceil(sizeof($schools) / 2);
         $schools1 = array_slice($schools, 0, $splitSize);
         $schools2 = array_slice($schools, $splitSize);
 
         //get fields of study
-        $fields = DB::table('fields')->get()->toArray();
+        $fields = DB::table('fields')->orderBy('name')->get()->toArray();
         $splitSize = ceil(sizeof($fields) / 2);
         $fields1 = array_slice($fields, 0, $splitSize);
         $fields2 = array_slice($fields, $splitSize);
@@ -184,16 +184,16 @@ class ProfileController extends Controller
         }
 
         //get degrees
-        $degrees = DB::table('degrees')->get();
+        $degrees = DB::table('degrees')->orderBy('name')->get();
 
         //get post secondary schools
-        $schools = DB::table('schools')->get()->toArray();
+        $schools = DB::table('schools')->orderBy('name')->get()->toArray();
         $splitSize = ceil(sizeof($schools) / 2);
         $schools1 = array_slice($schools, 0, $splitSize);
         $schools2 = array_slice($schools, $splitSize);
 
         //get fields of study
-        $fields = DB::table('fields')->get()->toArray();
+        $fields = DB::table('fields')->orderBy('name')->get()->toArray();
         $splitSize = ceil(sizeof($fields) / 2);
         $fields1 = array_slice($fields, 0, $splitSize);
         $fields2 = array_slice($fields, $splitSize);
@@ -214,16 +214,16 @@ class ProfileController extends Controller
         }
 
         //get degrees
-        $degrees = DB::table('degrees')->get();
+        $degrees = DB::table('degrees')->orderBy('name')->get();
 
         //get post secondary schools
-        $schools = DB::table('schools')->get()->toArray();
+        $schools = DB::table('schools')->orderBy('name')->get()->toArray();
         $splitSize = ceil(sizeof($schools) / 2);
         $schools1 = array_slice($schools, 0, $splitSize);
         $schools2 = array_slice($schools, $splitSize);
 
         //get fields of study
-        $fields = DB::table('fields')->get()->toArray();
+        $fields = DB::table('fields')->orderBy('name')->get()->toArray();
         $splitSize = ceil(sizeof($fields) / 2);
         $fields1 = array_slice($fields, 0, $splitSize);
         $fields2 = array_slice($fields, $splitSize);
@@ -387,7 +387,10 @@ class ProfileController extends Controller
         $favourites = DB::table('users')->where('id', Auth::user()->id)->value('favourites');
         $users = DB::table('users')->where('id', Auth::user()->id)->value('favourites_user_ids');
 
-        $favourites--;
+        if($favourites == -1) {
+
+        }
+
         if($favourites == 0) {
             $users = '';
         } else if($favourites == 1) {

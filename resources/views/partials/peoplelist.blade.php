@@ -25,7 +25,7 @@
                         @if(auth()->user()->id == $inbox->thread->sender->id)
                             <span class="fa fa-reply"></span>
                         @endif
-                        <span>{{substr($inbox->thread->message, 0, 20)}}</span>
+                        <span>{{substr($inbox->thread->message, 0, 30)}}</span>
                     </div>
                 </div>
             </div>

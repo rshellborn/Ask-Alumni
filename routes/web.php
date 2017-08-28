@@ -22,6 +22,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             Route::get('/reports/forums', 'ReportsController@forums');
             Route::get('/reports/messages', 'ReportsController@messages');
             Route::get('/reports/searches', 'ReportsController@searches');
+            Route::get('/reports/contacts', 'ReportsController@contacts');
         });
 
         //Browse
@@ -34,6 +35,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         Route::post('/post/give_points','PointsController@givePoints');
 
         Route::get('/rankings','PointsController@rankings');
+        Route::post('/rankings', 'PointsController@filter');
 
     // Notifications
         Route::post('notifications', 'NotificationController@store');
@@ -65,6 +67,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 
 
         Route::get('/matches', 'MatchesController@index');
+        Route::post('/matches', 'MatchesController@findMatches');
 
         Route::get('/profile/edit', 'ProfileController@edit');
         Route::get('/profile', 'ProfileController@index');

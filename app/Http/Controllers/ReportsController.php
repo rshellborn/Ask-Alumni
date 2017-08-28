@@ -7,9 +7,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\User;
+use Nahid\Talk\Facades\Talk;
+use View;
 
 class ReportsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) { Talk::setAuthUserId(Auth::user()->id); return $next($request); });
+        View::composer('partials.peoplelist', function($view) {
+            $threads = Talk::threads();
+            $view->with(compact('threads'));
+        });
+    }
+
     public function index() {
         //User stats
         $users       = DB::table('users')->where('type', '!=', null)->count();
@@ -29,15 +40,12 @@ class ReportsController extends Controller
         }
 
         //Messages stats
-        $conversations  = DB::table('threads')->count();
-        $searchTrigger  = DB::table('messages')->where('trigger', 'search')->count();
-        $matchesTrigger = DB::table('messages')->where('trigger', 'matches')->count();
-        $profileTrigger = DB::table('messages')->where('trigger', 'profile')->count();
+        $conversations  = DB::table('conversations')->count();
 
         $searches = DB::table('search_queries')->count();
         $favourites = 0;
 
-        return view('reports.dashboard', compact('users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations', 'profileTrigger', 'searchTrigger', 'matchesTrigger'));
+        return view('reports.dashboard', compact('users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
     }
 
     public function users() {
@@ -84,14 +92,20 @@ class ReportsController extends Controller
     }
 
     public function messages() {
-        $threads = DB::table('threads')->get();
+        $conversations = DB::table('conversations')->get();
 
-        return view('reports.messages', compact('threads'));
+        return view('reports.messages', compact('conversations'));
     }
 
     public function searches() {
         $searches = DB::table('search_queries')->get();
 
         return view('reports.searches', compact('searches'));
+    }
+
+    public function contacts() {
+        $contacts = DB::table('contact')->get();
+
+        return view('reports.contacts', compact('contacts'));
     }
 }

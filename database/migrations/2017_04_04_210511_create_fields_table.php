@@ -43,6 +43,10 @@ class CreateFieldsTable extends Migration
         ]);
 
         DB::table('fields')->insert([
+            "name" => "Communications"
+        ]);
+
+        DB::table('fields')->insert([
             "name" => "Computer Science"
         ]);
 
@@ -52,6 +56,10 @@ class CreateFieldsTable extends Migration
 
         DB::table('fields')->insert([
             "name" => "Economics"
+        ]);
+
+        DB::table('fields')->insert([
+            "name" => "Education"
         ]);
 
         DB::table('fields')->insert([
