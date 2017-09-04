@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="col-md-12">
         <form class="form-horizontal" role="form" method="POST" action="{{ url('/discover/search') }}">
             {{ csrf_field() }}
             <input type="hidden" value="name" name="search"/>
@@ -31,7 +31,7 @@
 
     <hr/>
 
-    <div class="row">
+    <div class="col-md-12">
         <form class="form-horizontal" role="form" method="POST" action="{{ url('/discover/search') }}">
             {{ csrf_field() }}
             <input type="hidden" value="filter" name="search"/>

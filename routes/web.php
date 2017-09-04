@@ -100,6 +100,10 @@ Route::get('/contact', 'ContactController@contact');
 
 Route::post('/contact', 'ContactController@send');
 
+Route::get('/error', function () {
+    return view('errors.400');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

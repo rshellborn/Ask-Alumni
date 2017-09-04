@@ -99,7 +99,7 @@
                         <div class="row" style="background-color: #4c5454;border-radius: 10px">
                             <div class="media">
                                 <div class="media-left" style="background-color: #1ea896; padding-right: 0; border-top-left-radius: 10px; border-bottom-left-radius: 10px">
-                                    <img src="{{url('/avatars/' . $avatar)}}" style="width: 200px; height: 200px; border-radius:100px;margin:10px" />
+                                    <img src="{{url('/avatars/' . $avatar)}}" style="border-radius:100px;margin:10px" />
                                 </div>
                                 <div class="media-body media-middle" style="background-color: #4c5454; color: white; border-radius: 10px">
                                     <h4 style="font-weight: bold;">{{$name}}</h4>

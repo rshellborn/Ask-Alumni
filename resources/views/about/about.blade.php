@@ -6,7 +6,7 @@
 
 @section('content')
     <h3 class="text-center">What is Ask Alumni?</h3>
-    <p>Ask Alumni is a website where high school students can discuss, ask questions, and communicate with
+    <p>Ask Alumni is a social network where high school students can discuss, ask questions, and communicate with
         Alumni.</p>
     <p>The purpose of this site was to make a bridge to allow high school students to get in contact with
         Alumni and get personal experiences and answers to their questions.</p>
@@ -20,10 +20,9 @@
 
     <h3 class="text-center">Benefits for Alumni</h3>
     <ul>
-        <li>Share your stories and experiences with students</li>
-        <li>Give students information about schools, fields of study, and degrees they would not be able to get anywhere else</li>
+        <li>Share experiences and information with students about schools, fields of study, and degrees they would not be able to get anywhere else</li>
         <li>Give advice to students that will help them in their post-secondary journey</li>
-        <li>Discuss with other alumni</li>
+        <li>Get advice and information from Alumni which are pursuing higher degrees that you are interested in</li>
     </ul>
 
     <h3 class="text-center">Have an idea for the website or any questions?</h3>

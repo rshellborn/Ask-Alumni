@@ -473,7 +473,7 @@ class ProfileController extends Controller
                 $filename = time() . '.' . $avatar->getClientOriginalExtension();
                 $prevAvatar = DB::table('users')->where('id', Auth::user()->id)->value('avatar');
 
-                Image::make($avatar)->fit(300)->save(public_path('/avatars/' . $filename));
+                Image::make($avatar)->fit(200)->save(public_path('/avatars/' . $filename));
 
                 if($prevAvatar != 'default-student.png' && $prevAvatar != 'default-alumni.png') {
                     if (file_exists(public_path('/avatars/' . $prevAvatar))) {
