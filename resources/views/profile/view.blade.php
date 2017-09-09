@@ -91,7 +91,9 @@
                         @endif
 
                         @if($usersProfile)
-                            <button class="btn btn-pink" onclick="window.location='{{ url('/profile/edit') }}'">Edit Profile</button>
+                            <button class="btn btn-pink" style="margin-bottom: 5px;" onclick="window.location='{{ url('/profile/edit') }}'">Edit Profile</button><br/>
+                            <button class="btn btn-pink" style="margin-bottom: 5px;" onclick="window.location='{{ url('/favourites') }}'">Favourites</button>
+                            <button class="btn btn-pink" onclick="window.location='{{ url('/settings') }}'">Settings</button>
                         @endif
                     </div>
 

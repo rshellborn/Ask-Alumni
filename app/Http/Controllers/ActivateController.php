@@ -24,6 +24,5 @@ class ActivateController extends Controller
         $_SESSION['registered'] = 'true';
 
         return view('activate');
-
     }
 }

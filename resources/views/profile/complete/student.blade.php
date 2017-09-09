@@ -185,6 +185,17 @@
         </div>
         <hr/>
 
+        @if(Auth::user()->type == null)
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <input type="checkbox" name="subscribe" value="subscribe" checked> I would like to receive email notifications<br/>
+                    <small>This includes when you receive a new message. You can edit your preferences after you complete your registration.</small>
+                    <br/>
+                </div>
+            </div>
+            <hr/>
+        @endif
+
         <div class="form-group">
             <div class="col-md-12 text-center">
                 <button type="submit" class="btn btn-pink">

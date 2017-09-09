@@ -24,6 +24,11 @@
                         Favourites
                     </div>
                 </a>
+                <a href="/settings" class="profileNavLink">
+                    <div class="list-group-item profileNav">
+                        Settings
+                    </div>
+                </a>
 
                 @if(Auth::user()->email == 'rachel@shellborn.com')
                     <a href="/reports" class="profileNavLink">
@@ -82,6 +87,11 @@
                         <a href="/favourites" class="profileNavLink">
                             <div class="list-group-item profileNav">
                                 Favourites
+                            </div>
+                        </a>
+                        <a href="/settings" class="profileNavLink">
+                            <div class="list-group-item profileNav">
+                                Settings
                             </div>
                         </a>
 

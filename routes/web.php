@@ -75,6 +75,11 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         Route::post('/profile/removefavourite', 'ProfileController@removefavourite');
         Route::get('/favourites', 'ProfileController@favourites');
 
+
+        Route::get('/settings', 'SettingsController@index');
+        Route::get('/unsubscribe', 'SettingsController@unsubscribeView');
+        Route::post('/unsubscribe', 'SettingsController@unsubscribe');
+
         Route::post('/profile/avatar', 'ProfileController@avatar');
 
         Route::get('/home', 'ContactController@about');
@@ -86,6 +91,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
     Route::get('/profile/complete/type', 'ProfileController@type');
 
     Route::post('/profile/edit', 'ProfileController@save');
+    Route::post('/settings', 'SettingsController@update');
     Route::get('/profile/complete/student', 'ProfileController@studentComplete');
     Route::get('/profile/complete/alumni', 'ProfileController@alumniComplete');
     Route::get('/profile/view/{id}', 'ProfileController@view');
@@ -106,6 +112,11 @@ Route::get('/error', function () {
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/email', function () {
+    $name = "Rachel Shellborn";
+    return view('emails.newmessage', compact('name'));
 });
 
 Auth::routes();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendNewMessageEmail;
 use App\User;
 use Illuminate\Http\Request;
 use Nahid\Talk\Facades\Talk;
@@ -65,8 +66,13 @@ class MessageController extends Controller
             $userId = $request->input('_id');
 
             //attempting to create notification
+            $notifyUser = User::where('id', $userId)->first();
             $notification = new NotificationController();
-            $notification->storeMessage(User::where('id', $userId)->first(), Auth::user()->id);
+            $notification->storeMessage($notifyUser, Auth::user()->id);
+
+            if($notifyUser['emails-messages'] == 1) {
+                dispatch(new SendNewMessageEmail($notifyUser));
+            }
 
             $conversations = Talk::getMessagesByUserId($userId);
             if(!$conversations) {
