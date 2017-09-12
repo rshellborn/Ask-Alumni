@@ -1,7 +1,7 @@
 @extends('layouts.maincontent')
 
 @section('title')
-    Messages
+    Inbox
 @endsection
 
 @section('content')

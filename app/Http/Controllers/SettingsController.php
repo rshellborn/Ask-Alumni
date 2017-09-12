@@ -50,6 +50,18 @@ class SettingsController extends Controller
         return view('settings.unsubscribe');
     }
 
+    public function unsubscribe(Request $request) {
+        DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
+            [
+                'emails-weekly'   => false,
+                'emails-messages' => false,
+            ]);
+
+        $request->session()->flash('updated', 'You will no longer receive emails from us.
+        You can always update your preferences here if you want to receive emails again.');
+        return redirect()->action('SettingsController@index');
+    }
+
     public function update(Request $request) {
         $newMessage   = Input::get('newMessage');
         $weeklyEmails = Input::get('weeklyEmails');

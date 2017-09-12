@@ -251,7 +251,7 @@
                 </div>
 
                 <div>
-                    @if(Auth::check() && !request()->is('profile')
+                    @if(Auth::check() && !request()->is('profile') && !request()->is('activate')
                     && !request()->is('profile/complete/alumni') && !request()->is('profile/complete/student')
                     && !request()->is('profile/complete/type'))
                         @include('partials.personinfo')

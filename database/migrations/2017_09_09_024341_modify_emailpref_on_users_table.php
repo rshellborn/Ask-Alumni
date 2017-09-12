@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPreferencesAndSearchableToUsersTable extends Migration
+class ModifyEmailprefOnUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,8 @@ class AddPreferencesAndSearchableToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('emails-weekly')->default(false);
-            $table->boolean('emails-messages')->default(false);
-            $table->boolean('searchable')->default(true);
+            $table->boolean('emails-weekly')->default(0)->change();
+            $table->boolean('emails-messages')->default(0)->change();
         });
     }
 
@@ -28,9 +27,7 @@ class AddPreferencesAndSearchableToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('emails-weekly');
-            $table->dropColumn('emails-messages');
-            $table->dropColumn('searchable');
+            //
         });
     }
 }

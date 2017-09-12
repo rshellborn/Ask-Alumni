@@ -115,8 +115,12 @@ Route::get('/', function () {
 });
 
 Route::get('/email', function () {
-    $name = "Rachel Shellborn";
-    return view('emails.newmessage', compact('name'));
+    $messages = 2;
+    $likes = 4;
+    $points= 10;
+
+    \Illuminate\Support\Facades\Mail::to(\App\User::where('id', 3)->first())->send(new \App\Mail\WeeklyNotifications($messages, $likes, $points));
+    return view('emails.notifications', compact('messages', 'likes', 'points'));
 });
 
 Auth::routes();

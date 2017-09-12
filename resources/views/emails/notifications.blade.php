@@ -1,7 +1,7 @@
 @extends('emails.layout')
 
 @section('image')
-    https://www.askalumni.ca/emailLogo.png
+    https://www.askalumni.ca/notification.png
 @endsection
 
 @section('title')
@@ -9,18 +9,18 @@
 @endsection
 
 @section('subtitle')
-    <div class="text-align: left" style="padding-left: 80px">
+    <div class="text-align: left" style="width:350px; margin:0 auto;">
     @if($messages != 0)
         <div style="margin-bottom: 10px;">
             <img style="vertical-align:middle;" src="https://www.askalumni.ca/message-thumb.png"/>
-            <span style="font-size: 18px;">{{$messages}} new messages</span><br/>
+            <span style="font-size: 18px;">{{$messages}} new @if($messages == 1) message @else messages @endif</span><br/>
         </div>
     @endif
 
     @if($likes != 0)
         <div style="margin-bottom: 10px;">
             <img style="vertical-align:middle" src="https://www.askalumni.ca/thumbsupfilled.png"/>
-            <span style="font-size: 18px;">{{$likes}} on your advice posts</span><br/>
+            <span style="font-size: 18px;">{{$likes}} @if($likes == 1) like @else likes @endif on your advice posts</span><br/>
         </div>
     @endif
 
