@@ -107,4 +107,8 @@ return [
         ],
     ],
 
+    'dkim_selector' => 'mail',
+    'dkim_domain' => 'askalumni.ca',
+    'dkim_private_key' => storage_path('mail.private'),
+
 ];

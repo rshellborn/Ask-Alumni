@@ -20,7 +20,7 @@
     @if($likes != 0)
         <div style="margin-bottom: 10px;">
             <img style="vertical-align:middle" src="https://www.askalumni.ca/thumbsupfilled.png"/>
-            <span style="font-size: 18px;">{{$likes}} @if($likes == 1) like @else likes @endif on your advice posts</span><br/>
+            <span style="font-size: 18px;">{{$likes}} @if($likes == 1) like @else likes @endif on your forum threads</span><br/>
         </div>
     @endif
 

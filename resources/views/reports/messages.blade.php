@@ -9,6 +9,7 @@
         <thead>
         <tr>
             <th>Participants</th>
+            <th>Trigger</th>
             <th>Messages</th>
         </tr>
         </thead>
@@ -29,6 +30,7 @@
                         <br/>
                     @endforeach
                 </td>
+                <td>{{ DB::table('conversations')->where('id', $convo->id)->value('trigger') }}</td>
                 <td>{{ count(\DB::table('messages')->where('conversation_id', $convo->id)->get()) }}</td>
             </tr>
         @endforeach

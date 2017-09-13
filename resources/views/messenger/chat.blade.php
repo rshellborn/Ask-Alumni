@@ -10,6 +10,21 @@
 
 @section('scripts')
     <script>
+        $( document ).ready(function() {
+            $('#message-data').bind("enterKey",function(e){
+                $( "#sendBtn" ).submit();
+            });
+            $('#message-data').keydown(function(e){
+                if(e.keyCode == 13)
+                {
+                    e.preventDefault();
+                    $(this).trigger("enterKey");
+                }
+            });
+        });
+    </script>
+
+    <script>
         var objDiv = document.getElementById("talkMessages");
         objDiv.scrollTop = objDiv.scrollHeight;
     </script>
@@ -18,9 +33,9 @@
         var __baseUrl = "{{url('/')}}"
     </script>
 
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js'></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js'></script>
 
     <script src="{{asset('chat/js/talk.js')}}"></script>
 
@@ -86,7 +101,7 @@
                     <strong>
                         @if(isset($user))
                             <a href="{{'/profile/view/' . $user->id}} " style="color: white;">
-                                {{'Chat with ' . @$user->name}}
+                                {{@$user->name}}
                             </a>
                         @else
                             No Thread Selected
@@ -117,7 +132,6 @@
         @if($message->sender->id == auth()->user()->id)
             <div class="col-md-10 col-md-offset-1">
                 <div class="row text-right" id="message-{{$message->id}}">
-                    <strong>{{$message->sender->name}}</strong>
                     <div class="text-right">
                         <div class="well well-sm col-md-8 col-md-offset-4" style="margin-bottom: 0px; background-color: #1ea896; border-radius: 30px">
                             <span style="color: white">{{$message->message}}</span>
@@ -132,7 +146,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="row text-left" id="message-{{$message->id}}">
                     <a href="{{ '/profile/view/' . $message->sender->id }}">
-                        <strong>{{$message->sender->name}}</strong>
+
                     </a>
                     <div class="text-left">
                         <div class="well well-sm col-md-8" style="margin-bottom: 0px; background-color: #4c5454; border-radius: 30px">
@@ -154,7 +168,8 @@
             <form action="" method="post" id="talkSendMessage">
                 <textarea class="form-control" name="message-data" id="message-data" placeholder ="Type your message" rows="3"></textarea>
                 <input type="hidden" name="_id" value="{{@request()->route('id')}}">
-                <button class="btn btn-pink" type="submit" style="margin-top: 10px">Send</button>
+                <input type="hidden" name="trigger" value="{{$trigger}}"/>
+                <button class="btn btn-pink col-md-4 col-md-offset-4" type="submit" id="sendBtn" style="margin-top: 10px">Send</button>
             </form>
         </div>
     </div>

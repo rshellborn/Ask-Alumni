@@ -87,7 +87,7 @@
                 <div class="row" style="padding-bottom: 20px;">
                     <div class="col-md-2" style="padding-bottom: 10px">
                         @if($id != Auth::user()->id)
-                            <a href="{{route('message.read', ['id'=>$id])}}" class="btn btn-pink">Message</a>
+                            <a href="{{route('message.read', ['id'=>$id, 'trigger'=>'profile'])}}" class="btn btn-pink">Message</a>
                         @endif
 
                         @if($usersProfile)

@@ -15,7 +15,8 @@
         "nahid/talk": "^2.2",
         "pusher/pusher-php-server": "^2.6",
         "riari/laravel-forum": "~4.0",
-        "riari/laravel-forum-frontend": "~1.0"
+        "riari/laravel-forum-frontend": "~1.0",
+        "vitalybaev/laravel5-dkim": "^0.2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

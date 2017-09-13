@@ -237,6 +237,7 @@ class ProfileController extends Controller
         $schools = Input::get('school');
         $highSchool = Input::get('highSchool');
         $degree = Input::get('degree');
+        $subscribe = Input::get('subscribe');
 
         //check if user selected other high school or school
         $otherHighSchool = Input::get('otherHighSchool');
@@ -288,24 +289,31 @@ class ProfileController extends Controller
             }
         }
 
-
-        if(count($fields) > 0) {
+        if(count($fields) > 1) {
             $fields = implode(",", $fields);
         } else if (count($fields) == 0) {
             $fields = '';
+        } else {
+            $fields = end($fields);
         }
 
-        if(count($schools) > 0) {
+        if(count($schools) > 1) {
             $schools = implode(",", $schools);
         } else if(count($schools) == 0) {
             $schools = '';
+        } else {
+            $schools = end($schools);
         }
 
-        if(count($degree) > 0) {
+        if(count($degree) > 1) {
             $degree = implode(",", $degree);
-        } else if(count($schools) == 0) {
+        } else if(count($degree) == 0) {
             $degree = '';
+        } else {
+            $degree = end($degree);
         }
+
+//        dd($degree);
 
         DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
             [
@@ -314,6 +322,8 @@ class ProfileController extends Controller
                 'schools' => $schools,
                 'degrees' => $degree,
                 'highSchool' => $highSchool,
+                'emails-weekly' => $subscribe == "true" ? true : false,
+                'emails-messages' => $subscribe == "true" ? true : false,
             ]);
 
         if($accType == "Alumni") {
@@ -475,7 +485,7 @@ class ProfileController extends Controller
 
                 Image::make($avatar)->fit(200)->save(public_path('/avatars/' . $filename));
 
-                if($prevAvatar != 'default-student.png' && $prevAvatar != 'default-alumni.png') {
+                if($prevAvatar != 'default-student.png' && $prevAvatar != 'default-alumni.png' && $prevAvatar != "") {
                     if (file_exists(public_path('/avatars/' . $prevAvatar))) {
                         unlink(public_path('/avatars/' . $prevAvatar));
                     }
@@ -498,6 +508,8 @@ class ProfileController extends Controller
                 $filename = 'default-student.png';
             } else if($request->input('type') == 'an Alumni') {
                 $filename = 'default-alumni.png';
+            } else {
+                $filename = "";
             }
 
             $user = Auth::user();
@@ -505,6 +517,14 @@ class ProfileController extends Controller
             $user->save();
         }
 
-        return $this->edit();
+        if($request->input('fromUrl') == 'edit') {
+            return $this->edit();
+        } else if($request->input('fromUrl') == 'alumni') {
+            return $this->alumniComplete();
+        } else if($request->input('fromUrl') == 'student'){
+            return $this->studentComplete();
+        } else {
+            return view('errors.500');
+        }
     }
 }

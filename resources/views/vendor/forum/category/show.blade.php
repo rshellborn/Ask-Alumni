@@ -68,9 +68,7 @@
                 <thead>
                     <tr>
                         <th>{{ trans('forum::general.subject') }}</th>
-                        @if(DB::table('forum_categories')->where('id', $category->id)->value('title') === "Advice")
-                            <th class="col-md-2 text-right">Likes</th>
-                        @endif
+                        <th class="col-md-2 text-right">Likes</th>
                         <th class="col-md-2 text-right">{{ trans('forum::general.replies') }}</th>
                         <th class="col-md-2 text-right">{{ trans('forum::posts.last') }}</th>
                         @can ('manageThreads', $category)
@@ -106,11 +104,9 @@
                                 @if ($thread->trashed())
                                     <td colspan="2">&nbsp;</td>
                                 @else
-                                    @if(DB::table('forum_categories')->where('id', $thread->category_id)->value('title') === "Advice")
-                                        <td class="text-right">
-                                            {{ $thread->likes }}
-                                        </td>
-                                    @endif
+                                    <td class="text-right">
+                                        {{ $thread->likes }}
+                                    </td>
                                     <td class="text-right">
                                         {{ $thread->reply_count }}
                                     </td>

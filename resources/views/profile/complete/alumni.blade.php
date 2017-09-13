@@ -48,6 +48,7 @@
                         <label>Update Profile Image</label>
                         <input class="form-control" type="file" name="avatar">
                         <input type="hidden" name="action" value="upload">
+                        <input type="hidden" name="fromUrl" value="alumni">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <br/>
                         <input type="submit" class="btn btn-pink" value="Upload">
@@ -87,7 +88,8 @@
                 <form style="display: inline" role="form" method="POST" action="/profile/avatar">
                     {{ csrf_field() }}
                     <input type="hidden" name="action" value="delete" />
-                    <input type="hidden" name="type" value="Alumni">
+                    <input type="hidden" name="type" value="an Alumni">
+                    <input type="hidden" name="fromUrl" value="alumni">
                     <input type="submit" class="btn btn-danger" value="Delete" />
                 </form>
             </div>
@@ -211,7 +213,7 @@
         @if(Auth::user()->type == null)
         <div class="row">
             <div class="col-md-12 text-center">
-                <input type="checkbox" name="subscribe" value="subscribe" checked> I would like to receive email notifications<br/>
+                <input type="checkbox" name="subscribe" value="true" checked> I would like to receive email notifications<br/>
                 <small>This includes when you receive a new message. You can edit your preferences after you complete your registration.</small>
                 <br/>
             </div>

@@ -23,6 +23,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             Route::get('/reports/messages', 'ReportsController@messages');
             Route::get('/reports/searches', 'ReportsController@searches');
             Route::get('/reports/contacts', 'ReportsController@contacts');
+            Route::get('/reports/logs/{id}', 'ReportsController@logs');
         });
 
         //Browse
@@ -114,13 +115,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/email', function () {
-    $messages = 2;
-    $likes = 4;
-    $points= 10;
-
-    \Illuminate\Support\Facades\Mail::to(\App\User::where('id', 3)->first())->send(new \App\Mail\WeeklyNotifications($messages, $likes, $points));
-    return view('emails.notifications', compact('messages', 'likes', 'points'));
-});
+//Route::get('/email', function () {
+//    $messages = 2;
+//    $likes = 4;
+//    $points= 10;
+//
+//    \Illuminate\Support\Facades\Mail::to(\App\User::where('id', 2)->first())->send(new \App\Mail\WeeklyNotifications($messages, $likes, $points));
+//    return view('emails.notifications', compact('messages', 'likes', 'points'));
+//});
 
 Auth::routes();

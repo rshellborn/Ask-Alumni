@@ -49,12 +49,7 @@
                     <span><strong>Matched on same high school: </strong>{{ $match->highSchool }}</span>
                 </div>
                 <div class="col-md-2">
-                    <form role="form" method="POST" action="{{ url('/messages/create') }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" value="{{ $match->user_id }}" name="user" />
-                        <input type="hidden" value="matches" name="trigger" />
-                        <button class="btn btn-pink">Message</button>
-                    </form>
+                    <a href="{{route('message.read', ['id'=>$match->user_id, 'trigger'=>'matches'])}}" class="btn btn-pink pull-right">Message</a>
                 </div>
             </div>
         </div>

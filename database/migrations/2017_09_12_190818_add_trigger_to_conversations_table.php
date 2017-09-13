@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyEmailprefOnUsersTable extends Migration
+class AddTriggerToConversationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class ModifyEmailprefOnUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-//            $table->boolean('emails-weekly')->default(false)->change();
-//            $table->boolean('emails-messages')->default(false)->change();
+        Schema::table('conversations', function (Blueprint $table) {
+            $table->string('trigger')->default('unknown');
         });
     }
 
@@ -26,8 +25,8 @@ class ModifyEmailprefOnUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('conversations', function (Blueprint $table) {
+            $table->dropColumn('trigger');
         });
     }
 }
