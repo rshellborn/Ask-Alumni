@@ -1,7 +1,10 @@
 @extends('layouts.maincontent')
 
 @section('title')
-    <button class="btn btn-info" onclick="window.location='{{ url('reports/contacts') }}'">Contact Messages</button>
+    <button class="btn btn-default" onclick="window.location='{{ url('reports/contacts') }}'">Contact Messages</button><br/><br/>
+    <button class="btn btn-default" onclick="window.location='{{ url('reports/logs/App') }}'">App Log</button>
+    <button class="btn btn-default" onclick="window.location='{{ url('reports/logs/Worker') }}'">Worker Log</button>
+    <button class="btn btn-default" onclick="window.location='{{ url('reports/logs/Scheduler') }}'">Scheduler Log</button>
 @endsection
 
 @section('content')
@@ -90,16 +93,6 @@
                     <div class="col-md-2 text-center">
                         <div class="panel panel-success">
                             <div class=panel-heading>
-                                <h3 class=panel-title>Advice</h3>
-                            </div>
-                            <div class=panel-body>
-                                {{$adviceThreads}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2 text-center">
-                        <div class="panel panel-success">
-                            <div class=panel-heading>
                                 <h3 class=panel-title>Likes</h3>
                             </div>
                             <div class=panel-body>
@@ -121,13 +114,46 @@
                     <div class="col-md-3 text-center">
                         <button class="btn btn-danger" onclick="window.location='{{ url('reports/messages') }}'">Browse Messages</button>
                     </div>
-                    <div class="col-md-3 text-center">
+                    <div class="col-md-2 text-center">
                         <div class="panel panel-danger">
                             <div class=panel-heading>
-                                <h3 class=panel-title>Conversations</h3>
+                                <h3 class=panel-title>Total Convos</h3>
                             </div>
                             <div class=panel-body>
                                 {{$conversations}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 text-center">
+                        <div class="panel panel-danger">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>From Discover</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$fromDiscover}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 text-center">
+                        <div class="panel panel-danger">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>From Matches</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$fromMatches}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 text-center">
+                        <div class="panel panel-danger">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>From Profile</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$fromProfile}}
                             </div>
                         </div>
                     </div>

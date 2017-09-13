@@ -40,6 +40,8 @@ class DiscoverController extends Controller
             //Do not show current user in results
             $query = $query->where('id', '!=', Auth::id());
 
+            $query = $query->where('searchable', 1);
+
             $totalResults = count($query->get());
 
             $results = $query->paginate(10);
@@ -70,6 +72,7 @@ class DiscoverController extends Controller
         $query = User::query();
 
         $query = $query->where('active', 1);
+        $query = $query->where('searchable', 1);
 
         if ($type != 'All') {
             $query = $query->where('type', $type);

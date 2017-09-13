@@ -42,8 +42,8 @@ class AdviceThreadLike extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'New Like on Advice',
-            'body' => 'You have received a like on your advice post!',
+            'title' => 'New Like on Forum Thread',
+            'body' => 'You have received a like on your forum thread!',
             'action_url' => '/forum',
             'icon' => '/like-icon.png',
             'created' => Carbon::now()->toIso8601String()
@@ -61,9 +61,9 @@ class AdviceThreadLike extends Notification
     {
         return WebPushMessage::create()
             ->id($notification->id)
-            ->title('New Like on Advice')
+            ->title('New Like on Forum Thread')
             ->icon('/like-icon.png')
-            ->body('You have received a like on your advice post!')
+            ->body('You have received a like on your forum thread!')
             ->action('View Forums', '/forum');
     }
 }

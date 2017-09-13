@@ -16,7 +16,7 @@ class CheckRegistration
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->type == null) {
+        if(Auth::user()->type == null && !request()->is('profile/avatar')) {
             return redirect('profile/complete/type');
         }
 

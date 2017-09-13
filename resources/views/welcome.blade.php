@@ -91,8 +91,7 @@
         <div class="flex-center position-ref">
             <div class="content">
                 <div class="title">
-                <img width="80px" src="{{ url('/alumnilogo.png') }}"/><br/>
-                    Ask Alumni
+                    <img src="{{ url('/welcomeLogo.png') }}"/><br/>
                 </div>
                 <div class="subtitle m-b-md">
                     A social network for high school students and alumni.

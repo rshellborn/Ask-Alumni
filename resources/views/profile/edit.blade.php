@@ -79,6 +79,7 @@
                         <label>Update Profile Image</label>
                         <input class="form-control" type="file" name="avatar">
                         <input type="hidden" name="action" value="upload">
+                        <input type="hidden" name="fromUrl" value="edit">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <br/>
                         <input type="submit" class="btn btn-pink" value="Upload">
@@ -119,6 +120,7 @@
                     {{ csrf_field() }}
                     <input type="hidden" name="action" value="delete" />
                     <input type="hidden" name="type" value="{{$type}}">
+                    <input type="hidden" name="fromUrl" value="edit">
                     <input type="submit" class="btn btn-danger" value="Delete" />
                 </form>
             </div>

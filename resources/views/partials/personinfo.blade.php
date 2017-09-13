@@ -24,6 +24,11 @@
                         Favourites
                     </div>
                 </a>
+                <a href="/settings" class="profileNavLink">
+                    <div class="list-group-item profileNav">
+                        Settings
+                    </div>
+                </a>
 
                 @if(Auth::user()->email == 'rachel@shellborn.com')
                     <a href="/reports" class="profileNavLink">
@@ -48,6 +53,10 @@
                 </a>
             </div>
             <div style="background-color: #4c5454; margin-right: 2px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                <div class="col-md-12">
+                    <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://www.facebook.com/askalumni.ca/"><img style="border: 0;" src="https://i2.createsend1.com/static/eb/master/13-the-blueprint-3/images/facebook.png" width="26" height="26" /></a>
+                    <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://twitter.com/askalumni/"><img style="border: 0;" src="https://i3.createsend1.com/static/eb/master/13-the-blueprint-3/images/twitter.png" width="26" height="26" /></a>
+                </div>
                 <small style="color: white;"><a href="/about" style="color: white;">About</a> | </small>
                 <a href="/contact" style="color: white;"><small>Contact</small></a><br/>
                 <small style="color: white;"><a href="http://rachelshellborn.me" target="_blank" style="color: white;">RS Web Development</a> &copy; 2017</small><br/>
@@ -84,6 +93,11 @@
                                 Favourites
                             </div>
                         </a>
+                        <a href="/settings" class="profileNavLink">
+                            <div class="list-group-item profileNav">
+                                Settings
+                            </div>
+                        </a>
 
                         @if(Auth::user()->email == 'rachel@shellborn.com')
                             <a href="/reports" class="profileNavLink">
@@ -108,9 +122,13 @@
                         </a>
 
                         <div class="list-group-item" style="background-color: #4c5454; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                            <div class="col-md-12">
+                                <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://www.facebook.com/askalumni.ca/"><img style="border: 0;" src="https://i2.createsend1.com/static/eb/master/13-the-blueprint-3/images/facebook.png" width="26" height="26" /></a>
+                                <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://twitter.com/askalumni/"><img style="border: 0;" src="https://i3.createsend1.com/static/eb/master/13-the-blueprint-3/images/twitter.png" width="26" height="26" /></a>
+                            </div>
                             <small style="color: white;"><a href="/about" style="color: white;">About</a> | </small>
                             <a href="/contact" style="color: white;"><small>Contact</small></a><br/>
-                            <small style="color: white;"><a href="http://rachelshellborn.me" target="_blank" style="color: white;">RS Web Development</a> &copy; 2017</small><br/>
+                            <small style="color: white;"><a href="http://rachel.shellborn.com" target="_blank" style="color: white;">RS Web Development</a> &copy; 2017</small><br/>
                         </div>
                     </div>
                 </div>

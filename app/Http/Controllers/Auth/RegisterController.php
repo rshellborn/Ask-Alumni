@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Jobs\SendVerificationEmail;
+use App\Mail\VerifyAccount;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -70,19 +72,26 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'verification_code' => $this->getVerificationCode()
+            'verification_code' => base64_encode($data['email'])
         ]);
 
-        //send activation email
-        $data['verification_code']  = $user->verification_code;
-
-        Mail::send('emails.activateaccount', $data, function($message) use ($data)
-        {
-            $message->subject("Activate Your Account");
-            $message->to($data['email']);
-        });
-
         return $user;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+
+        dispatch(new SendVerificationEmail($user));
+
+        return $this->registered($request) ?: redirect($this->redirectPath());
     }
 
     /**
@@ -99,18 +108,4 @@ class RegisterController extends Controller
         return redirect('login');
     }
 
-    /**
-     * Create a randomized verification code for the email.
-     */
-    private function getVerificationCode() {
-        $length = 20;
-
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
 }

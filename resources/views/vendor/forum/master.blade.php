@@ -130,6 +130,10 @@
             cursor: pointer;
             cursor: hand;
         }
+        .label-primary {
+            background-color: #1ea896;
+            border-color: #1ea896;
+        }
     </style>
 
     <script>
@@ -209,23 +213,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">
-                    @if (Auth::check())
-                        <a href="{{ url('/forum') }}">
-                            <img style="float:left; margin-right:5px" width="30px" src="{{ url('/alumnilogo.png') }}"/>
-                        </a>
-                        <a class="navbar-brand" href="{{ url('/forum') }}" style="color: white;">
-                            {{ config('app.name', 'Ask Alumni') }}
-                        </a>
-                    @else
-                        <a href="{{ url('/') }}">
-                            <img style="float:left; margin-right:5px" width="30px" src="{{ url('/alumnilogo.png') }}"/>
-                        </a>
-                        <a class="navbar-brand" href="{{ url('/') }}" style="color: white;">
-                            {{ config('app.name', 'Ask Alumni') }}
-                        </a>
-                    @endif
-                </a>
+                @if (Auth::check())
+                    <a href="{{ url('/forum') }}">
+                        <img src="{{ url('/brand.png') }}"/>
+                    </a>
+                @else
+                    <a href="{{ url('/') }}">
+                        <img src="{{ url('/brand.png') }}"/>
+                    </a>
+                @endif
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

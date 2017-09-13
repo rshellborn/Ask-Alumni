@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -41,11 +42,18 @@ class ReportsController extends Controller
 
         //Messages stats
         $conversations  = DB::table('conversations')->count();
+        $fromDiscover  = DB::table('conversations')->where('trigger', 'discover')->count();
+        $fromMatches  = DB::table('conversations')->where('trigger', 'matches')->count();
+        $fromProfile  = DB::table('conversations')->where('trigger', 'profile')->count();
 
         $searches = DB::table('search_queries')->count();
-        $favourites = 0;
 
-        return view('reports.dashboard', compact('users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
+        $favourites = 0;
+        foreach(User::all() as $user) {
+            $favourites += $user->favourites;
+        }
+
+        return view('reports.dashboard', compact('fromDiscover', 'fromMatches', 'fromProfile', 'users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
     }
 
     public function users() {
@@ -107,5 +115,22 @@ class ReportsController extends Controller
         $contacts = DB::table('contact')->get();
 
         return view('reports.contacts', compact('contacts'));
+    }
+
+    public function logs($log) {
+        $date = Carbon::now()->toDateString();
+        $file = '';
+        switch($log) {
+            case 'App': $file = 'laravel-' . $date . '.log';
+                break;
+            case 'Worker': $file = 'worker.log';
+                break;
+            case 'Scheduler': $file = 'scheduler.log';
+                break;
+        }
+
+        $contents = file_get_contents(storage_path('logs/' . $file));
+
+        return view('reports.logs', compact('contents', 'log'));
     }
 }

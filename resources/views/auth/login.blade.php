@@ -6,8 +6,12 @@
 
 @section('content')
     @if(session()->has('registered'))
-        <div class="alert alert-info text-center" role="alert">
-            <span>{{session()->get('registered')}}</span>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <div class="alert alert-info text-center" role="alert">
+                    <span>{{session()->get('registered')}}</span>
+                </div>
+            </div>
         </div>
     @endif
     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">

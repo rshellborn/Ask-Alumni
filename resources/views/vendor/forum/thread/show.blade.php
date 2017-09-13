@@ -15,30 +15,28 @@
                 @endif
                 {{ $thread->title }}
             </h2>
-            @if(DB::table('forum_categories')->where('id', $thread->category_id)->value('title') === "Advice")
-                <div class="text-right">
-                    <h4>Like this advice? Give it a thumbs up!</h4>
-                    @if(Auth::guest())
-                        <p>Login to vote.</p>
-                    @endif
-                    <input type="hidden" name="threadID" value="{{$thread->id}}"/>
-                    <input type="hidden" name="authorID" value="{{$thread->author_id}}"/>
-                    <input type="hidden" name="userID" value="{{\Auth::id()}}"/>
-                    <input type="hidden" name="likes" value="{{ $thread->likes }}"/>
-                    <div class="text-right col-md-2" style="float:right;">
+            <div class="text-right">
+                <h4>Like this thread? Give it a thumbs up!</h4>
+                @if(Auth::guest())
+                    <p>Login to vote.</p>
+                @endif
+                <input type="hidden" name="threadID" value="{{$thread->id}}"/>
+                <input type="hidden" name="authorID" value="{{$thread->author_id}}"/>
+                <input type="hidden" name="userID" value="{{\Auth::id()}}"/>
+                <input type="hidden" name="likes" value="{{ $thread->likes }}"/>
+                <div class="text-right col-md-2" style="float:right;">
 {{--                        {{dd(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count())}}--}}
-                        @if(Auth::guest())
-                            <img style="cursor: pointer; cursor: hand;"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
-                        @elseif(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count() == 0)
-                            <div id="filled" style="display:inline;"></div>
-                            <img id="up-vote"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
-                        @else
-                            <img src=" {{url('/thumbsupfilled.png') }}"/>&nbsp;
-                        @endif
-                        <h4 id="likes" style="font-weight: bold; float:right;">{{ $thread->likes }}</h4>
-                    </div>
+                    @if(Auth::guest())
+                        <img style="cursor: pointer; cursor: hand;"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
+                    @elseif(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count() == 0)
+                        <div id="filled" style="display:inline;"></div>
+                        <img id="up-vote"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
+                    @else
+                        <img src=" {{url('/thumbsupfilled.png') }}"/>&nbsp;
+                    @endif
+                    <h4 id="likes" style="font-weight: bold; float:right;">{{ $thread->likes }}</h4>
                 </div>
-            @endif
+            </div>
         </div>
 <br/>
         <hr>
@@ -111,8 +109,10 @@
                         <textarea name="content" class="form-control">{{ old('content') }}</textarea>
                     </div>
 
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-pink pull-right">{{ trans('forum::general.post') }}</button>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="submit" class="btn btn-pink pull-right">{{ trans('forum::general.post') }}</button>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'middleware' => 'web',
+    'middleware' => array('web', 'App\Http\Middleware\CheckLoggedIn', 'App\Http\Middleware\CheckRegistration'),
 
     /*
     |--------------------------------------------------------------------------

@@ -5,19 +5,16 @@
 @endsection
 
 @section('content')
-    <table class="table table-hover table-responsive">
+    <table class="table table-hover table-responsive text-center">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Type</th>
-            <th>Searches</th>
-            <th>Forum Threads</th>
-            <th>Advice Threads</th>
-            <th>Advice Likes</th>
-            <th>Forum Posts</th>
-            <th>Conversations</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Email W-M</th>
+            <th class="text-center">Points</th>
+            <th class="text-center">Favourites</th>
+            <th class="text-center">Searches</th>
+            <th class="text-center">Forum T-L-P</th>
+            <th class="text-center">Conversations</th>
         </tr>
         </thead>
         <tbody>
@@ -25,12 +22,16 @@
             <tr>
                 <td>
                     <button class="btn btn-primary" onclick="window.location='{{ url('profile/view/' . $user->id) }}'">
-                        {{ $user->id }}
-                    </button>
+                    {{ $user->name }}
+                    </button><br/>
+                    <small>{{ $user->type }}</small>
                 </td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->type }}</td>
+                <td>
+                    {{ $user->email }}<br/>
+                    {{ \DB::table('users')->where('id', $user->id)->value('emails-weekly') }} - {{ \DB::table('users')->where('id', $user->id)->value('emails-messages') }}
+                </td>
+                <td>{{ $user->points }}</td>
+                <td>{{ $user->favourites }}</td>
                 <td>{{ \DB::table('search_queries')->where('user_id', $user->id)->count() }}</td>
 
                 <?php
@@ -41,10 +42,9 @@
                     }
                 ?>
 
-                <td>{{\DB::table('forum_threads')->where('author_id', $user->id)->count()}}</td>
-                <td>{{\DB::table('forum_threads')->where('category_id', $adviceCategory)->where('author_id', $user->id)->count()}}</td>
-                <td>{{$adviceLikes}}</td>
-                <td>{{\DB::table('forum_posts')->where('author_id', $user->id)->count()}}</td>
+                <td>{{\DB::table('forum_threads')->where('author_id', $user->id)->count()}}
+                 - {{$adviceLikes}} -
+                {{\DB::table('forum_posts')->where('author_id', $user->id)->count()}}</td>
                 <td>{{\DB::table('conversations')->where('user_one', $user->id)->orWhere('user_two', $user->id)->count()}}</td>
             </tr>
         @endforeach

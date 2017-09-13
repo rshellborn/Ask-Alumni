@@ -120,9 +120,20 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Social Network URLs and Personal Site URL
+    |--------------------------------------------------------------------------
+    |
+    */
+    'dev_site_url' => env('DEV_SITE_URL'),
+    'fb_url' => env('FB_URL'),
+    'tw_url' => env('TW_URL'),
+    'in_url' => env('IN_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -151,7 +162,8 @@ return [
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Mail\MailServiceProvider::class,
+//        Illuminate\Mail\MailServiceProvider::class,
+        Vitalybaev\LaravelDkim\DkimMailServiceProvider::class,
         Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,

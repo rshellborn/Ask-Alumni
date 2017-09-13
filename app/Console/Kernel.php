@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\SendNotificationEmailCommand::class
     ];
 
     /**
@@ -24,8 +24,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $logfile = storage_path('logs/weeklyemails.log');
+
+        //Weekly notifications email
+        $schedule->command('notificationemail:send')
+                 ->weekly()
+                 ->sundays()
+                 ->at('17:00')
+                 ->sendOutputTo($logfile)
+                 ->emailOutputTo('rachel@shellborn.com');
+
+
+//        $schedule->command('notificationemail:send')->everyMinute()
+//                 ->sendOutputTo($logfile)
+//                 ->emailOutputTo('rachel@shellborn.com');
     }
 
     /**

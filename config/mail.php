@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'mail.askalumni@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Ask Alumni'),
+        'address' => env('MAIL_FROM_ADDRESS'),
+        'name' => env('MAIL_FROM_NAME'),
     ],
 
     /*
@@ -106,5 +106,9 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
+
+    'dkim_selector' => 'mail',
+    'dkim_domain' => 'askalumni.ca',
+    'dkim_private_key' => storage_path('mail.private'),
 
 ];

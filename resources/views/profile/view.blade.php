@@ -87,11 +87,13 @@
                 <div class="row" style="padding-bottom: 20px;">
                     <div class="col-md-2" style="padding-bottom: 10px">
                         @if($id != Auth::user()->id)
-                            <a href="{{route('message.read', ['id'=>$id])}}" class="btn btn-pink">Message</a>
+                            <a href="{{route('message.read', ['id'=>$id, 'trigger'=>'profile'])}}" class="btn btn-pink">Message</a>
                         @endif
 
                         @if($usersProfile)
-                            <button class="btn btn-pink" onclick="window.location='{{ url('/profile/edit') }}'">Edit Profile</button>
+                            <button class="btn btn-pink" style="margin-bottom: 5px;" onclick="window.location='{{ url('/profile/edit') }}'">Edit Profile</button><br/>
+                            <button class="btn btn-pink" style="margin-bottom: 5px;" onclick="window.location='{{ url('/favourites') }}'">Favourites</button>
+                            <button class="btn btn-pink" onclick="window.location='{{ url('/settings') }}'">Settings</button>
                         @endif
                     </div>
 
@@ -99,7 +101,7 @@
                         <div class="row" style="background-color: #4c5454;border-radius: 10px">
                             <div class="media">
                                 <div class="media-left" style="background-color: #1ea896; padding-right: 0; border-top-left-radius: 10px; border-bottom-left-radius: 10px">
-                                    <img src="{{url('/avatars/' . $avatar)}}" style="width: 200px; height: 200px; border-radius:100px;margin:10px" />
+                                    <img src="{{url('/avatars/' . $avatar)}}" style="border-radius:100px;margin:10px" />
                                 </div>
                                 <div class="media-body media-middle" style="background-color: #4c5454; color: white; border-radius: 10px">
                                     <h4 style="font-weight: bold;">{{$name}}</h4>

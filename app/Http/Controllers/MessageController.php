@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendNewMessageEmail;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Nahid\Talk\Facades\Talk;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +40,7 @@ class MessageController extends Controller
 
     public function chatHistory($id)
     {
+        $trigger = Input::get('trigger', 'unknown');
         $conversations = Talk::getMessagesByUserId($id);
         $user = '';
         $messages = [];
@@ -48,7 +51,7 @@ class MessageController extends Controller
             $messages = $conversations->messages;
         }
 
-        return view('messenger.chat', compact('messages', 'user'));
+        return view('messenger.chat', compact('messages', 'user', 'trigger'));
     }
 
     public function ajaxSendMessage(Request $request)
@@ -65,16 +68,30 @@ class MessageController extends Controller
             $userId = $request->input('_id');
 
             //attempting to create notification
+            $notifyUser = User::where('id', $userId)->first();
             $notification = new NotificationController();
-            $notification->storeMessage(User::where('id', $userId)->first(), Auth::user()->id);
+            $notification->storeMessage($notifyUser, Auth::user()->id);
 
-            $conversations = Talk::getMessagesByUserId($userId);
-            if(!$conversations) {
-                //give points
-                $this->givePoints();
+            if($notifyUser['emails-messages'] == 1) {
+                dispatch(new SendNewMessageEmail($notifyUser));
             }
 
+
+            $conversations = Talk::getMessagesByUserId($userId);
+
             if ($message = Talk::sendMessageByUserId($userId, $body)) {
+                if(!$conversations) {
+                    //set trigger
+                    DB::table('conversations')->where('user_one', Auth::user()->id)->orderBy('id', 'desc')->limit(1)->update(
+                        [
+                            'trigger' => $request->input('trigger'),
+                        ]);
+
+
+                    //give points
+                    $this->givePoints();
+                }
+
                 $html = view('ajax.newMessageHtml', compact('message'))->render();
                 return response()->json(['status'=>'success', 'html'=>$html], 200);
             }
