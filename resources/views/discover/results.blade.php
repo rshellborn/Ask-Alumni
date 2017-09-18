@@ -28,7 +28,9 @@
                     <strong>High school:</strong> {{$user->highSchool}}
                 </div>
                 <div class="col-md-2">
+                    @if($user->allowMessage || $user->allowMessage === null)
                     <a href="{{route('message.read', ['id'=>$user->id, 'trigger'=>'discover'])}}" class="btn btn-pink pull-right">Message</a>
+                    @endif
                 </div>
             </div>
         </div>

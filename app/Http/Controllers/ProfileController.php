@@ -86,7 +86,7 @@ class ProfileController extends Controller
         $email = $user->email;
         $name = $user->name;
         $highSchool = $user->highSchool;
-        $id = $user->id;
+        $allowMessage = $user->allowMessage;
 
         $degrees = $user->degrees;
         $degrees = explode(",", $degrees);
@@ -102,7 +102,17 @@ class ProfileController extends Controller
             $bio = $user->bio;
         }
 
-        return view('profile.view', compact('highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        //check if this user is blocked
+        $blockedUsers = DB::table('users')->where('id', Auth::id())->value('blockedUsers');
+        $blockedUsers = explode(',', $blockedUsers);
+        if($blockedUsers != null) {
+            foreach ($blockedUsers as $userId){
+                $blocked = $userId == $id ? true: false;
+            }
+
+        }
+
+        return view('profile.view', compact('blocked', 'allowMessage', 'highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function edit() {
@@ -112,6 +122,7 @@ class ProfileController extends Controller
 
         $type = $user->type;
         $accType = $type;
+        $name = $user->name;
 
         $selHighSchool = $user->highSchool;
         $selSchools = explode(',', $user->schools);
@@ -168,7 +179,7 @@ class ProfileController extends Controller
         $type = $type == 'Alumni' ? 'an Alumni' : 'a Student';
 
 
-        return view('profile.edit',  compact('avatar', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'inSchool', 'notInSchool', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
+        return view('profile.edit',  compact('name', 'avatar', 'accType', 'otherType', 'type', 'student', 'alumni', 'selDegrees', 'selFields', 'selSchools', 'selHighSchool', 'bio', 'inSchool', 'notInSchool', 'highschools', 'schools1', 'schools2', 'fields1', 'fields2', 'degrees'));
     }
 
     public function alumniComplete() {
@@ -232,12 +243,13 @@ class ProfileController extends Controller
     }
 
     public function save(Request $request) {
-        $accType = Input::get('accType');
-        $fields = Input::get('fieldOfStudy');
-        $schools = Input::get('school');
+        $name       = Input::get('username');
+        $accType    = Input::get('accType');
+        $fields     = Input::get('fieldOfStudy');
+        $schools    = Input::get('school');
         $highSchool = Input::get('highSchool');
-        $degree = Input::get('degree');
-        $subscribe = Input::get('subscribe');
+        $degree     = Input::get('degree');
+        $subscribe  = Input::get('subscribe');
 
         //check if user selected other high school or school
         $otherHighSchool = Input::get('otherHighSchool');
@@ -317,6 +329,7 @@ class ProfileController extends Controller
 
         DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
             [
+                'name' => $name,
                 'type' => $accType,
                 'fields' => $fields,
                 'schools' => $schools,

@@ -30,12 +30,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <style>
-        textarea {
-            min-height: 200px;
-        }
-        .deleted {
-            opacity: 0.65;
-        }
         a {
             color:#1ea896;
         }
@@ -55,14 +49,14 @@
             color: black;
         }
         .convoSelectIndex:hover {
-            background-color: #1ea896;
+            background-color: #323838;
             cursor: hand;
             cursor: pointer;
             border-radius: 10px;
             color: white;
         }
         .convoSelect:hover {
-            background-color: #1ea896;
+            background-color: #323838;
             cursor: hand;
             cursor: pointer;
         }
@@ -71,6 +65,14 @@
             cursor: hand;
             cursor: pointer;
             color: white;
+        }
+        #favourite:hover {
+            cursor: hand;
+            cursor: pointer;
+        }
+        #unfavourite:hover {
+            cursor: hand;
+            cursor: pointer;
         }
         .profileNavLink:hover {
             text-decoration: none;
@@ -126,13 +128,49 @@
             border-color: #178e7f;
             color: white;
         }
-        #up-vote:hover {
-            cursor: pointer;
-            cursor: hand;
+        .btn-dark {
+            background-color: #4c5454;
+            border-color: #4c5454;
+            color: white;
         }
-        .label-primary {
+        .btn-dark:hover {
+            background-color: #323838;
+            border-color: #323838;
+            color: white;
+        }
+        .nav>li>a:focus, .nav>li>a:hover {
+            background-color: #4C5454;
+            color: white;
+        }
+        .nav>li>a:focus, .nav>li>a {
+            color: #1EA896;
+        }
+        .thick-hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 1em 0;
+            padding: 0;
+            background-color: #1ea896;
+        }
+        .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+            z-index: 3;
+            color: #fff;
             background-color: #1ea896;
             border-color: #1ea896;
+            cursor: default;
+        }
+        .pagination>li>a, .pagination>li>span {
+            position: relative;
+            float: left;
+            padding: 6px 12px;
+            line-height: 1.6;
+            text-decoration: none;
+            color: #1ea896;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-left: -1px;
         }
     </style>
 

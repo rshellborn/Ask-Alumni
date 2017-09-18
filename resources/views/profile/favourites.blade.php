@@ -49,7 +49,7 @@
                             <input type="hidden" value="true" name="return"/>
                             <button type="submit" class="btn btn-sm pull-right btn-grey">X</button>
                         </form>
-                        <a href="{{route('message.read', ['id'=>$user->id])}}" class="btn btn-pink pull-right" style="margin-top: 25px">Message</a>
+                        <a href="{{route('message.read', ['id'=>$user->id, 'trigger'=>'favourites'])}}" class="btn btn-pink pull-right" style="margin-top: 25px">Message</a>
                     </div>
                 </div>
             </div>

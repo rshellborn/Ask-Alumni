@@ -42,6 +42,25 @@ class DiscoverController extends Controller
 
             $query = $query->where('searchable', 1);
 
+            //check if user has anyone blocked
+            $blockedUserIds = DB::table('users')->where('id', Auth::id())->value('blockedUsers');
+            $blockedUserIds = explode(',', $blockedUserIds);
+
+            if($blockedUserIds[0] != "") {
+                foreach($blockedUserIds as $userid) {
+                    $query = $query->where('id', '!=', $userid);
+                }
+            }
+
+            //check if other people have this user blocked
+            $blocked_by = DB::table('users_blocked_by')->where('user_id', Auth::id())->value("blocked_by");
+            if($blocked_by != null) {
+                $blocked_by = explode(",", $blocked_by);
+                foreach($blocked_by as $userid) {
+                    $query = $query->where('id', '!=', $userid);
+                }
+            }
+
             $totalResults = count($query->get());
 
             $results = $query->paginate(10);
@@ -94,6 +113,25 @@ class DiscoverController extends Controller
 
         if ($degree != 'All') {
             $query = $query->where('degrees', 'like', '%'.$degree.'%');
+        }
+
+        //check if user has anyone blocked
+        $blockedUserIds = DB::table('users')->where('id', Auth::id())->value('blockedUsers');
+        $blockedUserIds = explode(',', $blockedUserIds);
+
+        if($blockedUserIds[0] != "") {
+            foreach($blockedUserIds as $userid) {
+                $query = $query->where('id', '!=', $userid);
+            }
+        }
+
+        //check if other people have this user blocked
+        $blocked_by = DB::table('users_blocked_by')->where('user_id', Auth::id())->value("blocked_by");
+        if($blocked_by != null) {
+            $blocked_by = explode(",", $blocked_by);
+            foreach($blocked_by as $userid) {
+                $query = $query->where('id', '!=', $userid);
+            }
         }
 
         //Do not show current user in results

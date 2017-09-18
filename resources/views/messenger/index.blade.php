@@ -62,4 +62,9 @@
         @endforeach
         @endif
     </div>
+    <div class="row">
+        @if($flag == false)
+            <div class="text-center">{{ $threads->links() }}</div>
+        @endif
+    </div>
 @endsection

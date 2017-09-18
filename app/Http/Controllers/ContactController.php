@@ -37,6 +37,8 @@ class ContactController extends Controller
                 'email' => $email,
                 'message' => $message,
                 'user_id' => $user_id,
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
             ]);
 
         return view('about.thankyou');
