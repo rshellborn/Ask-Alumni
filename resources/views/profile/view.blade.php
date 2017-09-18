@@ -85,15 +85,30 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row" style="padding-bottom: 20px;">
-                    <div class="col-md-2" style="padding-bottom: 10px">
+                    <div class="col-md-2" style="margin-bottom: 10px">
                         @if($id != Auth::user()->id)
-                            <a href="{{route('message.read', ['id'=>$id, 'trigger'=>'profile'])}}" class="btn btn-pink">Message</a>
+                            @if($allowMessage || $allowMessage === null)
+                                <a href="{{route('message.read', ['id'=>$id, 'trigger'=>'profile'])}}" class="btn btn-pink btn-block" style="margin-bottom: 10px">Message</a>
+                            @endif
+                            <div class="dropdown text-right">
+                                <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    More <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                    <li><a href="{{url('/report/' . $id)}}">Report</a></li>
+                                    @if($blocked)
+                                        <li><a href="{{url('/unblock/' . $id)}}">Unblock</a></li>
+                                    @else
+                                        <li><a href="{{url('/block/' . $id)}}">Block</a></li>
+                                    @endif
+                                </ul>
+                            </div>
                         @endif
 
                         @if($usersProfile)
-                            <button class="btn btn-pink" style="margin-bottom: 5px;" onclick="window.location='{{ url('/profile/edit') }}'">Edit Profile</button><br/>
-                            <button class="btn btn-pink" style="margin-bottom: 5px;" onclick="window.location='{{ url('/favourites') }}'">Favourites</button>
-                            <button class="btn btn-pink" onclick="window.location='{{ url('/settings') }}'">Settings</button>
+                            <button class="btn btn-pink btn-block" style="margin-bottom: 5px;" onclick="window.location='{{ url('/profile/edit') }}'">Edit Profile</button><br/>
+                            <button class="btn btn-pink btn-block" style="margin-bottom: 5px;" onclick="window.location='{{ url('/favourites') }}'">Favourites</button>
+                            <button class="btn btn-pink btn-block" onclick="window.location='{{ url('/settings') }}'">Settings</button>
                         @endif
                     </div>
 
@@ -127,7 +142,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2 text-right">
+                    <div class="col-md-2 text-center">
                         <input type="hidden" name="user" value="{{$id}}" />
                         @if($id != Auth::user()->id)
                             @if(\DB::table('users')->where('id', Auth::user()->id)->where('favourites_user_ids', 'like', '%'.$id.'%')->count() == 0)

@@ -55,14 +55,14 @@
             color: black;
         }
         .convoSelectIndex:hover {
-            background-color: #1ea896;
+            background-color: #323838;
             cursor: hand;
             cursor: pointer;
             border-radius: 10px;
             color: white;
         }
         .convoSelect:hover {
-            background-color: #1ea896;
+            background-color: #323838;
             cursor: hand;
             cursor: pointer;
         }
@@ -132,6 +132,16 @@
         .btn-pink:hover {
             background-color: #178e7f;
             border-color: #178e7f;
+            color: white;
+        }
+        .btn-dark {
+            background-color: #4c5454;
+            border-color: #4c5454;
+            color: white;
+        }
+        .btn-dark:hover {
+            background-color: #323838;
+            border-color: #323838;
             color: white;
         }
         .nav>li>a:focus, .nav>li>a:hover {

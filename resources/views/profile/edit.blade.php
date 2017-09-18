@@ -134,6 +134,16 @@
 
         <div class="row">
             <div class="col-md-12 text-center">
+                <h4><strong>Display Name</strong></h4>
+                <div class="col-md-6 col-md-offset-3">
+                    <input type="text" class="form-control" name="username" value="{{ $name }}"/>
+                </div>
+            </div>
+        </div>
+        <hr class="thick-hr"/>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
                 <h4><strong>Education</strong></h4>
                 <div class="col-md-6 col-md-offset-3">
                     @if($accType == 'Alumni')
@@ -159,32 +169,32 @@
         </div>
         <hr />
         <div class="row">
-                <div class="col-md-12 text-center">
-                    @if($accType == 'Alumni')
-                        <label for="school[]">Which post secondary institutions are you attending or did you attend?</label>
-                    @elseif($accType == 'Student')
-                        <label for="school[]">Which post secondary institutions are you interested in?</label>
+            <div class="col-md-12 text-center">
+                @if($accType == 'Alumni')
+                    <label for="school[]">Which post secondary institutions are you attending or did you attend?</label>
+                @elseif($accType == 'Student')
+                    <label for="school[]">Which post secondary institutions are you interested in?</label>
+                @endif
+            </div>
+            <div class="col-md-5 col-md-offset-2">
+                @foreach($schools1 as $school)
+                    @if(in_array($school->name, $selSchools))
+                        <input type="checkbox" name="school[]" value="{{ $school->name }}" checked> {{ $school->name }}<br/>
+                    @else
+                        <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
                     @endif
-                </div>
-                <div class="col-md-5 col-md-offset-2">
-                    @foreach($schools1 as $school)
-                        @if(in_array($school->name, $selSchools))
-                            <input type="checkbox" name="school[]" value="{{ $school->name }}" checked> {{ $school->name }}<br/>
-                        @else
-                            <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
-                        @endif
-                    @endforeach
-                </div>
+                @endforeach
+            </div>
 
-                <div class="col-md-5">
-                    @foreach($schools2 as $school)
-                        @if(in_array($school->name, $selSchools))
-                            <input type="checkbox" name="school[]" value="{{ $school->name }}" checked> {{ $school->name }}<br/>
-                        @else
-                            <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
-                        @endif
-                    @endforeach
-                </div>
+            <div class="col-md-5">
+                @foreach($schools2 as $school)
+                    @if(in_array($school->name, $selSchools))
+                        <input type="checkbox" name="school[]" value="{{ $school->name }}" checked> {{ $school->name }}<br/>
+                    @else
+                        <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                    @endif
+                @endforeach
+            </div>
             <div class="col-md-6 col-md-offset-3 text-center">
                 <br/>
                 <a href="javascript:void(0);" id="showInputPS">Post secondary institution not listed? Click here.</a>

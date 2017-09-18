@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Notifications\AdviceThreadLike;
 use App\Notifications\NewMessage;
 use App\Notifications\NewRank;
+use App\Notifications\NewReport;
 use App\Notifications\PointsGiven;
 use App\Notifications\NewComment;
 use App\Notifications\NewContact;
@@ -133,6 +134,19 @@ class NotificationController extends Controller
     public function storeContact($user)
     {
         $user->notify(new NewContact());
+
+        return response()->json('Notification sent.', 201);
+    }
+
+    /**
+     * Create a rank achieved notification.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeReport($user)
+    {
+        $user->notify(new NewReport());
 
         return response()->json('Notification sent.', 201);
     }

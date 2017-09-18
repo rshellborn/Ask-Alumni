@@ -45,6 +45,7 @@ class ReportsController extends Controller
         $fromDiscover  = DB::table('conversations')->where('trigger', 'discover')->count();
         $fromMatches  = DB::table('conversations')->where('trigger', 'matches')->count();
         $fromProfile  = DB::table('conversations')->where('trigger', 'profile')->count();
+        $fromFavourites  = DB::table('conversations')->where('trigger', 'favourites')->count();
 
         $searches = DB::table('search_queries')->count();
 
@@ -53,7 +54,13 @@ class ReportsController extends Controller
             $favourites += $user->favourites;
         }
 
-        return view('reports.dashboard', compact('fromDiscover', 'fromMatches', 'fromProfile', 'users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
+        //blockedUsers
+        $blockedUsers = DB::table('users_blocked_by')->count();
+
+        //reportedUsers
+        $reports = DB::table('reported_users')->count();
+
+        return view('reports.dashboard', compact('reports', 'blockedUsers', 'fromDiscover', 'fromFavourites', 'fromMatches', 'fromProfile', 'users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
     }
 
     public function users() {
@@ -115,6 +122,18 @@ class ReportsController extends Controller
         $contacts = DB::table('contact')->get();
 
         return view('reports.contacts', compact('contacts'));
+    }
+
+    public function blocked() {
+        $blockedUsers = DB::table('users_blocked_by')->get();
+
+        return view('reports.blocked', compact('blockedUsers'));
+    }
+
+    public function reports() {
+        $reports = DB::table('reported_users')->get();
+
+        return view('reports.reports', compact('reports'));
     }
 
     public function logs($log) {

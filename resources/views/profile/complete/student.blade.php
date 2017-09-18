@@ -94,6 +94,7 @@
     <form class="form-horizontal" role="form" method="POST" action="{{ url('/profile/edit') }}">
         {{ csrf_field() }}
         <input type="hidden" name="accType" value="Student"/>
+        <input type="hidden" name="username" value="{{\Auth::user()->name}}"/>
 
         <div class="row">
             <div class="col-md-12 text-center">

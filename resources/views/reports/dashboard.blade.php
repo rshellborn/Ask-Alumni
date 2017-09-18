@@ -111,7 +111,7 @@
             <div class="panel-heading text-center"><h4>Messages</h4></div>
             <div class="panel-body">
                 <div class="col-md-12">
-                    <div class="col-md-3 text-center">
+                    <div class="col-md-2 text-center">
                         <button class="btn btn-danger" onclick="window.location='{{ url('reports/messages') }}'">Browse Messages</button>
                     </div>
                     <div class="col-md-2 text-center">
@@ -157,6 +157,17 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-md-2 text-center">
+                        <div class="panel panel-danger">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>From Favourites</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$fromFavourites}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -170,6 +181,8 @@
                 <div class="col-md-12">
                     <div class="col-md-3 text-center">
                         <button class="btn btn-warning" onclick="window.location='{{ url('reports/searches') }}'">Browse Searches</button>
+                        <button class="btn btn-warning" onclick="window.location='{{ url('reports/blocked') }}'">Browse Blocked Users</button>
+                        <button class="btn btn-warning" onclick="window.location='{{ url('reports/reports') }}'">Browse Reported Users</button>
                     </div>
                     <div class="col-md-2 text-center">
                         <div class="panel panel-warning">
@@ -188,6 +201,26 @@
                             </div>
                             <div class=panel-body>
                                 {{$favourites}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <div class="panel panel-warning">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>Blocked Users</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$blockedUsers}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <div class="panel panel-warning">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>Reported Users</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$reports}}
                             </div>
                         </div>
                     </div>

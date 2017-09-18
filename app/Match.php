@@ -12,14 +12,16 @@ class Match {
     private $highSchool;
     private $degrees;
     private $avatar;
+    private $allowMessage;
 
-    public function __construct($user_id, $user_name, $avatar, $degreeMatches, $fieldMatches, $schoolMatches, $highSchoolMatch, $highSchool) {
-        $this->user_id         = $user_id;
-        $this->user_name       = $user_name;
-        $this->fieldMatches    = $fieldMatches;
-        $this->schoolMatches   = $schoolMatches;
-        $this->degrees         = $degreeMatches;
-        $this->avatar          = $avatar;
+    public function __construct($user_id, $user_name, $avatar, $degreeMatches, $fieldMatches, $schoolMatches, $highSchoolMatch, $highSchool, $allowMessage) {
+        $this->user_id       = $user_id;
+        $this->user_name     = $user_name;
+        $this->fieldMatches  = $fieldMatches;
+        $this->schoolMatches = $schoolMatches;
+        $this->degrees       = $degreeMatches;
+        $this->avatar        = $avatar;
+        $this->allowMessage  = $allowMessage;
 
         if($highSchoolMatch) {
             $this->highSchool  = $highSchool;

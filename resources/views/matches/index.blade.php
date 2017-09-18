@@ -49,7 +49,9 @@
                     <span><strong>Matched on same high school: </strong>{{ $match->highSchool }}</span>
                 </div>
                 <div class="col-md-2">
+                    @if($match->allowMessage || $match->allowMessage === null)
                     <a href="{{route('message.read', ['id'=>$match->user_id, 'trigger'=>'matches'])}}" class="btn btn-pink pull-right">Message</a>
+                    @endif
                 </div>
             </div>
         </div>

@@ -94,20 +94,33 @@
 @endsection
 
 @section('title')
-    <div style="width: 100%; display: table;">
-        <div style="display: table-row">
-            <div class="text-center" style="width: 400px; display: table-cell;">
-                <h4>
-                    <strong>
-                        @if(isset($user))
-                            <a href="{{'/profile/view/' . $user->id}} " style="color: white;">
-                                {{@$user->name}}
-                            </a>
-                        @else
-                            No Thread Selected
-                        @endif
-                    </strong>
-                </h4>
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="text-center col-md-8">
+            <h4>
+                <strong>
+                    @if(isset($user))
+                        <a href="{{'/profile/view/' . $user->id}} " style="color: white;">
+                            {{@$user->name}}
+                        </a>
+                    @else
+                        No Thread Selected
+                    @endif
+                </strong>
+            </h4>
+        </div>
+        <div class="col-md-2 text-right">
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                    <li><a href="{{url('/profile/view/' . $user->id)}}">View Profile</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="{{url('/report/' . $user->id)}}">Report</a></li>
+                    <li><a href="{{url('/block/' . $user->id)}}">Block</a></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -145,9 +158,6 @@
         @else
             <div class="col-md-10 col-md-offset-1">
                 <div class="row text-left" id="message-{{$message->id}}">
-                    <a href="{{ '/profile/view/' . $message->sender->id }}">
-
-                    </a>
                     <div class="text-left">
                         <div class="well well-sm col-md-8" style="margin-bottom: 0px; background-color: #4c5454; border-radius: 30px">
                             <img src="{{'/avatars/' . $message->sender->avatar}}" alt="avatar" style="width: 50px;height: 50px;border-radius:50px" />

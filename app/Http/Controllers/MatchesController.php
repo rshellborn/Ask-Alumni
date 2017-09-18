@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -46,12 +47,35 @@ class MatchesController extends Controller
 
         $curHighSchool = $curUser->highSchool;
 
+        //check if user has anyone blocked
+        $query = User::query();
+
+        $blockedUserIds = DB::table('users')->where('id', Auth::id())->value('blockedUsers');
+        $blockedUserIds = explode(',', $blockedUserIds);
+
+        if($blockedUserIds[0] != "") {
+            foreach($blockedUserIds as $userid) {
+                $query = $query->where('id', '!=', $userid);
+            }
+        }
+
+        //check if other people have this user blocked
+        $blocked_by = DB::table('users_blocked_by')->where('user_id', Auth::id())->value("blocked_by");
+        if($blocked_by != null) {
+            $blocked_by = explode(",", $blocked_by);
+            foreach($blocked_by as $userid) {
+                $query = $query->where('id', '!=', $userid);
+            }
+        }
+
         if($curUser->type == 'Student') {
-            $users = DB::table('users')->where('type', 'Alumni')->get();
+            $query = $query->where('type', 'Alumni');
 
         } else if ($curUser->type == 'Alumni') {
-            $users = DB::table('users')->where('type', 'Student')->get();
+            $query = $query->where('type', 'Student');
         }
+
+        $users = $query->get();
 
         $matches = array();
 
@@ -80,7 +104,7 @@ class MatchesController extends Controller
                 $highSchoolMatch = true;
             }
 
-            array_push($matches, new Match($user->id, $user->name, $avatar, $degreeMatches, $fieldMatches, $schoolMatches, $highSchoolMatch, $highSchool));
+            array_push($matches, new Match($user->id, $user->name, $avatar, $degreeMatches, $fieldMatches, $schoolMatches, $highSchoolMatch, $highSchool, $user->allowMessage));
         }
 
         //remove no matches

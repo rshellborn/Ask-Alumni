@@ -23,6 +23,8 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             Route::get('/reports/messages', 'ReportsController@messages');
             Route::get('/reports/searches', 'ReportsController@searches');
             Route::get('/reports/contacts', 'ReportsController@contacts');
+            Route::get('/reports/reports', 'ReportsController@reports');
+            Route::get('/reports/blocked', 'ReportsController@blocked');
             Route::get('/reports/logs/{id}', 'ReportsController@logs');
         });
 
@@ -80,6 +82,12 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         Route::get('/settings', 'SettingsController@index');
         Route::get('/unsubscribe', 'SettingsController@unsubscribeView');
         Route::post('/unsubscribe', 'SettingsController@unsubscribe');
+        Route::get('/block/{id}', 'SettingsController@blockView');
+        Route::post('/block', 'SettingsController@block');
+        Route::post('/unblock/{id}', 'SettingsController@unblock');
+        Route::get('/unblock/{id}', 'SettingsController@unblock');
+        Route::post('/report', 'SettingsController@report');
+        Route::get('/report/{id}', 'SettingsController@reportView');
 
         Route::post('/profile/avatar', 'ProfileController@avatar');
 
