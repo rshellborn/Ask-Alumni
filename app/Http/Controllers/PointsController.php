@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Jobs\SendReferralEmail;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,22 @@ class PointsController extends Controller
 
     public function points() {
         return view('pointsystem');
+    }
+
+    public function referAFriend() {
+        $referCode = Auth::user()->referral_code;
+        return view('refer', compact('referCode'));
+    }
+
+    public function sendReferral(Request $request) {
+        $name  = Auth::user()->name;
+        $email = Input::get('email');
+        $url   = Auth::user()->referral_code;
+
+        dispatch(new SendReferralEmail($email, $name, $url));
+
+        $request->session()->flash('sent', 'Email sent successfully.');
+        return redirect()->action('PointsController@referAFriend');
     }
 
     // Points from users up voting an advice thread

@@ -13,8 +13,13 @@ class ContactController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(function ($request, $next) { Talk::setAuthUserId(Auth::user()->id); return $next($request); });
-        View::composer('partials.peoplelist', function($view) {
+        $this->middleware(function ($request, $next) {
+            if(Auth::check()) {
+                Talk::setAuthUserId(Auth::user()->id);
+            }
+            return $next($request);
+        });
+        View::composer('partials.peoplelist', function ($view) {
             $threads = Talk::threads();
             $view->with(compact('threads'));
         });
@@ -46,7 +51,16 @@ class ContactController extends Controller
     public function about() {
         return view('about.about');
     }
+
     public function contact() {
         return view('about.contact');
+    }
+
+    public function privacy() {
+        return view('about.privacy');
+    }
+
+    public function terms() {
+        return view('about.terms');
     }
 }

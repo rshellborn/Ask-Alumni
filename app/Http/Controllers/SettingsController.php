@@ -31,6 +31,7 @@ class SettingsController extends Controller
         $searchable = "";
         $allowMessage = "";
         $weeklyEmails = "";
+        $featureEmails = "";
         $messageEmails = "";
 
         if($user->searchable == 1) {
@@ -49,6 +50,10 @@ class SettingsController extends Controller
             $messageEmails = "checked";
         }
 
+        if($user->emails_news == 1) {
+            $featureEmails = "checked";
+        }
+
         //blocked users
         $userIds = $user->blockedUsers;
         $userIds = explode(',', $userIds);
@@ -64,7 +69,7 @@ class SettingsController extends Controller
             }
         }
 
-        return view('settings.index', compact('allowMessage', 'searchable', 'weeklyEmails', 'messageEmails', 'blockedUsers'));
+        return view('settings.index', compact('allowMessage', 'searchable', 'featureEmails', 'weeklyEmails', 'messageEmails', 'blockedUsers'));
     }
 
     public function unsubscribeView() {
@@ -76,6 +81,7 @@ class SettingsController extends Controller
             [
                 'emails-weekly'   => false,
                 'emails-messages' => false,
+                'emails_news' => false,
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]);
 
@@ -88,6 +94,7 @@ class SettingsController extends Controller
         $newMessage   = Input::get('newMessage');
         $allowMessage = Input::get('allowMessage');
         $weeklyEmails = Input::get('weeklyEmails');
+        $featureEmails = Input::get('featureEmails');
         $unsearchable = Input::get('unsearchable');
 
 
@@ -95,6 +102,7 @@ class SettingsController extends Controller
             [
                 'emails-weekly'   => $weeklyEmails == "subscribe" ? true : false,
                 'emails-messages' => $newMessage   == "subscribe" ? true : false,
+                'emails_news'     => $featureEmails == "subscribe" ? true : false,
                 'searchable'      => $unsearchable == "true" ? true : false,
                 'allowMessage'    => $allowMessage == "true" ? true : false,
                 'updated_at'      => Carbon::now()->toDateTimeString(),

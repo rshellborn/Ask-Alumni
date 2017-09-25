@@ -92,11 +92,19 @@
                         <br/>
                     </div>
                 </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <input type="checkbox" name="featureEmails" value="subscribe" <?php echo $featureEmails ?>> Receive New Feature and Update emails<br/>
+                        <small>Notifies you when there are new features added or other helpful information about the website.</small>
+                        <br/>
+                    </div>
+                </div>
             </div>
             <br/>
             <div class="form-group">
                 <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-pink">
+                    <button type="submit" class="btn btn-pink col-md-2 col-md-offset-5">
                         Save
                     </button>
                 </div>

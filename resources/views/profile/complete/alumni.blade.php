@@ -206,7 +206,7 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1 text-center">
                 <label for="bio">Tell everyone a bit about yourself.</label>
-                <textarea name="bio" id="bio" rows ="3" placeholder="Current student at {school} studying {field} and am expected to graduate in June 2018..." class="form-control"></textarea>
+                <textarea name="bio" id="bio" rows ="3" placeholder="Current situation, aspirations, interests, etc..." class="form-control"></textarea>
             </div>
         </div>
         <hr/>
@@ -224,7 +224,7 @@
 
         <div class="form-group">
             <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-pink">
+                <button type="submit" class="btn btn-pink col-md-2 col-md-offset-5">
                     Save
                 </button>
             </div>

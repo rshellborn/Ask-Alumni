@@ -188,6 +188,14 @@
         </div>
         <hr/>
 
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 text-center">
+                <label for="bio">Tell everyone a bit about yourself.</label>
+                <textarea name="bio" id="bio" rows ="3" placeholder="Current situation, aspirations, interests, etc..." class="form-control"></textarea>
+            </div>
+        </div>
+        <hr/>
+
         @if(Auth::user()->type == null)
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -201,7 +209,7 @@
 
         <div class="form-group">
             <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-pink">
+                <button type="submit" class="btn btn-pink col-md-2 col-md-offset-5">
                     Save
                 </button>
             </div>
