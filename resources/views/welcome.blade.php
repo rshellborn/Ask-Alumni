@@ -73,7 +73,7 @@
     <div class="header-content">
         <div class="header-content-inner"><br/><br/>
             @if(Auth::check())
-                <a class="btn btn-primary btn-xl js-scroll-trigger" style="margin-top: 30px; margin-bottom: 10px" href="#about">Continue to the site</a>
+                <a class="btn btn-primary btn-xl js-scroll-trigger" style="margin-top: 30px; margin-bottom: 10px" href="/home">Continue to the site</a>
             @endif
             <div class="row">
             <div class="col-md-8">

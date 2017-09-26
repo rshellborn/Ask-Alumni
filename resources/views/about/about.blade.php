@@ -96,6 +96,18 @@
                 </div>
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingSwitch" data-toggle="collapse" data-parent="#accordion" href="#collapseSwitch" aria-expanded="false" aria-controls="collapseSwitch">
+                <h4 class="panel-title">
+                    I'm no longer a high school student, how do I switch my account to become an alumni?
+                </h4>
+            </div>
+            <div id="collapseSwitch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSwitch">
+                <div class="panel-body">
+                    <p>Go to <strong>My Profile</strong> and then click the <strong>Edit Profile</strong> button. If you are a student, there will be a button that says <strong>Switch to Alumni</strong>. Click this and fill out your information.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <h4 class="text-center"><strong>Features</strong></h4>
@@ -188,8 +200,8 @@
                         <li>From <a href="{{url('/matches')}}">Matches</a></li>
                         <li>From <a href="{{url('/discover')}}">Discover</a></li>
                     </ul>
-                    <p>There is a Message button next to a persons name for each result in Matches or Discover, click this button and it will open a window for you to message this person.</p>
-                    <p>There are also Message buttons on a person's profile.</p>
+                    <p>There is a <strong>Message</strong> button next to a persons name for each result in <strong>Matches</strong> or <strong>Discover</strong>, click this button and it will open a window for you to message this person.</p>
+                    <p>There are also <strong>Message</strong> buttons on a person's profile.</p>
                     <small>Some people may have messages disabled for their account, and these buttons will not be visible.</small>
                 </div>
             </div>
@@ -223,7 +235,7 @@
                     <p>Favourites allows you to have a personal list of people who you can message or view their profile any time.</p>
                     <p>Your Favourites are only viewable by you and people that you have favourited do not know they are in your Favourites list.</p>
                     <p>To Favourite someone, click on the star on their profile. When the star is filled in with blue, it means they are in your Favourites list. Click the star again to remove them.</p>
-                    <p>To view your favourites, you can click the link on the Personal sidebar.</p>
+                    <p>To view your favourites, you can click the <strong>Favourites</strong> link on the Personal sidebar.</p>
 
                     <br/>
                     <div class="text-center">
@@ -240,8 +252,8 @@
             </div>
             <div id="collapseNine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNine">
                 <div class="panel-body">
-                    <p>To update your profile, go to your My Profile and click the Edit Profile button. Fill in the information you want
-                    to change and click Save.</p>
+                    <p>To update your profile, go to your <strong>My Profile</strong> and click the <strong>Edit Profile</strong> button. Fill in the information you want
+                    to change and click <strong>Save</strong>.</p>
                     You can change the following when editing your profile:
                     <ul>
                         <li>Profile picture</li>
@@ -269,8 +281,8 @@
             </div>
             <div id="collapseTen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTen">
                 <div class="panel-body">
-                    <p>You can unsubscribe anytime by clicking the Unsubscribe button at the bottom of an email.</p>
-                    <p>You can edit your email preferences by going to Settings and unchecking which emails you no longer wish
+                    <p>You can unsubscribe anytime by clicking the <strong>Unsubscribe</strong> button at the bottom of an email.</p>
+                    <p>You can edit your email preferences by going to <strong>Settings</strong> and unchecking which emails you no longer wish
                     to receive.</p>
 
                     <br/>
@@ -288,8 +300,8 @@
             </div>
             <div id="collapseTwelve" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwelve">
                 <div class="panel-body">
-                    <p>You can report or block someone by clicking the More button on someone's profile or the down arrow button in
-                    a direct message with someone and selecting Block or Report.</p>
+                    <p>You can report or block someone by clicking the <strong>More</strong> button on someone's profile or the down arrow button in
+                    a direct message with someone and selecting <strong>Block</strong> or <strong>Report</strong>.</p>
                 </div>
             </div>
         </div>
@@ -309,11 +321,30 @@
                 </div>
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingSecure" data-toggle="collapse" data-parent="#accordion" href="#collapseSecure" aria-expanded="false" aria-controls="collapseSecure">
+                <h4 class="panel-title">
+                    How do I make my account more secure?
+                </h4>
+            </div>
+            <div id="collapseSecure" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSecure">
+                <div class="panel-body">
+                    <p>You can limit the amount of information on your profile by editing your profile, turning off messages, and making your account unsearchable.</p>
+                    <p>To turn off receiving messages, go to <strong>Settings</strong> and uncheck the <strong>Allow Messages</strong> box. Doing this means no one will have the option to message you. However current conversations will remain open.</p>
+                    <p>To make your account unsearchable, go to Settings and uncheck the <strong>Allow account to be displayed in a 'Discover' search</strong> box. Doing this means your account will no longer be displayed when someone searches using the 'Discover' feature. </p>
+
+                    <br/>
+                    <div class="text-center">
+                        <a href="{{url('/settings')}}" class="btn btn-pink col-md-2 col-md-offset-5">Settings</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="text-center">
         <br/>
-        <p>If you have any questions, please <a href="{{url('/contact')}}">contact us.</a></p>
+        <p>If you have any questions, please <a href="{{url('/contact')}}"><strong>contact us</strong>.</a></p>
     </div>
 
     <div style="font-style: italic; font-size: 12px;" class="text-right">
