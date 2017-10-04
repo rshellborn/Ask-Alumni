@@ -16,7 +16,7 @@
                     <div class="col-md-3 text-center">
                         <button class="btn btn-primary" onclick="window.location='{{ url('reports/users') }}'">Browse Users</button>
                     </div>
-                    <div class="col-md-2 text-center">
+                    <div class="col-md-3 text-center">
                         <div class="panel panel-primary">
                             <div class=panel-heading>
                                 <h3 class=panel-title>Registered</h3>
@@ -26,7 +26,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 text-center">
+                    <div class="col-md-3 text-center">
+                        <div class="panel panel-primary">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>Completed</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$completed}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="panel panel-primary">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>All Users</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$users}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 text-center">
                         <div class="panel panel-primary">
                             <div class=panel-heading>
                                 <h3 class=panel-title>Students</h3>
@@ -36,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 text-center">
+                    <div class="col-md-3 text-center">
                         <div class="panel panel-primary">
                             <div class=panel-heading>
                                 <h3 class=panel-title>Alumni</h3>
@@ -46,13 +67,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 text-center">
+                    <div class="col-md-3 text-center">
                         <div class="panel panel-primary">
                             <div class=panel-heading>
-                                <h3 class=panel-title>All Users</h3>
+                                <h3 class=panel-title>Provider Counts</h3>
                             </div>
-                            <div class=panel-body>
-                                {{$users}}
+                            <div class="text-left panel-body">
+                                Facebook: {{$fb}}<br/>
+                                Twitter: {{$tw}}<br/>
+                                Google: {{$go}}<br/>
+                                Ask Alumni: {{$aa}}<br/>
                             </div>
                         </div>
                     </div>

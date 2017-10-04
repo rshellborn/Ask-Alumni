@@ -27,6 +27,7 @@ class ReportsController extends Controller
         $users       = DB::table('users')->where('type', '!=', null)->count();
         $students    = DB::table('users')->where('type', 'Student')->count();
         $alumni      = DB::table('users')->where('type', 'Alumni')->count();
+        $completed   = $users - DB::table('users')->where('type', null)->count();
 
         //Forum stats
         $forumCategories = DB::table('forum_categories')->count();
@@ -60,14 +61,18 @@ class ReportsController extends Controller
         //reportedUsers
         $reports = DB::table('reported_users')->count();
 
-        return view('reports.dashboard', compact('reports', 'blockedUsers', 'fromDiscover', 'fromFavourites', 'fromMatches', 'fromProfile', 'users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
+        $fb = DB::table('users')->where('provider', 'facebook')->count();
+        $tw = DB::table('users')->where('provider', 'twitter')->count();
+        $go = DB::table('users')->where('provider', 'google')->count();
+        $aa = DB::table('users')->where('provider', 'askalumni')->count();
+
+        return view('reports.dashboard', compact('completed', 'fb', 'tw', 'go', 'aa', 'reports', 'blockedUsers', 'fromDiscover', 'fromFavourites', 'fromMatches', 'fromProfile', 'users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
     }
 
     public function users() {
-        $users = DB::table('users')->orderBy('active', 'desc')->get();
-        $adviceCategory  = DB::table('forum_categories')->where('title', 'Advice')->value('id');
+        $users = DB::table('users')->orderBy('id')->get();
 
-        return view('reports.users', compact('users', 'adviceCategory'));
+        return view('reports.users', compact('users'));
     }
 
     public function forums() {

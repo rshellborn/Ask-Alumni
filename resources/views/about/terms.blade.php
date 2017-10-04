@@ -7,24 +7,23 @@
 @section('content')
     <h3 class="text-center">Terms</h3>
     <p>By accessing the website at <a href="https://www.askalumni.ca">https://askalumni.ca</a>, you are agreeing to be bound by these terms of service, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this site. The materials contained in this website are protected by applicable copyright and trademark law.</p>
-    <h3 class="text-center">Use License</h3>
-    <ol type="a">
-        <li>Permission is granted to temporarily download one copy of the materials (information or software) on RS Web Development's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
-            <ol type="i">
-                <li>modify or copy the materials;</li>
-                <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-                <li>attempt to decompile or reverse engineer any software contained on RS Web Development's website;</li>
-                <li>remove any copyright or other proprietary notations from the materials; or</li>
-                <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
-            </ol>
-        </li>
-        <li>This license shall automatically terminate if you violate any of these restrictions and may be terminated by RS Web Development at any time. Upon terminating your viewing of these materials or upon the termination of this license, you must destroy any downloaded materials in your possession whether in electronic or printed format.</li>
-    </ol>
+
+    <h3 class="text-center">General Rules</h3>
+    <ul>
+        <li>Harassment towards any user will not be tolerated and may result in a ban from the website.</li>
+        <li>No profanity or offensive language is allowed on the forums or 'bio' in your profile under any circumstance.</li>
+        <li>'Spamming' of points will not be tolerated and may result in your level and points to be set the original values of when you first registered on the website.</li>
+        <small>'Spamming' includes creating forum posts or threads with no purpose other than to gain points, liking your own posts or threads, and anything else deemed as 'spam' by an Ask Alumni administrator.</small>
+    </ul>
+
+
     <h3 class="text-center">Disclaimer</h3>
     <ol type="a">
         <li>The materials on RS Web Development's website are provided on an 'as is' basis. RS Web Development makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</li>
         <li>Further, RS Web Development does not warrant or make any representations concerning the accuracy, likely results, or reliability of the use of the materials on its website or otherwise relating to such materials or on any sites linked to this site.</li>
     </ol>
+
+
     <h3 class="text-center">Limitations</h3>
     <p>In no event shall RS Web Development or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on RS Web Development's website, even if RS Web Development or a RS Web Development authorized representative has been notified orally or in writing of the possibility of such damage. Because some jurisdictions do not allow limitations on implied warranties, or limitations of liability for consequential or incidental damages, these limitations may not apply to you.</p>
     <h3 class="text-center">Accuracy of materials</h3>
@@ -35,13 +34,12 @@
     <p>RS Web Development may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms of service.</p>
     <h3 class="text-center">Governing Law</h3>
     <p>These terms and conditions are governed by and construed in accordance with the laws of Canada and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.</p>
-
     <div class="text-center">
         <br/>
         <p>If you have any questions about the Terms of Service, please <a href="{{url('/contact')}}">contact us.</a></p>
     </div>
 
     <div class="text-right">
-        <small>Last updated on September 23, 2017</small>
+        <small>Last updated on October 3, 2017</small>
     </div>
 @endsection

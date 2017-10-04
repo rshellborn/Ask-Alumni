@@ -5,7 +5,7 @@
         <script>
             $('#myModal').modal('show');
         </script>
-    @elseif(!empty($referred) && $referred)
+    @elseif($referred)
         <script>
             $('#referredModal').modal('show');
         </script>

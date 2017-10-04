@@ -260,9 +260,9 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 @if($accType == 'Alumni')
-                    <label for="degree[]">What are you studying or did you study in post secondary?</label>
+                    <label for="degree[]">What degree are you pursuing or have achieved?</label>
                 @elseif($accType == 'Student')
-                    <label for="degree[]">Which fields of study are you interested in?</label>
+                    <label for="degree[]">Which degrees are you interested in?</label>
                 @endif
             </div>
             <div class="col-md-6 col-md-offset-5">

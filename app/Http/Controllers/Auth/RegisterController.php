@@ -145,21 +145,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'verification_code' => base64_encode($data['email']),
-            'referral_code' => $this->generateRandomString(),
             'referred_by' => $referred_by
         ]);
 
         return $user;
-    }
-
-    function generateRandomString($length = 5) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
     }
 
     /**

@@ -23,10 +23,12 @@ class Match {
         $this->avatar        = $avatar;
         $this->allowMessage  = $allowMessage;
 
+        $highSchoolMatched = 0;
         if($highSchoolMatch) {
             $this->highSchool  = $highSchool;
+            $highSchoolMatched = 1;
         }
-        $this->totalMatches    = count($fieldMatches) + count($schoolMatches);
+        $this->totalMatches    = count($fieldMatches) + count($schoolMatches) + count($degreeMatches) + $highSchoolMatched;
     }
 
     public function __get($property) {

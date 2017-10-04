@@ -251,7 +251,7 @@
                 <div class="col-md-2" style="padding-left: 0;">
                     <div class="sidebar-nav-fixed affix hidden-xs hidden-sm">
                 {{--<div class="col-md-2 sidebar-nav-fixed affix hidden-xs text-center">--}}
-                        @if(Auth::check() && !request()->is('messages')
+                        @if(!request()->is('messages')
                         && !request()->is('profile/complete/alumni') && !request()->is('profile/complete/student')
                         && !request()->is('profile/complete/type'))
                             @include('partials.peoplelist')
@@ -272,7 +272,7 @@
 
                 @if (Auth::check())
                 <div>
-                    @if(Auth::check() && !request()->is('profile') && !request()->is('activate')
+                    @if(!request()->is('profile') && !request()->is('activate')
                     && !request()->is('profile/complete/alumni') && !request()->is('profile/complete/student')
                     && !request()->is('profile/complete/type'))
                         @include('partials.personinfo')

@@ -102,6 +102,20 @@ class PointsController extends Controller
         $userID   = $request->input('user');
         $fromUserId = $request->input('fromUser');
 
+        //set received points for convo
+        $received = DB::table('conversations')->where('user_one', $userID)->where('user_two', $fromUserId)->value('user_one_received_points');
+        if($received === null) {
+            DB::table('conversations')->where('user_one', $fromUserId)->where('user_two', $userID)->limit(1)->update(
+                [
+                    'user_two_received_points' => true,
+                ]);
+        } else {
+            DB::table('conversations')->where('user_one', $userID)->where('user_two', $fromUserId)->limit(1)->update(
+                [
+                    'user_one_received_points' => true,
+                ]);
+        }
+
         //attempting to create notification
         $user = User::where('id', $userID)->first();
         $fromUser = User::where('id', $fromUserId)->value('name');

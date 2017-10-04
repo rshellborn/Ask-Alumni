@@ -105,14 +105,15 @@ class ProfileController extends Controller
         $referred = false;
         if(isset($_SESSION["registered"])) {
             unset($_SESSION['registered']);
-            $displayModal = true;
             $points = $user->points;
 
-            if(Auth::user()->referred_by != null) {
+            if($user->referred_by !== "") {
                 $referred = true;
 
                 $this->handlePoints(Auth::id(), intval(Auth::user()->referred_by));
                 $points = $user->points + 15;
+            } else {
+                $displayModal = true;
             }
         } else {
             $points = $user->points;
@@ -146,6 +147,7 @@ class ProfileController extends Controller
 
     public function view($id) {
         $displayModal = false;
+        $referred = false;
         $user = DB::table('users')->where('id', $id)->first();
 
         $usersProfile = false;
@@ -187,7 +189,7 @@ class ProfileController extends Controller
 
         }
 
-        return view('profile.view', compact('blocked', 'allowMessage', 'highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        return view('profile.view', compact('blocked', 'referred', 'allowMessage', 'highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function edit() {
@@ -405,6 +407,8 @@ class ProfileController extends Controller
                 [
                     'emails-weekly' => $subscribe == "true" ? true : false,
                     'emails-messages' => $subscribe == "true" ? true : false,
+                    'emails_news' => $subscribe == "true" ? true : false,
+                    'referral_code' => $this->generateRandomString(),
                 ]);
         }
 
@@ -441,6 +445,16 @@ class ProfileController extends Controller
         }
 
         return redirect()->action('ProfileController@index');
+    }
+
+    function generateRandomString($length = 5) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
     private function wordFilter($text) {
