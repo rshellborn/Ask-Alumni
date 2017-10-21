@@ -9,7 +9,7 @@
         <thead>
         <tr>
             <th class="text-center">Name</th>
-            <th class="text-center">Email W-M</th>
+            <th class="text-center">Email W-M-N</th>
             <th class="text-center">Points</th>
             <th class="text-center">Favourites</th>
             <th class="text-center">Searches</th>
@@ -24,18 +24,19 @@
                     <button class="btn btn-primary" onclick="window.location='{{ url('profile/view/' . $user->id) }}'">
                     {{ $user->name }}
                     </button><br/>
-                    <small>{{ $user->type }}</small>
+                    <small>{{ $user->type }}</small><br/>
+                    <small>{{ $user->provider }}</small>
                 </td>
                 <td>
                     {{ $user->email }}<br/>
-                    {{ \DB::table('users')->where('id', $user->id)->value('emails-weekly') }} - {{ \DB::table('users')->where('id', $user->id)->value('emails-messages') }}
+                    {{ \DB::table('users')->where('id', $user->id)->value('emails-weekly') }} - {{ \DB::table('users')->where('id', $user->id)->value('emails-messages') }} - {{ \DB::table('users')->where('id', $user->id)->value('emails_news') }}
                 </td>
                 <td>{{ $user->points }}</td>
                 <td>{{ $user->favourites }}</td>
                 <td>{{ \DB::table('search_queries')->where('user_id', $user->id)->count() }}</td>
 
                 <?php
-                    $advices = \DB::table('forum_threads')->where('category_id', $adviceCategory)->where('author_id', $user->id)->get();
+                    $advices = \DB::table('forum_threads')->where('author_id', $user->id)->get();
                     $adviceLikes = 0;
                     foreach($advices as $advice) {
                         $adviceLikes += $advice->likes;

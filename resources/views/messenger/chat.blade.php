@@ -127,6 +127,7 @@
 @endsection
 
 @section('content')
+    @if(!$pointsReceived)
     <div class="text-center" style="background-color: white; padding-bottom: 4px; padding-top: 4px;">
         <span id="convoHelp">Was this conversation helpful?</span>
         <input type="hidden" name="userID" value="{{$user->id}}"/>
@@ -139,8 +140,9 @@
         </div>
         <div id="pointsGiven"></div>
     </div>
+    @endif
 
-    <div class="row" id="talkMessages" style="max-height:400px;overflow:auto;">
+    <div class="row" id="talkMessages" style="margin-top: 10px; max-height:400px;overflow:auto;">
     @foreach($messages as $message)
         @if($message->sender->id == auth()->user()->id)
             <div class="col-md-10 col-md-offset-1">

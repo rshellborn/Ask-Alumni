@@ -460,11 +460,19 @@
                         </div>
                     </div>
                 </div>
+
+                <div role="contentinfo" style="background-color: #f4f4f4; min-height: 100px">
+                    <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 250px;" src="https://www.askalumni.ca/emailHeaderLogo.png" alt="" width="300" /></div>
+                    <div class="logo-center" align="center" id="emb-email-header" style="margin-top: 5px"><span style="font-family: sans-serif; font-style: italic; color: #acb3b8;">Social network for high school students and alumni</span></div>
+                </div>
+
+                <div style="line-height:30px;font-size:20px;">&nbsp;</div>
+
                 <div class="header" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);" id="emb-email-header-container">
                     <!--[if (mso)|(IE)]><table align="center" class="header" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="width: 600px"><![endif]-->
-                    <div class="logo emb-logo-margin-box" style="font-size: 26px;line-height: 32px;Margin-top: 6px;Margin-bottom: 20px;color: #c3ced9;font-family: Roboto,Tahoma,sans-serif;Margin-left: 20px;Margin-right: 20px;" align="center">
-                        <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 141px;" src="@yield('image')" alt="" width="141" /></div>
-                    </div>
+
+                 {{--<div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 100px;" src="@yield('image')" alt="" width="100" /></div>--}}
+
                     <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
                 </div>
             </div>
@@ -475,8 +483,12 @@
                         <div class="column" style="text-align: left;color: #8e959c;font-size: 14px;line-height: 21px;font-family: sans-serif;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);">
 
                             <div style="Margin-left: 20px;Margin-right: 20px;">
-                                <p class="size-28" style="Margin-top: 0;Margin-bottom: 20px;font-size: 24px;line-height: 32px;text-align: center;" lang="x-size-28"><span style="color:#1ea896"><strong>@yield('title')</strong></span></p>
+                                <p class="size-28" style="Margin-top: 0;Margin-bottom: 0;font-size: 24px;line-height: 32px;text-align: center;" lang="x-size-28"><span style="color:#1EA896"><strong>@yield('title')</strong></span></p>
                             </div>
+
+
+                            <div class="logo-center" align="center" id="emb-email-header"><img style="display: block;height: auto;width: 100%;border: 0;max-width: 100px; margin-top: 10px; margin-bottom: 10px;" src="@yield('image')" alt="" width="100" /></div>
+
 
                             <div style="Margin-left: 20px;Margin-right: 20px;">
                                 <p class="size-16" style="Margin-top: 0;Margin-bottom: 20px;font-size: 16px;line-height: 24px;text-align: center;" lang="x-size-16">@yield('subtitle')</p>
@@ -484,7 +496,7 @@
 
                             <div style="Margin-left: 20px;Margin-right: 20px;">
                                 <div class="btn btn--flat btn--large" style="text-align:center;">
-                                    <![if !mso]><a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #1ea896;font-family: sans-serif;" href="@yield('btnLink')">@yield('btnText')</a><![endif]>
+                                    <![if !mso]><a style="min-width: 200px; border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #1ea896;font-family: sans-serif;" href="@yield('btnLink')">@yield('btnText')</a><![endif]>
                                     <!--[if mso]><p style="line-height:0;margin:0;">&nbsp;</p><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="https://www.askalumni.ca" style="width:94px" arcsize="9%" fillcolor="#1EA896" stroke="f"><v:textbox style="mso-fit-shape-to-text:t" inset="0px,11px,0px,11px"><center style="font-size:14px;line-height:24px;color:#FFFFFF;font-family:sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px">Button</center></v:textbox></v:roundrect><![endif]--></div>
                             </div>
 
@@ -493,17 +505,16 @@
                     </div>
                 </div>
 
-                <div style="line-height:20px;font-size:20px;">&nbsp;</div>
-                <hr style="width:400px;"/>
+                <div style="line-height:50px;font-size:20px;">&nbsp;</div>
 
-                <div role="contentinfo">
+                <div role="contentinfo" style="background-color: #f4f4f4;">
                     <div class="layout one-col email-footer" style="Margin: 0 auto;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;">
                         <div class="layout__inner" style="border-collapse: collapse;display: table;width: 100%;">
                             <!--[if (mso)|(IE)]><table align="center" cellpadding="0" cellspacing="0" role="presentation"><tr class="layout-email-footer"><td style="width: 600px;" class="w560"><![endif]-->
                             <div class="column" style="text-align: center;font-size: 12px;line-height: 19px;color: #adb3b9;font-family: sans-serif;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);">
                                 <div style="Margin-left: 20px;Margin-right: 20px;Margin-top: 10px;Margin-bottom: 10px;">
                                     <div style="font-size: 12px;line-height: 19px;">
-                                        <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://www.facebook.com/askalumni.ca/"><img style="border: 0;" src="https://i2.createsend1.com/static/eb/master/13-the-blueprint-3/images/facebook.png" width="26" height="26" /></a><a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://twitter.com/askalumni/"><img style="border: 0;" src="https://i3.createsend1.com/static/eb/master/13-the-blueprint-3/images/twitter.png" width="26" height="26" /></a>
+                                        <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://www.facebook.com/askalumni.ca/"><img style="border: 0;" src="https://i2.createsend1.com/static/eb/master/13-the-blueprint-3/images/facebook.png" width="26" height="26" /></a><a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://twitter.com/askalumni/"><img style="border: 0;" src="https://i3.createsend1.com/static/eb/master/13-the-blueprint-3/images/twitter.png" width="26" height="26" /></a><a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://instagram.com/ask_alumni/"><img style="border: 0;" src="https://i3.createsend1.com/static/eb/master/13-the-blueprint-3/images/instagram.png" width="26" height="26" /></a>
                                         {{--<a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="{{ config('app.in_url') }}"><img style="border: 0;" src="https://i6.createsend1.com/static/eb/master/13-the-blueprint-3/images/linkedin.png" width="26" height="26" /></a>--}}
                                         <div style="margin: 5px"><a href="http://rachel.shellborn.com" target="_blank" style="text-decoration: underline;color:#adb3b9;">RS Web Development</a>&nbsp;&#169; 2017</div>
                                         <span><a href="{!! url('/settings') !!}" target="_blank" style="text-decoration: underline;color:#adb3b9;" lang="en">Preferences</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="{!! url('/unsubscribe') !!}" target="_blank" style="text-decoration: underline; color:#adb3b9;">Unsubscribe</a>

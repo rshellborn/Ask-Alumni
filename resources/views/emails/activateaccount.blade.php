@@ -1,7 +1,7 @@
 @extends('emails.layout')
 
 @section('image')
-    https://www.askalumni.ca/emailLogo.png
+    https://www.askalumni.ca/Cap.png
 @endsection
 
 @section('title')

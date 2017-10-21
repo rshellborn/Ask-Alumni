@@ -27,10 +27,10 @@
                 <div class="text-right col-md-2" style="float:right;">
 {{--                        {{dd(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count())}}--}}
                     @if(Auth::guest())
-                        <img style="cursor: pointer; cursor: hand;"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
+                        <img src=" {{url('/thumbsup.png') }}"/>&nbsp;
                     @elseif(DB::table('forum_threads')->where('id', $thread->id)->where('users', 'like', '%'.\Auth::id().'%')->count() == 0)
                         <div id="filled" style="display:inline;"></div>
-                        <img id="up-vote"  src=" {{url('/thumbsup.png') }}"/>&nbsp;
+                        <img id="up-vote"  style="cursor: pointer;" src=" {{url('/thumbsup.png') }}"/>&nbsp;
                     @else
                         <img src=" {{url('/thumbsupfilled.png') }}"/>&nbsp;
                     @endif

@@ -65,7 +65,7 @@
                 <h4>Add favourites by clicking on the star on someone's profile.</h4>
             </div>
             <div class="col-md-4 col-md-offset-4">
-                <img src="{{url('bookmarking.png')}}" class="img-responsive" />
+                <img src="{{url('Bookmarking.png')}}" class="img-responsive" />
             </div>
             <div class="col-md-12">
                 <h4>View them here later to start a conversation with them.</h4>

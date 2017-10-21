@@ -29,19 +29,104 @@ class ProfileController extends Controller
         return view('profile.type');
     }
 
-    public function index() {
-        session_start();
-        $displayModal = false;
-        if(isset($_SESSION["registered"])) {
-            unset($_SESSION['registered']);
-            $displayModal = true;
+    public function referral(Request $request) {
+        $code = Input::get('code');
+        $referralUserId = DB::table('users')->where('referral_code', $code)->value('id');
+
+        if($referralUserId == null) {
+            $request->session()->flash('failed', 'Invalid referral code.');
+        } else {
+            $this->handlePoints(Auth::id(), $referralUserId);
+
+            DB::table('users')->where('id', Auth::id())->limit(1)->update(
+                [
+                    'referred_by' => $referralUserId
+                ]);
+
+            $request->session()->flash('success', 'You earned 15 points for being referred!');
         }
 
+        return redirect()->action('ProfileController@index');
+    }
+
+    public function handlePoints($thisUser, $referralUser) {
+        $this->givePoints($thisUser);
+        $this->givePoints($referralUser);
+    }
+
+    private function givePoints($userID) {
+        $points = DB::table('users')->where('id', $userID)->value('points');
+        $oldPoints = $points;
+        $points += 15;
+
+        DB::table('users')->where('id', $userID)->limit(1)->update(
+            [
+                'points' => $points,
+            ]);
+
+        $this->checkRank($points, $oldPoints, $userID);
+    }
+
+    private function checkRank($points, $oldPoints, $userID) {
+        //check if user has reached next rank
+        if($points > 149 && $oldPoints < 149) {
+            \DB::table('users')->where('id', $userID)->limit(1)->update(
+                [
+                    'rank' => 'Silver',
+                ]);
+
+            //attempting to create notification
+            $user = User::where('id', $userID)->first();
+            $notification = new NotificationController();
+            $notification->storeRankAchieved($user, 'Silver');
+        } else if ($points > 399 && $oldPoints < 399) {
+            \DB::table('users')->where('id', $userID)->limit(1)->update(
+                [
+                    'rank' => 'Gold',
+                ]);
+
+            //attempting to create notification
+            $user = User::where('id', $userID)->first();
+            $notification = new NotificationController();
+            $notification->storeRankAchieved($user, 'Gold');
+        } else if ($points > 799 && $oldPoints < 799) {
+            \DB::table('users')->where('id', $userID)->limit(1)->update(
+                [
+                    'rank' => 'Platinum',
+                ]);
+
+            //attempting to create notification
+            $user = User::where('id', $userID)->first();
+            $notification = new NotificationController();
+            $notification->storeRankAchieved($user, 'Platinum');
+        }
+    }
+
+
+    public function index() {
+        session_start();
         $user = Auth::user();
+
+        $displayModal = false;
+        $referred = false;
+        if(isset($_SESSION["registered"])) {
+            unset($_SESSION['registered']);
+            $points = $user->points;
+
+            if($user->referred_by !== 0) {
+                $referred = true;
+
+                $this->handlePoints(Auth::id(), intval(Auth::user()->referred_by));
+                $points = $user->points + 15;
+            } else {
+                $displayModal = true;
+            }
+        } else {
+            $points = $user->points;
+        }
 
         $avatar = $user->avatar;
         $type = $user->type;
-        $points = $user->points;
         $rank = $user->rank;
 
         $fields = $user->fields;
@@ -61,15 +146,14 @@ class ProfileController extends Controller
         $degrees = $user->degrees;
         $degrees = explode(",", $degrees);
 
-        if($type == "Alumni") {
-            $bio = $user->bio;
-        }
+        $bio = $user->bio;
 
-        return view('profile.view', compact('highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        return view('profile.view', compact('highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'referred', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function view($id) {
         $displayModal = false;
+        $referred = false;
         $user = DB::table('users')->where('id', $id)->first();
 
         $usersProfile = false;
@@ -94,13 +178,12 @@ class ProfileController extends Controller
         $url = 'profile/edit';
 
         $inSchool = false;
-        $bio = "";
 
         if($type == "Alumni") {
             $inSchool = $user->inSchool;
-
-            $bio = $user->bio;
         }
+
+        $bio = $user->bio;
 
         //check if this user is blocked
         $blockedUsers = DB::table('users')->where('id', Auth::id())->value('blockedUsers');
@@ -112,7 +195,7 @@ class ProfileController extends Controller
 
         }
 
-        return view('profile.view', compact('blocked', 'allowMessage', 'highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
+        return view('profile.view', compact('blocked', 'referred', 'allowMessage', 'highSchool', 'bio', 'type', 'inSchool', 'avatar', 'displayModal', 'email', 'degrees', 'rank', 'url', 'id', 'points', 'usersProfile', 'name', 'fields', 'schools', 'inSchool'));
     }
 
     public function edit() {
@@ -147,9 +230,9 @@ class ProfileController extends Controller
                 $inSchool = "";
                 $notInSchool = "checked";
             }
-
-            $bio = $user->bio;
         }
+
+        $bio = $user->bio;
 
         //get high schools
         $allhighschools = \App\HighSchool::all();
@@ -248,7 +331,7 @@ class ProfileController extends Controller
         $fields     = Input::get('fieldOfStudy');
         $schools    = Input::get('school');
         $highSchool = Input::get('highSchool');
-        $degree     = Input::get('degree');
+        $degrees     = Input::get('degree');
         $subscribe  = Input::get('subscribe');
 
         //check if user selected other high school or school
@@ -259,98 +342,101 @@ class ProfileController extends Controller
         }
 
         //check if they entered any extra stuff
+
+        if($schools == null) {
+            $schools = array();
+        }
+
         $otherInputs = Input::get('otherSchools');
         if($otherInputs != null) {
             $otherInputs = explode(',', $otherInputs);
             foreach($otherInputs as $school) {
                 $formatted = trim($school);
                 $formatted = ucwords($formatted);
-                if(count($schools) > 0) {
-                    array_push($schools, $formatted);
-                } else {
-                    $schools = $formatted;
-                }
+                array_push($schools, $formatted);
             }
+        }
+
+        if($fields == null) {
+            $fields = array();
         }
 
         $otherInputs = Input::get('otherFields');
         if($otherInputs != null) {
             $otherInputs = explode(',', $otherInputs);
-            foreach($otherInputs as $school) {
-                $formatted = trim($school);
+            foreach($otherInputs as $field) {
+                $formatted = trim($field);
                 $formatted = ucwords($formatted);
-                if(count($fields) > 0) {
-                    array_push($fields, $formatted);
-                } else {
-                    $fields = $formatted;
-                }
+                array_push($fields, $formatted);
             }
+        }
+
+        if($degrees == null) {
+            $degrees = array();
         }
 
         $otherInputs = Input::get('otherDegrees');
         if($otherInputs != null) {
             $otherInputs = explode(',', $otherInputs);
-            foreach($otherInputs as $school) {
-                $formatted = trim($school);
+            foreach($otherInputs as $degree) {
+                $formatted = trim($degree);
                 $formatted = ucwords($formatted);
-                if(count($degree) > 0) {
-                    array_push($degree, $formatted);
-                } else {
-                    $degree = $formatted;
-                }
+                array_push($degrees, $formatted);
             }
         }
 
-        if(count($fields) > 1) {
+
+        if(count($fields) >= 1) {
             $fields = implode(",", $fields);
         } else if (count($fields) == 0) {
             $fields = '';
-        } else {
-            $fields = end($fields);
         }
 
-        if(count($schools) > 1) {
+        if(count($schools) >= 1) {
             $schools = implode(",", $schools);
         } else if(count($schools) == 0) {
             $schools = '';
-        } else {
-            $schools = end($schools);
         }
 
-        if(count($degree) > 1) {
-            $degree = implode(",", $degree);
-        } else if(count($degree) == 0) {
-            $degree = '';
-        } else {
-            $degree = end($degree);
+        if(count($degrees) >= 1) {
+            $degrees = implode(",", $degrees);
+        } else if(count($degrees) == 0) {
+            $degrees = '';
         }
 
-//        dd($degree);
+        $bio = Input::get('bio');
+        if($this->wordFilter($bio)) {
+            $request->session()->flash('error', 'Your bio cannot contain profanity.');
+            return back();
+        }
+
+        if(Auth::user()->type == null) {
+            DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
+                [
+                    'emails-weekly' => $subscribe == "true" ? true : false,
+                    'emails-messages' => $subscribe == "true" ? true : false,
+                    'emails_news' => $subscribe == "true" ? true : false,
+                    'referral_code' => $this->generateRandomString(),
+                    'active' => 1
+                ]);
+        }
 
         DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
             [
                 'name' => $name,
+                'bio' => $bio,
                 'type' => $accType,
                 'fields' => $fields,
                 'schools' => $schools,
-                'degrees' => $degree,
+                'degrees' => $degrees,
                 'highSchool' => $highSchool,
-                'emails-weekly' => $subscribe == "true" ? true : false,
-                'emails-messages' => $subscribe == "true" ? true : false,
             ]);
 
         if($accType == "Alumni") {
-            $bio = Input::get('bio');
             $inSchool = Input::get('inSchool');
-
-            if($this->wordFilter($bio)) {
-                $request->session()->flash('error', 'Your bio cannot contain profanity.');
-                return back();
-            }
 
             DB::table('users')->where('id', Auth::user()->id)->limit(1)->update(
                 [
-                    'bio' => $bio,
                     'inSchool' => $inSchool == "true" ? true : false,
                 ]);
         }
@@ -368,6 +454,16 @@ class ProfileController extends Controller
         }
 
         return redirect()->action('ProfileController@index');
+    }
+
+    function generateRandomString($length = 5) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
     private function wordFilter($text) {

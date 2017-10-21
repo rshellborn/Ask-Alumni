@@ -20,7 +20,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>Receive a like on your Advice thread</td>
+                <td>Receive a like on your forum thread</td>
                 <td>10</td>
             </tr>
             <tr>
@@ -38,6 +38,10 @@
             <tr>
                 <td>Receive points from someone in private messages</td>
                 <td>10</td>
+            </tr>
+            <tr>
+                <td>Refer a friend and they sign up</td>
+                <td>15</td>
             </tr>
             <tr>
                 <td>Successfully registering</td>

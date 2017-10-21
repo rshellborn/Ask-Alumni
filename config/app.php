@@ -203,6 +203,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
         Nahid\Talk\TalkServiceProvider::class,
+
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -260,6 +262,7 @@ return [
 
         'Talk'      => Nahid\Talk\Facades\Talk::class,
 
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

@@ -245,28 +245,40 @@
         @yield('modal')
         <div class="container-fluid">
             <div class="row content">
+                @yield('auth')
+
+                @if (Auth::check())
                 <div class="col-md-2" style="padding-left: 0;">
                     <div class="sidebar-nav-fixed affix hidden-xs hidden-sm">
                 {{--<div class="col-md-2 sidebar-nav-fixed affix hidden-xs text-center">--}}
-                        @if(Auth::check() && !request()->is('messages')
+                        @if(!request()->is('messages')
                         && !request()->is('profile/complete/alumni') && !request()->is('profile/complete/student')
                         && !request()->is('profile/complete/type'))
                             @include('partials.peoplelist')
                         @endif
                     </div>
                 </div>
+                @endif
 
-                <div class="col-md-8">
-                    @yield('body')
-                </div>
+                @if(Auth::check())
+                    <div class="col-md-8">
+                        @yield('body')
+                    </div>
+                @else
+                    <div class="col-md-8 col-md-offset-2">
+                        @yield('body')
+                    </div>
+                @endif
 
+                @if (Auth::check())
                 <div>
-                    @if(Auth::check() && !request()->is('profile') && !request()->is('activate')
+                    @if(!request()->is('profile') && !request()->is('activate')
                     && !request()->is('profile/complete/alumni') && !request()->is('profile/complete/student')
                     && !request()->is('profile/complete/type'))
                         @include('partials.personinfo')
                     @endif
                 </div>
+                @endif
             </div>
         </div>
     </div>

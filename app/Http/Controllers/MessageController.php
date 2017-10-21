@@ -91,17 +91,37 @@ class MessageController extends Controller
 
 
         $trigger = Input::get('trigger', 'unknown');
+
         $conversations = Talk::getMessagesByUserId($id);
+
         $user = '';
         $messages = [];
+        $pointsReceived = false;
         if(!$conversations) {
             $user = User::find($id);
         } else {
             $user = $conversations->withUser;
             $messages = $conversations->messages;
+            $pointsReceived = $this->checkPointsReceived($conversations->withUser->id, Auth::id());
         }
 
-        return view('messenger.chat', compact('messages', 'user', 'trigger'));
+
+
+        return view('messenger.chat', compact('messages', 'user', 'trigger', 'pointsReceived'));
+    }
+
+    private function checkPointsReceived($user1, $user2) {
+        $received = DB::table('conversations')->where('user_one', $user1)->where('user_two', $user2)->value('user_one_received_points');
+        if($received) {
+            return true;
+        }
+
+        $received = DB::table('conversations')->where('user_two', $user1)->where('user_one', $user2)->value('user_two_received_points');
+        if($received) {
+            return true;
+        }
+
+        return false;
     }
 
     public function ajaxSendMessage(Request $request)

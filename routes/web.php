@@ -90,10 +90,13 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         Route::get('/report/{id}', 'SettingsController@reportView');
 
         Route::post('/profile/avatar', 'ProfileController@avatar');
+        Route::post('/profile/referral', 'ProfileController@referral');
 
         Route::get('/home', 'ContactController@about');
 
         Route::get('/pointsystem', 'PointsController@points');
+        Route::get('/refer', 'PointsController@referAFriend');
+        Route::post('/refer', 'PointsController@sendReferral');
 
     });
 
@@ -109,7 +112,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 
 Route::get('/activate/{code}', 'ActivateController@index');
 
-Route::get('/about', 'ContactController@about');
+Route::get('/faq', 'ContactController@about');
 
 Route::get('/contact', 'ContactController@contact');
 
@@ -123,13 +126,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/email', function () {
-//    $messages = 2;
-//    $likes = 4;
-//    $points= 10;
-//
-//    \Illuminate\Support\Facades\Mail::to(\App\User::where('id', 2)->first())->send(new \App\Mail\WeeklyNotifications($messages, $likes, $points));
-//    return view('emails.notifications', compact('messages', 'likes', 'points'));
-//});
+Route::get('/email', function () {
+    $name = "Rachel Shellborn";
+    $verification_code = 1;
+
+    $likes = 1;
+    $points = 1;
+    return view('emails.activateaccount', compact('name', 'verification_code'));
+});
+
+Route::get('/register/{code}', function ($referral_code) {
+    return view('auth.register', compact('referral_code'));
+});
+
+Route::get('/terms', 'ContactController@terms');
+Route::get('/privacy', 'ContactController@privacy');
+
+
+Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider');
+Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCallback');
 
 Auth::routes();

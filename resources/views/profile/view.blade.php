@@ -5,6 +5,10 @@
         <script>
             $('#myModal').modal('show');
         </script>
+    @elseif($referred)
+        <script>
+            $('#referredModal').modal('show');
+        </script>
     @endif
 
     <script type="text/javascript">
@@ -69,11 +73,37 @@
             <div class="modal-content text-center">
                 <div class="modal-header" style="background-color: #1ea896; color: white">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><strong>You just earned 10 points for registering!<br/><small style="color:white;">Learn more about points <a href="{{ url('/pointsystem') }}"  style="color:white;">here.</a></small></strong></h4>
+                </div>
+                <div class="modal-body">
+                    <h4>Did a friend tell you about this site?</h4>
+                    <p>Enter your referral code below and press Claim Points.</p>
+                    <div class="row">
+                        <form class="col-md-6 col-md-offset-3" role="form" method="POST" action="{{url('/profile/referral') }}">
+                            {{ csrf_field() }}
+                            <input type="text" name="code" placeholder="Referral code" class="form-control" /><br/>
+                            <input type="submit" class="btn btn-pink" value="Claim Points" />
+                        </form>
+                    </div>
+                    <div class="row text-right" style="padding-right: 5px;">
+                        <button data-dismiss="modal" class="btn btn-danger">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="referredModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-header" style="background-color: #1ea896; color: white">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"><strong>Congratulations!</strong></h4>
                 </div>
                 <div class="modal-body">
-                    <h4>You just earned 10 points for registering!</h4><br/>
+                    <h4>You earned 15 points for registering from a referral and 10 points for registering!<br/><br/>Refer your friends to earn 15 points for each friend who successfully registers.</h4><br/>
                     <button class="btn btn-pink" onclick="window.location='{{ url('/pointsystem') }}'">What are points?</button>
+                    <button class="btn btn-pink" onclick="window.location='{{ url('/refer') }}'">Refer a friend</button>
                 </div>
             </div>
         </div>
@@ -82,6 +112,26 @@
 
 @section('body')
     <div class="row">
+        @if(session()->has('success'))
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="alert alert-success alert-dismissable text-center">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <span>{{session()->get('success')}}</span> <a href="/refer" class="alert-link">Refer your friends to get more points.</a>
+                    </div>
+                </div>
+            </div>
+        @endif
+        @if(session()->has('failed'))
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 text-center">
+                    <div class="alert alert-danger alert-dismissable text-center">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <span>{{session()->get('failed')}}</span>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="row" style="padding-bottom: 20px;">
@@ -158,11 +208,9 @@
 
                 <div class="row" style="padding-right: 20px; padding-left: 20px">
 
-                    @if($type == 'Alumni')
-                        <div class="col-md-12">
-                            <p class="text-center" style="font-weight: bold; padding-bottom: 20px">{{$bio}}</p>
-                        </div>
-                    @endif
+                    <div class="col-md-12">
+                        <p class="text-center" style="font-weight: bold; padding-bottom: 20px">{{$bio}}</p>
+                    </div>
 
                     <div class="row">
                         <div class="col-md-5">

@@ -54,13 +54,16 @@
             </div>
             <div style="background-color: #4c5454; margin-right: 2px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                 <div class="col-md-12">
-                    <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://www.facebook.com/askalumni.ca/"><img style="border: 0;" src="https://i2.createsend1.com/static/eb/master/13-the-blueprint-3/images/facebook.png" width="26" height="26" /></a>
-                    <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://twitter.com/askalumni/"><img style="border: 0;" src="https://i3.createsend1.com/static/eb/master/13-the-blueprint-3/images/twitter.png" width="26" height="26" /></a>
+                    <a target="_blank" href="https://www.facebook.com/askalumni.ca/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack fa-inverse"></i></span></a>
+                    <a target="_blank" href="https://twitter.com/askalumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack fa-inverse"></i></span></a>
+                    <a target="_blank" href="https://www.instagram.com/ask_alumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-instagram fa-stack fa-inverse"></i></span></a>
                 </div>
-                <small style="color: white;"><a href="/about" style="color: white;">About</a> | </small>
-                <a href="/contact" style="color: white;"><small>Contact</small></a><br/>
-                <small style="color: white;"><a href="http://rachelshellborn.me" target="_blank" style="color: white;">RS Web Development</a> &copy; 2017</small><br/>
+                <small style="color: white;"><a href="/faq" style="color: white;">FAQ</a> &bull; <a href="/contact" style="color: white;">Contact</a> &bull; <a href="/privacy" style="color: white;">Privacy</a> &bull; <a href="/terms" style="color: white;">Terms</a></small><br/>
+                <small style="color: white;"><a href="http://rachel.shellborn.com" target="_blank" style="color: white;">RS Web Development</a> &copy; 2017</small>
             </div>
+        </div>
+        <div class="col-md-12" style="margin-top:10px;">
+            <a href="/refer" class="btn btn-pink btn-block">Refer a Friend</a>
         </div>
     </div>
 </div>
@@ -123,15 +126,20 @@
 
                         <div class="list-group-item" style="background-color: #4c5454; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                             <div class="col-md-12">
-                                <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://www.facebook.com/askalumni.ca/"><img style="border: 0;" src="https://i2.createsend1.com/static/eb/master/13-the-blueprint-3/images/facebook.png" width="26" height="26" /></a>
-                                <a target="_blank" style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;margin: 2px;" href="https://twitter.com/askalumni/"><img style="border: 0;" src="https://i3.createsend1.com/static/eb/master/13-the-blueprint-3/images/twitter.png" width="26" height="26" /></a>
+                                <a target="_blank" href="https://www.facebook.com/askalumni.ca/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack fa-inverse"></i></span></a>
+                                <a target="_blank" href="https://twitter.com/askalumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack fa-inverse"></i></span></a>
+                                <a target="_blank" href="https://www.instagram.com/ask_alumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-instagram fa-stack fa-inverse"></i></span></a>
                             </div>
-                            <small style="color: white;"><a href="/about" style="color: white;">About</a> | </small>
-                            <a href="/contact" style="color: white;"><small>Contact</small></a><br/>
-                            <small style="color: white;"><a href="http://rachel.shellborn.com" target="_blank" style="color: white;">RS Web Development</a> &copy; 2017</small><br/>
+                            <br/>
+                            <small style="color: white;"><a href="/faq" style="color: white;">FAQ</a> &bull; <a href="/contact" style="color: white;">Contact</a> &bull; <a href="/privacy" style="color: white;">Privacy</a> &bull; <a href="/terms" style="color: white;">Terms</a></small><br/>
+                            <small style="color: white;"><a href="http://rachel.shellborn.com" target="_blank" style="color: white;">RS Web Development</a> &copy; 2017</small>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="row" style="margin-left: 15px;margin-top:10px;">
+                <a href="/refer" class="btn btn-pink btn-block">Refer a Friend</a>
             </div>
         </div>
     </div>

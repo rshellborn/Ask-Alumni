@@ -68,13 +68,37 @@ class DiscoverController extends Controller
             return view('discover.results', ['results' => $results, 'totalResults' => $totalResults]);
         }
 
-
-
         $highSchool = Input::get('highSchool');
         $school     = Input::get('school');
         $field      = Input::get('field');
         $degree     = Input::get('degree');
         $type       = Input::get('type');
+
+        //check if they entered manually
+        $otherHighSchool = Input::get('otherHS');
+
+        if($otherHighSchool != null) {
+            $highSchool = $otherHighSchool;
+        }
+
+        $otherPSInstitution = Input::get('otherPS');
+
+        if($otherPSInstitution != null) {
+            $school = $otherPSInstitution;
+        }
+
+        $otherField = Input::get('otherF');
+
+        if($otherField != null) {
+            $field = $otherField;
+        }
+
+        $otherDegree = Input::get('otherD');
+
+        if($otherDegree != null) {
+            $degree = $otherDegree;
+        }
+
 
         DB::table('search_queries')->insert(
             [
@@ -100,7 +124,7 @@ class DiscoverController extends Controller
         }
 
         if ($highSchool != 'All') {
-            $query = $query->where('highSchool', $highSchool);
+            $query = $query->where('highSchool', 'like', '%'.$highSchool.'%');
         }
 
         if ($school != 'All') {

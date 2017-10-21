@@ -172,6 +172,9 @@
             border: 1px solid #ddd;
             margin-left: -1px;
         }
+        .label-primary {
+            background-color: #178e7f;
+        }
     </style>
 
     <script>

@@ -119,7 +119,10 @@ class MatchesController extends Controller
         //sorts array according to total number of matches
         usort($matches, function($a, $b)
         {
-            return $b->totalMatches - $a->totalMatches;
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a->totalMatches < $b->totalMatches) ? 1 : -1;
         });
 
         // Get current page form url e.x. &page=1
