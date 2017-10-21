@@ -172,9 +172,9 @@
             <h2>What is Ask Alumni?</h2>
             <div class="row">
                 <div class="col-md-12">
-                    <p>Ask Alumni is a social network where high school students can get advice about post-secondary and Alumni can share their experiences.</p>
+                    <p>Ask Alumni is a social network where high school students can get advice about post-secondary from alumni and hear about their experiences.</p>
 
-                    <p>The purpose of this site is to make a bridge to allow high school students to get in contact with Alumni and get personal experiences and answers to their questions.</p>
+                    <p>The purpose of Ask Alumni is to help high school students get in contact with alumni to hear about post-secondary experiences and answers to their questions.</p>
                 </div>
             </div>
 
@@ -255,7 +255,13 @@
 
     <footer>
         <div class="container">
-            <p class="copyright text-muted small text-center" style="margin-top: 25px">Copyright &copy; RS Web Development 2017<br/><a href="/privacy">Privacy</a> &bull; <a href="/terms">Terms</a></p>
+            <div class="col-md-12 text-center" style="margin-top: 10px">
+                <a target="_blank" href="https://www.facebook.com/askalumni.ca/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack fa-inverse"></i></span></a>
+                <a target="_blank" href="https://twitter.com/askalumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack fa-inverse"></i></span></a>
+                <a target="_blank" href="https://www.instagram.com/ask_alumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-instagram fa-stack fa-inverse"></i></span></a>
+                <a href="mailto:info@askalumni.ca" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-envelope fa-stack fa-inverse"></i></span></a>
+            </div>
+            <p class="copyright text-muted small text-center" style="margin-top: 10px">Copyright &copy; <a href="http://rachel.shellborn.com/">RS Web Development</a> 2017<br/><a href="/privacy">Privacy</a> &bull; <a href="/terms">Terms</a></p>
         </div>
     </footer>
 

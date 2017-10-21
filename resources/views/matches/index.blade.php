@@ -17,9 +17,9 @@
 @section('content')
     <h4 class="text-right" style="font-weight: bold">{{$totalMatches}}
         @if($totalMatches==1)
-            match
+            match found
         @else
-            matches
+            matches found
         @endif
     </h4>
     <br/>

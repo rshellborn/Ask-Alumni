@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Jobs\SendAdminNotificationEmail;
 use App\Jobs\SendVerificationEmail;
 use App\Mail\VerifyAccount;
 use App\User;
@@ -101,7 +102,7 @@ class RegisterController extends Controller
         session_start();
         $_SESSION['registered'] = 'true';
 
-        return User::create([
+        $user = User::create([
             'name'     => $user->name,
             'email'    => $user->email,
             'provider' => $provider,
@@ -109,6 +110,12 @@ class RegisterController extends Controller
             'avatar' => $filename,
             'points' => 10,
         ]);
+
+
+        //send email to notify me of new user
+        dispatch(new SendAdminNotificationEmail("NEW USER ---", $user->name . " " . $provider));
+
+        return $user;
     }
 
     /**
@@ -137,7 +144,7 @@ class RegisterController extends Controller
         if(Input::get('referral_code') != null) {
             $referred_by = DB::table('users')->where('referral_code', Input::get('referral_code'))->value('id');
         } else {
-            $referred_by = "";
+            $referred_by = 0;
         }
 
         $user = User::create([
@@ -163,6 +170,9 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         dispatch(new SendVerificationEmail($user));
+
+        //send email to notify me of new user
+        dispatch(new SendAdminNotificationEmail("NEW USER ---", $user->name . " " . $user->provider));
 
         return $this->registered($request) ?: redirect($this->redirectPath());
     }

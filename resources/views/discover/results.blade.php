@@ -6,7 +6,7 @@
 
 @section('content')
     <h4 class="text-right" style="font-weight: bold">{{$totalResults}}
-        @if(count($totalResults)==1)
+        @if($totalResults == 1)
             result found
         @else
             results found

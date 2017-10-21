@@ -15,7 +15,7 @@ class AddReferralCodeToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('referral_code')->default('NOTSET');
-            $table->string('referred_by')->default('');
+            $table->integer('referred_by')->default(0);
         });
     }
 

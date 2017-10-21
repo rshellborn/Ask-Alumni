@@ -128,9 +128,11 @@ Route::get('/', function () {
 
 Route::get('/email', function () {
     $name = "Rachel Shellborn";
-    $url = "test";
+    $verification_code = 1;
 
-    return view('emails.referral', compact('name', 'url'));
+    $likes = 1;
+    $points = 1;
+    return view('emails.activateaccount', compact('name', 'verification_code'));
 });
 
 Route::get('/register/{code}', function ($referral_code) {

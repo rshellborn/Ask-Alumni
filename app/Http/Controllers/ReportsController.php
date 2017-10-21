@@ -24,10 +24,11 @@ class ReportsController extends Controller
 
     public function index() {
         //User stats
-        $users       = DB::table('users')->where('type', '!=', null)->count();
+        $users       = DB::table('users')->count();
+        $registered  = DB::table('users')->where('active', 1)->count();
+        $completed   = DB::table('users')->where('type', '!=', null)->count();
         $students    = DB::table('users')->where('type', 'Student')->count();
         $alumni      = DB::table('users')->where('type', 'Alumni')->count();
-        $completed   = $users - DB::table('users')->where('type', null)->count();
 
         //Forum stats
         $forumCategories = DB::table('forum_categories')->count();
@@ -66,7 +67,7 @@ class ReportsController extends Controller
         $go = DB::table('users')->where('provider', 'google')->count();
         $aa = DB::table('users')->where('provider', 'askalumni')->count();
 
-        return view('reports.dashboard', compact('completed', 'fb', 'tw', 'go', 'aa', 'reports', 'blockedUsers', 'fromDiscover', 'fromFavourites', 'fromMatches', 'fromProfile', 'users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
+        return view('reports.dashboard', compact('registered', 'completed', 'fb', 'tw', 'go', 'aa', 'reports', 'blockedUsers', 'fromDiscover', 'fromFavourites', 'fromMatches', 'fromProfile', 'users', 'favourites', 'searches', 'students', 'adviceThreads', 'alumni', 'advicePosts', 'adviceLikes', 'forumThreads', 'forumCategories', 'forumPosts', 'forumMessages', 'conversations'));
     }
 
     public function users() {

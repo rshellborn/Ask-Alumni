@@ -90,5 +90,9 @@
                 </div>
             </form>
         </div>
+
+        <div class="text-center">
+            <small><a href="mailto:contact@askalumni.ca">Having issues signing in? Contact us at contact@askalumni.ca</a></small>
+        </div>
     </div>
 @endsection

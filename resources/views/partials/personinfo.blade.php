@@ -56,6 +56,7 @@
                 <div class="col-md-12">
                     <a target="_blank" href="https://www.facebook.com/askalumni.ca/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack fa-inverse"></i></span></a>
                     <a target="_blank" href="https://twitter.com/askalumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack fa-inverse"></i></span></a>
+                    <a target="_blank" href="https://www.instagram.com/ask_alumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-instagram fa-stack fa-inverse"></i></span></a>
                 </div>
                 <small style="color: white;"><a href="/faq" style="color: white;">FAQ</a> &bull; <a href="/contact" style="color: white;">Contact</a> &bull; <a href="/privacy" style="color: white;">Privacy</a> &bull; <a href="/terms" style="color: white;">Terms</a></small><br/>
                 <small style="color: white;"><a href="http://rachel.shellborn.com" target="_blank" style="color: white;">RS Web Development</a> &copy; 2017</small>
@@ -127,6 +128,7 @@
                             <div class="col-md-12">
                                 <a target="_blank" href="https://www.facebook.com/askalumni.ca/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-facebook fa-stack fa-inverse"></i></span></a>
                                 <a target="_blank" href="https://twitter.com/askalumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-twitter fa-stack fa-inverse"></i></span></a>
+                                <a target="_blank" href="https://www.instagram.com/ask_alumni/" style="color:#262a2a;"><span class="fa-stack fa"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-instagram fa-stack fa-inverse"></i></span></a>
                             </div>
                             <br/>
                             <small style="color: white;"><a href="/faq" style="color: white;">FAQ</a> &bull; <a href="/contact" style="color: white;">Contact</a> &bull; <a href="/privacy" style="color: white;">Privacy</a> &bull; <a href="/terms" style="color: white;">Terms</a></small><br/>

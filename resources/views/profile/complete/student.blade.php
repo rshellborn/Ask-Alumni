@@ -121,13 +121,21 @@
             </div>
             <div class="col-md-5 col-md-offset-2">
                 @foreach($schools1 as $school)
-                    <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}
+                        </label>
+                    </div>
                 @endforeach
             </div>
 
             <div class="col-md-5">
                 @foreach($schools2 as $school)
-                    <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}
+                        </label>
+                    </div>
                 @endforeach
             </div>
             <div class="col-md-6 col-md-offset-3 text-center">
@@ -147,13 +155,22 @@
             </div>
             <div class="col-md-5 col-md-offset-2">
                 @foreach($fields1 as $field)
-                    <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                        </label>
+                    </div>
                 @endforeach
             </div>
 
             <div class="col-md-5">
                 @foreach($fields2 as $field)
-                    <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                        </label>
+                    </div>
                 @endforeach
             </div>
             <div class="col-md-6 col-md-offset-3 text-center">
@@ -173,7 +190,11 @@
             </div>
             <div class="col-md-6 col-md-offset-5">
                 @foreach($degrees as $degree)
-                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}"> {{ $degree->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="degree[]" value="{{ $degree->name }}"> {{ $degree->name }}<br/>
+                        </label>
+                    </div>
                 @endforeach
             </div>
 

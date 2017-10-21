@@ -19,16 +19,6 @@
                     <div class="col-md-3 text-center">
                         <div class="panel panel-primary">
                             <div class=panel-heading>
-                                <h3 class=panel-title>Registered</h3>
-                            </div>
-                            <div class=panel-body>
-                                {{$users}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 text-center">
-                        <div class="panel panel-primary">
-                            <div class=panel-heading>
                                 <h3 class=panel-title>Completed</h3>
                             </div>
                             <div class=panel-body>
@@ -39,7 +29,17 @@
                     <div class="col-md-3 text-center">
                         <div class="panel panel-primary">
                             <div class=panel-heading>
-                                <h3 class=panel-title>All Users</h3>
+                                <h3 class=panel-title>Verified</h3>
+                            </div>
+                            <div class=panel-body>
+                                {{$registered}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div class="panel panel-primary">
+                            <div class=panel-heading>
+                                <h3 class=panel-title>Registered</h3>
                             </div>
                             <div class=panel-body>
                                 {{$users}}

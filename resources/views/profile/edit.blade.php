@@ -179,9 +179,17 @@
             <div class="col-md-5 col-md-offset-2">
                 @foreach($schools1 as $school)
                     @if(in_array($school->name, $selSchools))
-                        <input type="checkbox" name="school[]" value="{{ $school->name }}" checked> {{ $school->name }}<br/>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="school[]" value="{{ $school->name }}" checked> {{ $school->name }}
+                            </label>
+                        </div>
                     @else
-                        <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}
+                            </label>
+                        </div>
                     @endif
                 @endforeach
             </div>
@@ -189,9 +197,17 @@
             <div class="col-md-5">
                 @foreach($schools2 as $school)
                     @if(in_array($school->name, $selSchools))
-                        <input type="checkbox" name="school[]" value="{{ $school->name }}" checked> {{ $school->name }}<br/>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="school[]" value="{{ $school->name }}" checked> {{ $school->name }}
+                            </label>
+                        </div>
                     @else
-                        <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}
+                            </label>
+                        </div>
                     @endif
                 @endforeach
             </div>
@@ -211,9 +227,18 @@
             <div class="row text-center">
                 <label for="inSchool">Are you still attending a post secondary institution?</label>
                 <div class="col-md-6 col-md-offset-3 text-center">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="inSchool" value="true" <?php echo  $inSchool ?>>Yes
+                        </label>
+                    </div>
 
-                    <input type="radio" name="inSchool" value="true" <?php echo  $inSchool ?>> Yes<br/>
-                    <input type="radio" name="inSchool" value="false" <?php echo $notInSchool ?>> No<br/>
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="inSchool" value="false" <?php echo $notInSchool ?>>No
+                        </label>
+                    </div>
                 </div>
             </div>
         <hr />
@@ -230,9 +255,13 @@
             <div class="col-md-5 col-md-offset-2">
                 @foreach($fields1 as $field)
                     @if(in_array($field->name, $selFields))
-                        <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}" checked> {{ $field->name }}<br/>
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}" checked> {{ $field->name }}</label>
+                        </div>
                     @else
-                        <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}</label>
+                        </div>
                     @endif
                 @endforeach
             </div>
@@ -240,9 +269,17 @@
             <div class="col-md-5">
                 @foreach($fields2 as $field)
                     @if(in_array($field->name, $selFields))
-                        <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}" checked> {{ $field->name }}<br/>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}" checked> {{ $field->name }}
+                            </label>
+                        </div>
                     @else
-                        <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}
+                            </label>
+                        </div>
                     @endif
                 @endforeach
             </div>
@@ -268,9 +305,17 @@
             <div class="col-md-6 col-md-offset-5">
                 @foreach($degrees as $degree)
                     @if(in_array($degree->name, $selDegrees))
-                        <input type="checkbox" name="degree[]" value="{{ $degree->name }}" checked> {{ $degree->name }}<br/>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="degree[]" value="{{ $degree->name }}" checked> {{ $degree->name }}
+                            </label>
+                        </div>
                     @else
-                        <input type="checkbox" name="degree[]" value="{{ $degree->name }}"> {{ $degree->name }}<br/>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="degree[]" value="{{ $degree->name }}"> {{ $degree->name }}
+                            </label>
+                        </div>
                     @endif
                 @endforeach
             </div>

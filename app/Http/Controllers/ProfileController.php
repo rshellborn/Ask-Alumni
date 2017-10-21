@@ -37,6 +37,12 @@ class ProfileController extends Controller
             $request->session()->flash('failed', 'Invalid referral code.');
         } else {
             $this->handlePoints(Auth::id(), $referralUserId);
+
+            DB::table('users')->where('id', Auth::id())->limit(1)->update(
+                [
+                    'referred_by' => $referralUserId
+                ]);
+
             $request->session()->flash('success', 'You earned 15 points for being referred!');
         }
 
@@ -107,7 +113,7 @@ class ProfileController extends Controller
             unset($_SESSION['registered']);
             $points = $user->points;
 
-            if($user->referred_by !== "") {
+            if($user->referred_by !== 0) {
                 $referred = true;
 
                 $this->handlePoints(Auth::id(), intval(Auth::user()->referred_by));
@@ -325,7 +331,7 @@ class ProfileController extends Controller
         $fields     = Input::get('fieldOfStudy');
         $schools    = Input::get('school');
         $highSchool = Input::get('highSchool');
-        $degree     = Input::get('degree');
+        $degrees     = Input::get('degree');
         $subscribe  = Input::get('subscribe');
 
         //check if user selected other high school or school
@@ -336,47 +342,49 @@ class ProfileController extends Controller
         }
 
         //check if they entered any extra stuff
+
+        if($schools == null) {
+            $schools = array();
+        }
+
         $otherInputs = Input::get('otherSchools');
         if($otherInputs != null) {
             $otherInputs = explode(',', $otherInputs);
             foreach($otherInputs as $school) {
                 $formatted = trim($school);
                 $formatted = ucwords($formatted);
-                if(count($schools) > 0) {
-                    array_push($schools, $formatted);
-                } else {
-                    $schools = $formatted;
-                }
+                array_push($schools, $formatted);
             }
+        }
+
+        if($fields == null) {
+            $fields = array();
         }
 
         $otherInputs = Input::get('otherFields');
         if($otherInputs != null) {
             $otherInputs = explode(',', $otherInputs);
-            foreach($otherInputs as $school) {
-                $formatted = trim($school);
+            foreach($otherInputs as $field) {
+                $formatted = trim($field);
                 $formatted = ucwords($formatted);
-                if(count($fields) > 0) {
-                    array_push($fields, $formatted);
-                } else {
-                    $fields = $formatted;
-                }
+                array_push($fields, $formatted);
             }
+        }
+
+        if($degrees == null) {
+            $degrees = array();
         }
 
         $otherInputs = Input::get('otherDegrees');
         if($otherInputs != null) {
             $otherInputs = explode(',', $otherInputs);
-            foreach($otherInputs as $school) {
-                $formatted = trim($school);
+            foreach($otherInputs as $degree) {
+                $formatted = trim($degree);
                 $formatted = ucwords($formatted);
-                if(count($degree) > 0) {
-                    array_push($degree, $formatted);
-                } else {
-                    $degree = $formatted;
-                }
+                array_push($degrees, $formatted);
             }
         }
+
 
         if(count($fields) >= 1) {
             $fields = implode(",", $fields);
@@ -390,10 +398,10 @@ class ProfileController extends Controller
             $schools = '';
         }
 
-        if(count($degree) >= 1) {
-            $degree = implode(",", $degree);
-        } else if(count($degree) == 0) {
-            $degree = '';
+        if(count($degrees) >= 1) {
+            $degrees = implode(",", $degrees);
+        } else if(count($degrees) == 0) {
+            $degrees = '';
         }
 
         $bio = Input::get('bio');
@@ -409,6 +417,7 @@ class ProfileController extends Controller
                     'emails-messages' => $subscribe == "true" ? true : false,
                     'emails_news' => $subscribe == "true" ? true : false,
                     'referral_code' => $this->generateRandomString(),
+                    'active' => 1
                 ]);
         }
 
@@ -419,7 +428,7 @@ class ProfileController extends Controller
                 'type' => $accType,
                 'fields' => $fields,
                 'schools' => $schools,
-                'degrees' => $degree,
+                'degrees' => $degrees,
                 'highSchool' => $highSchool,
             ]);
 

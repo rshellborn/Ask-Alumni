@@ -96,14 +96,16 @@ class MessageController extends Controller
 
         $user = '';
         $messages = [];
+        $pointsReceived = false;
         if(!$conversations) {
             $user = User::find($id);
         } else {
             $user = $conversations->withUser;
             $messages = $conversations->messages;
+            $pointsReceived = $this->checkPointsReceived($conversations->withUser->id, Auth::id());
         }
 
-        $pointsReceived = $this->checkPointsReceived($conversations->withUser->id, Auth::id());
+
 
         return view('messenger.chat', compact('messages', 'user', 'trigger', 'pointsReceived'));
     }

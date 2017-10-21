@@ -127,13 +127,21 @@
             </div>
             <div class="col-md-5 col-md-offset-2">
                 @foreach($schools1 as $school)
-                    <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}
+                        </label>
+                    </div>
                 @endforeach
             </div>
 
             <div class="col-md-5">
                 @foreach($schools2 as $school)
-                    <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="school[]" value="{{ $school->name }}"> {{ $school->name }}
+                        </label>
+                    </div>
                 @endforeach
             </div>
             <div class="col-md-6 col-md-offset-3 text-center">
@@ -150,8 +158,18 @@
         <div class="row text-center">
             <label for="inSchool">Are you still attending a post secondary institution?</label>
             <div class="col-md-6 col-md-offset-3">
-                <input type="radio" name="inSchool" value="true" checked> Yes<br/>
-                <input type="radio" name="inSchool" value="false"> No<br/>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="inSchool" value="true" checked>Yes
+                    </label>
+                </div>
+
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="inSchool" value="false">No
+                    </label>
+                </div>
             </div>
         </div>
         <hr/>
@@ -162,13 +180,21 @@
             </div>
             <div class="col-md-5 col-md-offset-2">
                 @foreach($fields1 as $field)
-                    <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                        </label>
+                    </div>
                 @endforeach
             </div>
 
             <div class="col-md-5">
                 @foreach($fields2 as $field)
-                    <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="fieldOfStudy[]" value="{{ $field->name }}"> {{ $field->name }}<br/>
+                        </label>
+                    </div>
                 @endforeach
             </div>
             <div class="col-md-6 col-md-offset-3 text-center">
@@ -188,7 +214,11 @@
             </div>
             <div class="col-md-6 col-md-offset-5">
                 @foreach($degrees as $degree)
-                    <input type="checkbox" name="degree[]" value="{{ $degree->name }}"> {{ $degree->name }}<br/>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="degree[]" value="{{ $degree->name }}"> {{ $degree->name }}<br/>
+                        </label>
+                    </div>
                 @endforeach
             </div>
 
@@ -214,7 +244,11 @@
         @if(Auth::user()->type == null)
         <div class="row">
             <div class="col-md-12 text-center">
-                <input type="checkbox" name="subscribe" value="true" checked> I would like to receive email notifications<br/>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="subscribe" value="true" checked> I would like to receive email notifications
+                    </label>
+                </div>
                 <small>This includes when you receive a new message. You can edit your preferences after you complete your registration.</small>
                 <br/>
             </div>

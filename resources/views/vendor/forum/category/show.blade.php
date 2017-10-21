@@ -98,7 +98,7 @@
                                     <p class="lead">
                                         <a href="{{ Forum::route('thread.show', $thread) }}">{{ $thread->title }}</a>
                                     </p>
-                                    <a href="{{ '/profile/view/' . $thread->lastPost->author_id}}">{{ $thread->lastPost->authorName }}</a>
+                                    <a href="{{ '/profile/view/' . $thread->author_id}}">{{ $thread->authorName }}</a>
                                     <span class="text-muted">({{ $thread->posted }})</span>
                                 </td>
                                 @if ($thread->trashed())
