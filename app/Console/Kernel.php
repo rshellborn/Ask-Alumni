@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\SendNotificationEmailCommand::class
+        Commands\SendNotificationEmailCommand::class,
+        Commands\SendRegistrationReminderEmail::class
     ];
 
     /**
@@ -35,7 +36,15 @@ class Kernel extends ConsoleKernel
                  ->emailOutputTo('rachel@shellborn.com');
 
 
-//        $schedule->command('notificationemail:send')->everyMinute()
+        $schedule->command('registrationreminder:send')
+            ->weekly()
+            ->sundays()
+            ->at('17:00')
+            ->sendOutputTo($logfile)
+            ->emailOutputTo('rachel@shellborn.com');
+
+
+//        $schedule->command('registrationreminder:send')->everyMinute()
 //                 ->sendOutputTo($logfile)
 //                 ->emailOutputTo('rachel@shellborn.com');
     }

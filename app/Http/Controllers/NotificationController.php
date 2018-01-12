@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Notifications\AdviceThreadLike;
+use App\Notifications\ExperiencePostLike;
 use App\Notifications\NewMessage;
 use App\Notifications\NewRank;
 use App\Notifications\NewReport;
@@ -95,6 +96,12 @@ class NotificationController extends Controller
     public function storeAdviceLike($user)
     {
         $user->notify(new AdviceThreadLike);
+
+        return response()->json('Notification sent.', 201);
+    }
+
+    public function storeExperienceLike($user, $threadID) {
+        $user->notify(new ExperiencePostLike($threadID));
 
         return response()->json('Notification sent.', 201);
     }

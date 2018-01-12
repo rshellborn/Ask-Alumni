@@ -24,6 +24,11 @@
                         Favourites
                     </div>
                 </a>
+                <a href="/rankings" class="profileNavLink">
+                    <div class="list-group-item profileNav">
+                        Rankings
+                    </div>
+                </a>
                 <a href="/settings" class="profileNavLink">
                     <div class="list-group-item profileNav">
                         Settings
@@ -94,6 +99,11 @@
                         <a href="/favourites" class="profileNavLink">
                             <div class="list-group-item profileNav">
                                 Favourites
+                            </div>
+                        </a>
+                        <a href="/rankings" class="profileNavLink">
+                            <div class="list-group-item profileNav">
+                                Rankings
                             </div>
                         </a>
                         <a href="/settings" class="profileNavLink">

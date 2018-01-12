@@ -97,6 +97,55 @@ class PointsController extends Controller
         ]);
     }
 
+    public function experienceVote(Request $request) {
+        $threadID = $request->input('thread');
+        $userID = $request->input('user');
+        $authorID = $request->input('author');
+
+        //attempting to create notification
+        $user = User::where('id', $authorID)->first();
+        $notification = new NotificationController();
+        $notification->storeExperienceLike($user, $threadID);
+
+        $likes = DB::table('experiences')->where('id', $threadID)->value('up_votes');
+        $likes++;
+
+        $userLikes = DB::table('experiences')->where('id', $threadID)->value('up_votes');
+        $users = DB::table('experiences')->where('id', $threadID)->value('users');
+        if($userLikes == 0) {
+            $users = $userID;
+        } else if($userLikes == 1) {
+            $users = $users . ',' . $userID;
+        } else {
+            $users = explode(',', $users);
+            array_push($users, $userID);
+            $users = implode(',', $users);
+        }
+
+        DB::table('experiences')->where('id', $threadID)->limit(1)->update(
+            [
+                'up_votes' => $likes,
+                'users' => $users
+            ]);
+
+        $points = DB::table('users')->where('id', $authorID)->value('points');
+        $oldPoints = $points;
+        $points += 10;
+
+        DB::table('users')->where('id', $authorID)->limit(1)->update(
+            [
+                'points' => $points,
+            ]);
+
+        $this->checkRank($points, $oldPoints, $authorID);
+
+        return response()->json([
+            'likes' => $likes,
+            'users' => $users,
+            'author' => $authorID
+        ]);
+    }
+
     // Points from other user in a message convo
     public function givePoints(Request $request) {
         $userID   = $request->input('user');

@@ -28,6 +28,13 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             Route::get('/reports/logs/{id}', 'ReportsController@logs');
         });
 
+        //experiences
+        Route::get('/experiences', 'ExperiencesController@index');
+        Route::get('/experiences/new', 'ExperiencesController@newPost');
+        Route::post('/experiences/post', 'ExperiencesController@post');
+        Route::get('/experiences/view/{id}', 'ExperiencesController@view');
+        Route::get('/experiences/edit/{id}', 'ExperiencesController@edit');
+
         //Browse
         Route::get('/discover', 'DiscoverController@index');
         Route::post('/discover/search', 'DiscoverController@search');
@@ -35,6 +42,7 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
 
 
         Route::post('/post/post_vote_up','PointsController@adviceVote');
+        Route::post('/post/experience_vote_up','PointsController@experienceVote');
         Route::post('/post/give_points','PointsController@givePoints');
 
         Route::get('/rankings','PointsController@rankings');
@@ -126,14 +134,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/email', function () {
-    $name = "Rachel Shellborn";
-    $verification_code = 1;
-
-    $likes = 1;
-    $points = 1;
-    return view('emails.activateaccount', compact('name', 'verification_code'));
-});
+//Route::get('/email', function () {
+//    $name = "Rachel Shellborn";
+//    $verification_code = 1;
+//
+//    return view('emails.registrationreminder', compact('name', 'verification_code'));
+//});
+//
+//
+//Route::get('/test', function() {
+//    $nonCompletedUsers = App\User::where('type', null)->get();
+//
+//    foreach($nonCompletedUsers as $user)
+//    {
+//        if($user['created_at'] >= Carbon\Carbon::today()->subWeek()) {
+//            if($user['email'] != null) {
+//                Mail::to($user)->send(new App\Mail\RegistrationReminder($user->name));
+//            }
+//        }
+//    }
+//});
 
 Route::get('/register/{code}', function ($referral_code) {
     return view('auth.register', compact('referral_code'));

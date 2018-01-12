@@ -26,6 +26,7 @@ class ContactController extends Controller
             $view->with(compact('threads'));
         });
     }
+
     public function send() {
         $user_id = Auth::user()->id;
         $name = Auth::user()->name;

@@ -224,7 +224,7 @@
                             <li><a href="{{ url('/matches') }}">Matches</a></li>
                             <li><a href="{{ url('/discover') }}">Discover</a></li>
                             <li><a href="{{ url('/messages') }}">Messages</a></li>
-                            <li><a href="{{ url('/rankings') }}">Rankings</a></li>
+                            <li><a href="{{ url('/experiences') }}">Experiences</a></li>
                         @endif
                     </ul>
 
