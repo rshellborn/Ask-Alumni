@@ -219,13 +219,11 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-center">
-                        @if (Auth::check())
                             <li><a href="{{ url('/forum') }}">Forums</a></li>
                             <li><a href="{{ url('/matches') }}">Matches</a></li>
                             <li><a href="{{ url('/discover') }}">Discover</a></li>
                             <li><a href="{{ url('/messages') }}">Messages</a></li>
                             <li><a href="{{ url('/experiences') }}">Experiences</a></li>
-                        @endif
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">

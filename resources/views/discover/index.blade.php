@@ -53,9 +53,13 @@
             </div>
             <div class="form-group">
                 <div class="text-center">
-                    <button type="submit" class="btn btn-pink  col-md-2 col-md-offset-5">
-                        Search
-                    </button>
+                    @if(Auth::guest())
+                        <a href="login" class="btn btn-pink">Search</a>
+                    @else
+                        <button type="submit" class="btn btn-pink  col-md-2 col-md-offset-5">
+                            Search
+                        </button>
+                    @endif
                 </div>
             </div>
         </form>
@@ -156,9 +160,13 @@
 
             <div class="form-group">
                 <div class="text-center">
-                    <button type="submit" class="btn btn-pink  col-md-2 col-md-offset-5">
-                        Search
-                    </button>
+                    @if(Auth::guest())
+                        <a href="login" class="btn btn-pink">Search</a>
+                    @else
+                        <button type="submit" class="btn btn-pink  col-md-2 col-md-offset-5">
+                            Search
+                        </button>
+                    @endif
                 </div>
             </div>
 

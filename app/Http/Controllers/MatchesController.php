@@ -16,7 +16,16 @@ class MatchesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(function ($request, $next) { Talk::setAuthUserId(Auth::user()->id); return $next($request); });
+        $this->middleware(function ($request, $next) {
+
+            if(Auth::guest()) {
+                return;
+            }
+
+            Talk::setAuthUserId(Auth::user()->id);
+
+            return $next($request);
+        });
 
         View::composer('partials.peoplelist', function($view) {
             $threads = Talk::threads();
@@ -32,7 +41,7 @@ class MatchesController extends Controller
     public function index(Request $request) {
         $curUser = Auth::user();
 
-        if(DB::table('users')->where('id', $curUser->id)->value('seenMatches') == false) {
+        if(Auth::guest() || DB::table('users')->where('id', $curUser->id)->value('seenMatches') == false) {
             return view('matches.first');
         }
 

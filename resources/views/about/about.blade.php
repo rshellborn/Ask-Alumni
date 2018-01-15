@@ -348,7 +348,7 @@
     </div>
 
     <div style="font-style: italic; font-size: 12px;" class="text-right">
-        <a target="_blank" href="http://rachel.shellborn.com">RS Web Development</a> &copy; 2017<br/>
+        <a target="_blank" href="http://rachel.shellborn.com">RS Web Development</a> &copy; 2018<br/>
         Graphics created by Melayna Vergara
     </div>
 @endsection

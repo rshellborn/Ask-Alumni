@@ -12,6 +12,8 @@
                     High school students need your help!
                 @elseif(DB::table('users')->where('id', Auth::id())->value('type') == 'Student')
                     Need advice or information for your post secondary journey?
+                @else
+                    Get connected with people with similar educational interests.
                 @endif
             </strong></h4>
             <h4>
@@ -19,6 +21,9 @@
                     Find high school students that are interested in your school, degree, or field of study.
                 @elseif(DB::table('users')->where('id', Auth::id())->value('type') == 'Student')
                     Find Alumni that have information on schools, degrees, and fields of study you are interested in.
+                @else
+                    <strong>Alumni</strong>: Help out high school students that are interested in your school, degree, or field of study.<br/><br/>
+                    <strong>Students</strong>: Find Alumni that are enrolled at schools, in degrees, and in fields of study you are interested in.
                 @endif
             </h4>
             <br/>
@@ -27,10 +32,14 @@
                 <br/>
             </div>
             <div class="col-md-6 col-md-offset-3">
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('/matches') }}">
-                    {{ csrf_field() }}
-                    <button class="btn btn-pink" type="submit">Get Matches</button>
-                </form>
+                @if(Auth::guest())
+                    <a href="login" class="btn btn-pink">Get Matches</a>
+                @else
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/matches') }}">
+                        {{ csrf_field() }}
+                        <button class="btn btn-pink" type="submit">Get Matches</button>
+                    </form>
+                @endif
             </div>
         </div>
     </div>

@@ -45,7 +45,7 @@
 @endsection
 
 @section('content')
-    @if(Auth::user()->id == $experience->user_id)
+    @if(!Auth::guest() && Auth::user()->id == $experience->user_id)
         <form class="form-horizontal" role="form" method="GET" action="{{ url('experiences/edit/' . $id) }}">
             <button class="btn btn-pink">Edit this Experience</button>
         </form>
@@ -75,11 +75,10 @@
 
     <div class="col-md-12">
         {!! $experience->body !!}
+        <hr/>
     </div>
-
     <div class="col-md-10">
-        <br/>
-        <span>Posted by <i><a href="{{ url("profile/" . $user->id) }}">{{ $user->name }}</a></i></span><br/>
+        <span>Posted by <i><a href="{{ url("profile/view/" . $user->id) }}">{{ $user->name }}</a></i></span><br/>
 
         {{ $experience->schools }}<br/>
         {{ $experience->fields }}<br/>

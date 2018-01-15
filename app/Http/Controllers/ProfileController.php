@@ -106,6 +106,7 @@ class ProfileController extends Controller
     public function index() {
         session_start();
         $user = Auth::user();
+        dd($user);
 
         $displayModal = false;
         $referred = false;

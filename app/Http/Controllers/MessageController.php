@@ -20,7 +20,14 @@ class MessageController extends Controller
 
     public function __construct()
     {
-        $this->middleware(function ($request, $next) { Talk::setAuthUserId(Auth::user()->id); return $next($request); });
+        $this->middleware(function ($request, $next) {
+
+            if(Auth::guest()) {
+                return;
+            }
+
+            Talk::setAuthUserId(Auth::user()->id);
+            return $next($request); });
 
         View::composer('partials.peoplelist', function($view) {
             $threads = Talk::threads();

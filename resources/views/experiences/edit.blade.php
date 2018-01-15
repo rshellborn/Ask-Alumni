@@ -48,13 +48,13 @@
 
         <div class="form-group">
             <div class="col-md-12">
-                <input type="text" name="title" placeholder="Title" class="form-control" required>
+                <input type="text" name="title" placeholder="Title" class="form-control" value="{{$title}}" required>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-12">
-                <textarea name="body" placeholder="Tell everyone about your experience at post-secondary" class="form-control" rows="8" required></textarea>
+                <textarea name="body" placeholder="Tell everyone about your experience at post-secondary" class="form-control" rows="8" required>{{ $body }}</textarea>
             </div>
         </div>
 
@@ -205,10 +205,9 @@
         </div>
     </form>
 
-    <form class="form-horizontal" role="form" method="POST" action="{{ url('/advice/edit/' . $id) }}">
+    <form class="form-horizontal" role="form" method="POST" action="{{ url('/experiences/delete/' . $id) }}">
         {{ csrf_field() }}
-        <input type="hidden" name="action" value="delete">
-        <div class="text-center">
+        <div class="text-center" style="margin-top: 30px;">
             <button type="submit" class="btn btn-danger">Delete</button>
         </div>
     </form>

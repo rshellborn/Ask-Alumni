@@ -28,15 +28,13 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
             Route::get('/reports/logs/{id}', 'ReportsController@logs');
         });
 
-        //experiences
-        Route::get('/experiences', 'ExperiencesController@index');
         Route::get('/experiences/new', 'ExperiencesController@newPost');
         Route::post('/experiences/post', 'ExperiencesController@post');
-        Route::get('/experiences/view/{id}', 'ExperiencesController@view');
         Route::get('/experiences/edit/{id}', 'ExperiencesController@edit');
+        Route::post('/experiences/edit/{id}', 'ExperiencesController@save');
+        Route::post('/experiences/delete/{id}', 'ExperiencesController@delete');
 
         //Browse
-        Route::get('/discover', 'DiscoverController@index');
         Route::post('/discover/search', 'DiscoverController@search');
         Route::get('/discover/search', 'DiscoverController@search');
 
@@ -45,8 +43,6 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         Route::post('/post/experience_vote_up','PointsController@experienceVote');
         Route::post('/post/give_points','PointsController@givePoints');
 
-        Route::get('/rankings','PointsController@rankings');
-        Route::post('/rankings', 'PointsController@filter');
 
     // Notifications
         Route::post('notifications', 'NotificationController@store');
@@ -69,7 +65,6 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         });
 
         Route::get('message/{id}', 'MessageController@chatHistory')->name('message.read');
-        Route::get('messages', 'MessageController@index');
 
         Route::group(['prefix'=>'ajax', 'as'=>'ajax::'], function() {
             Route::post('message/send', 'MessageController@ajaxSendMessage')->name('message.new');
@@ -77,7 +72,6 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         });
 
 
-        Route::get('/matches', 'MatchesController@index');
         Route::post('/matches', 'MatchesController@findMatches');
 
         Route::get('/profile/edit', 'ProfileController@edit');
@@ -100,7 +94,6 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
         Route::post('/profile/avatar', 'ProfileController@avatar');
         Route::post('/profile/referral', 'ProfileController@referral');
 
-        Route::get('/home', 'ContactController@about');
 
         Route::get('/pointsystem', 'PointsController@points');
         Route::get('/refer', 'PointsController@referAFriend');
@@ -116,6 +109,26 @@ Route::group(['middleware' => 'App\Http\Middleware\CheckLoggedIn'], function()
     Route::get('/profile/complete/alumni', 'ProfileController@alumniComplete');
     Route::get('/profile/view/{id}', 'ProfileController@view');
 });
+
+
+Route::get('/home', 'ContactController@about');
+
+
+Route::get('/discover', 'DiscoverController@index');
+
+Route::get('/matches', 'MatchesController@index');
+
+
+Route::get('/rankings','PointsController@rankings');
+Route::post('/rankings', 'PointsController@filter');
+
+
+Route::get('messages', 'MessageController@index');
+
+//experiences
+Route::get('/experiences', 'ExperiencesController@index');
+Route::get('/experiences/view/{id}', 'ExperiencesController@view');
+
 
 
 Route::get('/activate/{code}', 'ActivateController@index');
